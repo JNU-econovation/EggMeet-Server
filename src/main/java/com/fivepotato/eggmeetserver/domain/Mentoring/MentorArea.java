@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.domain.Mentoring;
 
 import com.fivepotato.eggmeetserver.domain.User.User;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,14 +25,22 @@ public class MentorArea {
     @NotNull
     private Category category;
 
-    @NotNull
-    private Type type;
-
     private String description;
 
-    @NotNull
-    private boolean isAvailableOnline;
+    private String career;
+
+    private String link;
 
     @NotNull
-    private boolean isAvailableOffline;
+    private Byte growthPoint;
+
+    @Builder
+    public MentorArea(User mentor, Category category, String description, String career, String link, Byte growthPoint) {
+        this.mentor = mentor;
+        this.category = category;
+        this.description = description;
+        this.career = career;
+        this.link = link;
+        this.growthPoint = growthPoint;
+    }
 }

@@ -2,7 +2,9 @@ package com.fivepotato.eggmeetserver.domain.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeArea;
 import com.fivepotato.eggmeetserver.domain.Mentoring.MentorArea;
+import com.fivepotato.eggmeetserver.dto.Mentoring.MentorAreaDto;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,16 +33,18 @@ public class User {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Do locationDo;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Dong locationDong;
+    private Location location;
 
     private String description;
 
     @NotNull
     private byte pictureIndex;
+
+    @NotNull
+    private boolean isOnlineAvailable;
+
+    @NotNull
+    private boolean isOfflineAvailable;
 
     @OneToOne(mappedBy = "mentor", orphanRemoval = true)
     private MentorArea mentorArea;
@@ -49,13 +53,13 @@ public class User {
     private MenteeArea menteeArea;
 
     @NotNull
-    private float mentorGrade;
+    private float mentorGrade = 0.0f;
 
     @NotNull
-    private float menteeGrade;
+    private float menteeGrade = 0.0f;
 
     @NotNull
-    private int point;
+    private int point = 0;
 
     // chats, messages, reporterReports, reporteeReports, blacklistUsers
 
@@ -71,4 +75,21 @@ public class User {
 
     @NotNull
     private Role role;
+
+    @Builder
+    public User(String name, byte age, Sex sex, String phoneNumber, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String email, String encodedEmail, Role role) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.phoneNumber = phoneNumber;
+        this.location = location;
+        this.description = description;
+        this.pictureIndex = pictureIndex;
+        this.isOnlineAvailable = isOnlineAvailable;
+        this.isOfflineAvailable = isOfflineAvailable;
+        this.loginType = loginType;
+        this.email = email;
+        this.encodedEmail = encodedEmail;
+        this.role = role;
+    }
 }
