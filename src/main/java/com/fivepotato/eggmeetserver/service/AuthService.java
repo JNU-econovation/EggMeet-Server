@@ -54,9 +54,14 @@ public class AuthService {
         } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
 
             // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
+            // 시험용 토큰 때문에 윤성이와
 
             String email = getEmailBySocialTokenFromApple(userSaveDto.getSocialToken());
             userSaveDto.setEmail(email);
+
+        } else if (userSaveDto.getLoginType().equals(LoginType.KAKAO)) {
+
+            // TODO: 카카오 로그인 구현
         }
 
         User user = userSaveDto.toEntity(passwordEncoder);
