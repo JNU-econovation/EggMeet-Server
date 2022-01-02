@@ -1,8 +1,9 @@
-package com.fivepotato.eggmeetserver.service;
+package com.fivepotato.eggmeetserver.service.User;
 
 import com.fivepotato.eggmeetserver.domain.User.LoginType;
+import com.fivepotato.eggmeetserver.domain.User.RefreshToken;
+import com.fivepotato.eggmeetserver.domain.User.RefreshTokenRepository;
 import com.fivepotato.eggmeetserver.domain.User.User;
-import com.fivepotato.eggmeetserver.domain.User.UserRepository;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeAreaDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MentorAreaDto;
 import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
@@ -11,11 +12,15 @@ import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
 import com.fivepotato.eggmeetserver.exception.CustomAuthenticationException;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.SystemIOException;
+import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
 import com.google.gson.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +34,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,30 +45,19 @@ public class AuthService {
     private final String BACKDOOR_EMAIL = "test@test.com";
     private final String APPLE_DECODE_KEY_URL = "https://appleid.apple.com/auth/keys";
 
-    private final UserRepository userRepository;
-    private final MentoringService mentoringService;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AppTokenProvider appTokenProvider;
+
+    private final UserService userService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final MentoringService mentoringService;
 
 
     public boolean getIsExistUser(SocialTokenDto socialTokenDto) {
-        String email = "";
-        if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
-            email = BACKDOOR_EMAIL;
+        String email = getEmailBySocialTokenDto(socialTokenDto);
 
-        } else if (socialTokenDto.getLoginType().equals(LoginType.APPLE)) {
-            // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
-            // 시험용 토큰 때문에 윤성이와
-
-            email = getEmailBySocialTokenFromApple(socialTokenDto.getSocialToken());
-
-        } else if (socialTokenDto.getLoginType().equals(LoginType.KAKAO)) {
-            // TODO: 카카오 로그인 구현
-
-        } else {
-            throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
-        }
-
-        return userRepository.existsByEmail(email);
+        return userService.getIsExistUserByEmail(email);
     }
 
     public void registerUser(UserSaveDto userSaveDto) {
@@ -84,7 +79,7 @@ public class AuthService {
         }
 
         User user = userSaveDto.toEntity(passwordEncoder);
-        userRepository.save(user);
+        userService.createUser(user);
 
         if (userSaveDto.getMentorCategory() != null) {
             MentorAreaDto mentorAreaDto = MentorAreaDto.builder()
@@ -186,7 +181,51 @@ public class AuthService {
         }
     }
 
-    public AppTokenDto issueAppTokenDto(SocialTokenDto socialTokenDto) {
-        return null;
+    public AppTokenDto getAppTokenDto(SocialTokenDto socialTokenDto) {
+        String email = getEmailBySocialTokenDto(socialTokenDto);
+        User user = userService.getUserByEmail(email);
+
+        return issueAppTokenDto(user.getId());
+    }
+
+    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) throws CustomAuthenticationException {
+        if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
+            return BACKDOOR_EMAIL;
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.APPLE)) {
+            // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
+            // 시험용 토큰 때문에 윤성이와
+
+            return getEmailBySocialTokenFromApple(socialTokenDto.getSocialToken());
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.KAKAO)) {
+            // TODO: 카카오 로그인 구현
+
+        }
+
+        throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
+    }
+
+    private AppTokenDto issueAppTokenDto(Long id) {
+        // String 형태의 user id를 기반으로 AuthenticationToken 생성
+        String userId = id.toString();
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, userId);
+
+        // authenticate 메소드는 CustomUserDetailsService 의 loadUserByUsername 메서드 실행 (user id를 통해 유저를 감지)
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // 인증 정보를 기반으로 JWT 토큰 생성
+        AppTokenDto appTokenDto = appTokenProvider.generateAppTokenDto(authentication);
+
+        // RefreshToken 저장
+        // authentication.getName() => user id
+        RefreshToken refreshToken = RefreshToken.builder()
+                .userId(authentication.getName())
+                .token(appTokenDto.getRefreshToken())
+                .build();
+        refreshTokenRepository.save(refreshToken);
+
+        // 토큰 발급
+        return appTokenDto;
     }
 }

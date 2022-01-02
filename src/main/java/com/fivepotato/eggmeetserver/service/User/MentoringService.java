@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.service;
+package com.fivepotato.eggmeetserver.service.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeAreaRepository;
 import com.fivepotato.eggmeetserver.domain.Mentoring.MentorAreaRepository;

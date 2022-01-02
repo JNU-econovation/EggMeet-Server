@@ -3,7 +3,7 @@ package com.fivepotato.eggmeetserver.web.User;
 import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
 import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
-import com.fivepotato.eggmeetserver.service.AuthService;
+import com.fivepotato.eggmeetserver.service.User.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class AuthController {
     @GetMapping("/auth/login")
     public ResponseEntity<AppTokenDto> login(@RequestBody SocialTokenDto socialTokenDto) {
         return new ResponseEntity<>(
-                authService.issueAppTokenDto(socialTokenDto),
+                authService.getAppTokenDto(socialTokenDto),
                 HttpStatus.OK
         );
     }

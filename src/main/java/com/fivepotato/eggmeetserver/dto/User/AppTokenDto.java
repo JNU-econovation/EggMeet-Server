@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AppTokenDto {
 
-    private String grantType;
+    private String grantType; // bearer
     private String accessToken;
-    private String refreshToken;
     private Long accessTokenExpiresIn;
+    private String refreshToken;
 }
