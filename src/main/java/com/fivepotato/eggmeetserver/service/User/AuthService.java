@@ -7,12 +7,15 @@ import com.fivepotato.eggmeetserver.domain.User.User;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeAreaDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MentorAreaDto;
 import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
+import com.fivepotato.eggmeetserver.dto.User.AppTokenReissueDto;
 import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
 import com.fivepotato.eggmeetserver.exception.CustomAuthenticationException;
+import com.fivepotato.eggmeetserver.exception.CustomTokenException;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.SystemIOException;
 import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
+import com.fivepotato.eggmeetserver.service.Mentoring.MentoringService;
 import com.google.gson.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +38,6 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -188,7 +191,7 @@ public class AuthService {
         return issueAppTokenDto(user.getId());
     }
 
-    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) throws CustomAuthenticationException {
+    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
         if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
             return BACKDOOR_EMAIL;
 
@@ -226,6 +229,27 @@ public class AuthService {
         refreshTokenRepository.save(refreshToken);
 
         // 토큰 발급
+        return appTokenDto;
+    }
+
+    @Transactional
+    public AppTokenDto reissueAppTokenDto(AppTokenReissueDto appTokenReissueDto){
+        appTokenProvider.validateToken(appTokenReissueDto.getRefreshToken());
+
+        // issue 메소드의 UsernamePasswordAuthenticationToken와는 다르게 모든 정보가 들어 있음
+        UsernamePasswordAuthenticationToken authentication = appTokenProvider.getAuthentication(appTokenReissueDto.getAccessToken());
+
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(appTokenReissueDto.getRefreshToken())
+                .orElseThrow(() -> new CustomAuthenticationException(ErrorCode.NOT_EXIST_REFRESH_TOKEN));
+
+        // authentication.getName() => user id
+        if (!refreshToken.getUserId().equals(authentication.getName())) {
+            throw new CustomTokenException(ErrorCode.WRONG_REFRESH_TOKEN);
+        }
+
+        AppTokenDto appTokenDto = appTokenProvider.generateAppTokenDto(authentication);
+        refreshToken.setToken(appTokenDto.getRefreshToken());
+
         return appTokenDto;
     }
 }

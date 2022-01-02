@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.web.User;
 
 import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
+import com.fivepotato.eggmeetserver.dto.User.AppTokenReissueDto;
 import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
 import com.fivepotato.eggmeetserver.service.User.AuthService;
@@ -38,10 +39,11 @@ public class AuthController {
         );
     }
 
-//    @GetMapping("/auth/reissue")
-//    public ResponseEntity<AppTokenDto> reissue(@RequestBody AppTokenDto appTokenDto) {
-//        // check whether app token is valid
-//
-//        // return app token reissued
-//    }
+    @GetMapping("/auth/reissue")
+    public ResponseEntity<AppTokenDto> reissue(@RequestBody AppTokenReissueDto appTokenReissueDto) {
+        return new ResponseEntity<>(
+                authService.reissueAppTokenDto(appTokenReissueDto),
+                HttpStatus.OK
+        );
+    }
 }

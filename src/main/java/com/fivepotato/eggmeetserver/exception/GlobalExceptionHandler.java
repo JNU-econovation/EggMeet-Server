@@ -17,6 +17,15 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
+    @ExceptionHandler(CustomTokenException.class)
+    protected ResponseEntity handleCustomTokenException(final CustomTokenException e) {
+//        LogView.logErrorStacktraceWithMessage(e);
+
+        return ResponseEntity
+                .status(ErrorCode.TOKEN_ERROR.getStatus())
+                .body(e.getMessage());
+    }
+
     @ExceptionHandler(SystemIOException.class)
     protected ResponseEntity handleSystemIOException(final SystemIOException e) {
 //      LogView.logErrorStacktraceWithMessage(e);
