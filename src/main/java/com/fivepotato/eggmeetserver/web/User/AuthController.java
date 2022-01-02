@@ -15,10 +15,10 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/auth/user/{socialToken}")
-    public ResponseEntity<Boolean> getIsPresentUser(@PathVariable SocialTokenDto socialTokenDto) {
+    @GetMapping("/auth/user")
+    public ResponseEntity<Boolean> getIsExistUser(@PathVariable SocialTokenDto socialTokenDto) {
         return new ResponseEntity<>(
-                authService.getIsPresentUser(socialTokenDto),
+                authService.getIsExistUser(socialTokenDto),
                 HttpStatus.OK
         );
     }

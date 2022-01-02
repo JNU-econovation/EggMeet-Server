@@ -44,8 +44,25 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public boolean getIsPresentUser(SocialTokenDto socialTokenDto) {
-        return false;
+    public boolean getIsExistUser(SocialTokenDto socialTokenDto) {
+        String email = "";
+        if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
+            email = BACKDOOR_EMAIL;
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.APPLE)) {
+            // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
+            // 시험용 토큰 때문에 윤성이와
+
+            email = getEmailBySocialTokenFromApple(socialTokenDto.getSocialToken());
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.KAKAO)) {
+            // TODO: 카카오 로그인 구현
+
+        } else {
+            throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
+        }
+
+        return userRepository.existsByEmail(email);
     }
 
     public void registerUser(UserSaveDto userSaveDto) {
@@ -53,7 +70,6 @@ public class AuthService {
             userSaveDto.setEmail(BACKDOOR_EMAIL);
 
         } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
-
             // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
             // 시험용 토큰 때문에 윤성이와
 
@@ -61,8 +77,10 @@ public class AuthService {
             userSaveDto.setEmail(email);
 
         } else if (userSaveDto.getLoginType().equals(LoginType.KAKAO)) {
-
             // TODO: 카카오 로그인 구현
+
+        } else {
+            throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
         }
 
         User user = userSaveDto.toEntity(passwordEncoder);
