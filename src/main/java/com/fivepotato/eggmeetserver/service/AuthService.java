@@ -34,8 +34,9 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class AuthService {
 
-    @Value("${admin-token-secret}")
-    private String ADMIN_TOKEN;
+    @Value("${backdoor-token-secret}")
+    private String BACKDOOR_TOKEN;
+    private final String BACKDOOR_EMAIL = "test@test.com";
     private final String APPLE_DECODE_KEY_URL = "https://appleid.apple.com/auth/keys";
 
     private final UserRepository userRepository;
@@ -48,8 +49,8 @@ public class AuthService {
     }
 
     public void registerUser(UserSaveDto userSaveDto) {
-        if (userSaveDto.getSocialToken().equals(ADMIN_TOKEN)) {
-            userSaveDto.setEmail("test@test.com");
+        if (userSaveDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
+            userSaveDto.setEmail(BACKDOOR_EMAIL);
 
         } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
 
