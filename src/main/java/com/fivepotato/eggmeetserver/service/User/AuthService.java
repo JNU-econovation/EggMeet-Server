@@ -38,6 +38,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +48,8 @@ public class AuthService {
     private String BACKDOOR_TOKEN;
     private final String BACKDOOR_EMAIL = "test@test.com";
     private final String APPLE_DECODE_KEY_URL = "https://appleid.apple.com/auth/keys";
+    private final String APPLE_TOKEN_ISS = "https://appleid.apple.com";
+    private final String APPLE_TOKEN_CLIENT_ID = "com.FivePotato.EggMeet";
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AppTokenProvider appTokenProvider;
@@ -68,10 +71,9 @@ public class AuthService {
             userSaveDto.setEmail(BACKDOOR_EMAIL);
 
         } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
-            // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
-            // 시험용 토큰 때문에 윤성이와
+            validateAppleSocialToken(userSaveDto.getSocialToken());
 
-            String email = getEmailBySocialTokenFromApple(userSaveDto.getSocialToken());
+            String email = getEmailByAppleSocialToken(userSaveDto.getSocialToken());
             userSaveDto.setEmail(email);
 
         } else if (userSaveDto.getLoginType().equals(LoginType.KAKAO)) {
@@ -106,6 +108,68 @@ public class AuthService {
 
             mentoringService.setMenteeArea(menteeAreaDto);
         }
+    }
+
+    public AppTokenDto getAppTokenDto(SocialTokenDto socialTokenDto) {
+        String email = getEmailBySocialTokenDto(socialTokenDto);
+        User user = userService.getUserByEmail(email);
+
+        return issueAppTokenDto(user.getEmail());
+    }
+
+    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
+        if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
+            return BACKDOOR_EMAIL;
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.APPLE)) {
+            validateAppleSocialToken(socialTokenDto.getSocialToken());
+
+            return getEmailByAppleSocialToken(socialTokenDto.getSocialToken());
+
+        } else if (socialTokenDto.getLoginType().equals(LoginType.KAKAO)) {
+            // TODO: 카카오 로그인 구현
+
+        }
+
+        throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
+    }
+
+    private String getEmailByAppleSocialToken(String socialToken) {
+        JsonObject tokenObject = getParsedObjectByAppleSocialToken(socialToken);
+
+        return tokenObject.get("email").getAsString();
+    }
+
+    private void validateAppleSocialToken(String socialToken) {
+        JsonObject tokenObject = getParsedObjectByAppleSocialToken(socialToken);
+
+        String tokenIss = tokenObject.get("iss").toString().split("\"")[1];
+        if (!tokenIss.equals(APPLE_TOKEN_ISS)) {
+            throw new CustomAuthenticationException(ErrorCode.WRONG_APPLE_SOCIAL_TOKEN + " : wrong iss");
+        }
+
+        String tokenAud = tokenObject.get("aud").toString().split("\"")[1];
+        if (!tokenAud.equals(APPLE_TOKEN_CLIENT_ID)) {
+            throw new CustomAuthenticationException(ErrorCode.WRONG_APPLE_SOCIAL_TOKEN + " : wrong aud");
+        }
+
+        long expirationTime = Long.parseLong(tokenObject.get("exp").toString());
+        long currentTime = (new Date()).getTime() / 1000; // 10자리 시간 형태인 apple token expiration time과 맞추기 위함
+        if (expirationTime < currentTime) {
+            throw new CustomAuthenticationException(ErrorCode.WRONG_APPLE_SOCIAL_TOKEN + " : expired token");
+        }
+    }
+
+    private JsonObject getParsedObjectByAppleSocialToken(String socialToken) {
+        PublicKey decodeKey = getAppleDecodeKey(socialToken);
+
+        Claims userInfo = Jwts.parserBuilder()
+                .setSigningKey(decodeKey)
+                .build()
+                .parseClaimsJws(socialToken)
+                .getBody();
+        JsonParser parser = new JsonParser();
+        return (JsonObject) parser.parse(new Gson().toJson(userInfo));
     }
 
     private PublicKey getAppleDecodeKey(String socialToken) {
@@ -168,45 +232,6 @@ public class AuthService {
         } catch (Exception exception) {
             throw new CustomAuthenticationException(ErrorCode.WRONG_APPLE_SOCIAL_TOKEN);
         }
-    }
-
-    public AppTokenDto getAppTokenDto(SocialTokenDto socialTokenDto) {
-        String email = getEmailBySocialTokenDto(socialTokenDto);
-        User user = userService.getUserByEmail(email);
-
-        return issueAppTokenDto(user.getEmail());
-    }
-
-    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
-        if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
-            return BACKDOOR_EMAIL;
-
-        } else if (socialTokenDto.getLoginType().equals(LoginType.APPLE)) {
-            // TODO: 토큰 유효성 확인 함수 추가 및 추가된 함수에 맞게 getEmailBySocialTokenFromApple() 함수도 리펙토링
-            // 시험용 토큰 때문에 윤성이와
-
-            return getEmailBySocialTokenFromApple(socialTokenDto.getSocialToken());
-
-        } else if (socialTokenDto.getLoginType().equals(LoginType.KAKAO)) {
-            // TODO: 카카오 로그인 구현
-
-        }
-
-        throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
-    }
-
-    private String getEmailBySocialTokenFromApple(String socialToken) {
-        PublicKey decodeKey = getAppleDecodeKey(socialToken);
-
-        Claims userInfo = Jwts.parserBuilder()
-                .setSigningKey(decodeKey)
-                .build()
-                .parseClaimsJws(socialToken)
-                .getBody();
-        JsonParser parser = new JsonParser();
-        JsonObject userInfoObject = (JsonObject) parser.parse(new Gson().toJson(userInfo));
-
-        return userInfoObject.get("email").getAsString();
     }
 
     private AppTokenDto issueAppTokenDto(String email) {
