@@ -5,7 +5,6 @@ import com.fivepotato.eggmeetserver.domain.User.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
@@ -74,9 +73,5 @@ public class UserSaveDto {
                 .encodedEmail(passwordEncoder.encode(email))
                 .role(role)
                 .build();
-    }
-
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, email);
     }
 }

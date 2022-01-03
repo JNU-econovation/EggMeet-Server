@@ -18,8 +18,8 @@ public class CustomUserDetailService implements UserDetailsService {
     private final UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        com.fivepotato.eggmeetserver.domain.User.User user = userService.getUserByUserId(Long.parseLong(userId));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        com.fivepotato.eggmeetserver.domain.User.User user = userService.getUserByEmail(email);
         return createUserDetails(user);
     }
 

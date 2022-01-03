@@ -1,10 +1,13 @@
 package com.fivepotato.eggmeetserver.service.User;
 
+import com.fivepotato.eggmeetserver.domain.User.LoginType;
 import com.fivepotato.eggmeetserver.domain.User.User;
 import com.fivepotato.eggmeetserver.domain.User.UserRepository;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +19,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Boolean getIsExistUserByEmail(String email) {
-        return userRepository.existsByEmail(email);
+    public Boolean getIsExistUserByEmail(LoginType loginType, String email) {
+        return userRepository.existsByLoginTypeAndEmail(loginType, email);
     }
 
     public User getUserByEmail(String email) {

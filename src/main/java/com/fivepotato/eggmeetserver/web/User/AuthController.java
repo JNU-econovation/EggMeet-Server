@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/auth/user")
-    public ResponseEntity<Boolean> getIsExistUser(@PathVariable SocialTokenDto socialTokenDto) {
+    public ResponseEntity<Boolean> getIsExistUser(@RequestBody SocialTokenDto socialTokenDto) {
         return new ResponseEntity<>(
                 authService.getIsExistUser(socialTokenDto),
                 HttpStatus.OK

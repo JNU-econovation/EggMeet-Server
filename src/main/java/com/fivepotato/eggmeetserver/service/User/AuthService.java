@@ -48,10 +48,10 @@ public class AuthService {
     private final String BACKDOOR_EMAIL = "test@test.com";
     private final String APPLE_DECODE_KEY_URL = "https://appleid.apple.com/auth/keys";
 
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AppTokenProvider appTokenProvider;
 
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final MentoringService mentoringService;
@@ -60,7 +60,7 @@ public class AuthService {
     public boolean getIsExistUser(SocialTokenDto socialTokenDto) {
         String email = getEmailBySocialTokenDto(socialTokenDto);
 
-        return userService.getIsExistUserByEmail(email);
+        return userService.getIsExistUserByEmail(socialTokenDto.getLoginType(), email);
     }
 
     public void registerUser(UserSaveDto userSaveDto) {
@@ -106,20 +106,6 @@ public class AuthService {
 
             mentoringService.setMenteeArea(menteeAreaDto);
         }
-    }
-
-    private String getEmailBySocialTokenFromApple(String socialToken) {
-        PublicKey decodeKey = getAppleDecodeKey(socialToken);
-
-        Claims userInfo = Jwts.parserBuilder()
-                .setSigningKey(decodeKey)
-                .build()
-                .parseClaimsJws(socialToken)
-                .getBody();
-        JsonParser parser = new JsonParser();
-        JsonObject userInfoObject = (JsonObject) parser.parse(new Gson().toJson(userInfo));
-
-        return userInfoObject.get("email").getAsString();
     }
 
     private PublicKey getAppleDecodeKey(String socialToken) {
@@ -188,7 +174,7 @@ public class AuthService {
         String email = getEmailBySocialTokenDto(socialTokenDto);
         User user = userService.getUserByEmail(email);
 
-        return issueAppTokenDto(user.getId());
+        return issueAppTokenDto(user.getEmail());
     }
 
     private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
@@ -209,10 +195,23 @@ public class AuthService {
         throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
     }
 
-    private AppTokenDto issueAppTokenDto(Long id) {
-        // String 형태의 user id를 기반으로 AuthenticationToken 생성
-        String userId = id.toString();
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, userId);
+    private String getEmailBySocialTokenFromApple(String socialToken) {
+        PublicKey decodeKey = getAppleDecodeKey(socialToken);
+
+        Claims userInfo = Jwts.parserBuilder()
+                .setSigningKey(decodeKey)
+                .build()
+                .parseClaimsJws(socialToken)
+                .getBody();
+        JsonParser parser = new JsonParser();
+        JsonObject userInfoObject = (JsonObject) parser.parse(new Gson().toJson(userInfo));
+
+        return userInfoObject.get("email").getAsString();
+    }
+
+    private AppTokenDto issueAppTokenDto(String email) {
+        // 유저의 email을 기반으로 AuthenticationToken 생성
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, email);
 
         // authenticate 메소드는 CustomUserDetailsService 의 loadUserByUsername 메서드 실행 (user id를 통해 유저를 감지)
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

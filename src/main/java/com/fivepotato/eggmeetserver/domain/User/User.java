@@ -7,6 +7,7 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -77,7 +78,7 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, byte age, Sex sex, String phoneNumber, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String email, String encodedEmail, Role role) {
+    public User(String name, byte age, Sex sex, String phoneNumber, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
         this.name = name;
         this.age = age;
         this.sex = sex;
