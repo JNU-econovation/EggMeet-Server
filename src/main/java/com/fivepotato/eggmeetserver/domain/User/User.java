@@ -2,12 +2,10 @@ package com.fivepotato.eggmeetserver.domain.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeArea;
 import com.fivepotato.eggmeetserver.domain.Mentoring.MentorArea;
-import com.fivepotato.eggmeetserver.dto.Mentoring.MentorAreaDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
