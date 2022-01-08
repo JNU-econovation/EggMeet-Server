@@ -14,7 +14,6 @@ public class UserSaveDto {
     private String name;
     private byte age;
     private Sex sex;
-    private String phoneNumber;
     private Location location;
     private String description;
     private byte pictureIndex;
@@ -35,11 +34,10 @@ public class UserSaveDto {
     private Role role;
 
     @Builder
-    public UserSaveDto(String name, byte age, Sex sex, String phoneNumber, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, byte mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
+    public UserSaveDto(String name, byte age, Sex sex, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, byte mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
         this.name = name;
         this.age = age;
         this.sex = sex;
-        this.phoneNumber = phoneNumber;
         this.location = location;
         this.description = description;
         this.pictureIndex = pictureIndex;
@@ -62,7 +60,6 @@ public class UserSaveDto {
                 .name(name)
                 .age(age)
                 .sex(sex)
-                .phoneNumber(phoneNumber)
                 .location(location)
                 .description(description)
                 .pictureIndex(pictureIndex)

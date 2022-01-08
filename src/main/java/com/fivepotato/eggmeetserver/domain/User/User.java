@@ -28,9 +28,6 @@ public class User {
     private Sex sex;
 
     @NotNull
-    private String phoneNumber;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Location location;
 
@@ -76,11 +73,10 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, byte age, Sex sex, String phoneNumber, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
+    public User(String name, byte age, Sex sex, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
         this.name = name;
         this.age = age;
         this.sex = sex;
-        this.phoneNumber = phoneNumber;
         this.location = location;
         this.description = description;
         this.pictureIndex = pictureIndex;
