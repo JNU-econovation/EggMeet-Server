@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.Ban;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,10 @@ public class Ban {
 
     @NotNull
     private Reason reason;
+
+    @Builder
+    public Ban(String bannedEmail, Reason reason) {
+        this.bannedEmail = bannedEmail;
+        this.reason = reason;
+    }
 }
