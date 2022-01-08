@@ -5,6 +5,7 @@ import com.fivepotato.eggmeetserver.dto.User.AppTokenReissueDto;
 import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
 import com.fivepotato.eggmeetserver.service.User.AuthService;
+import com.fivepotato.eggmeetserver.service.User.UserAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-public class AuthController {
+public class AuthApiController {
 
     private final AuthService authService;
+    private final UserAdminService userAdminService;
 
     @PostMapping("/auth/user")
     public ResponseEntity<Boolean> getIsExistUser(@RequestBody SocialTokenDto socialTokenDto) {
@@ -25,9 +27,17 @@ public class AuthController {
     }
 
     @GetMapping("/auth/user/name")
-    public ResponseEntity<Boolean> getIsExistName(@RequestParam(value = "name") String name) {
+    public ResponseEntity<Boolean> getIsExistUserByName(@RequestParam(value = "name") String name) {
         return new ResponseEntity<>(
-                authService.getIsExistName(name),
+                authService.getIsExistUserByName(name),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/auth/user/ban")
+    public ResponseEntity<Boolean> getIsBannedUserByEmail(@RequestParam(value = "email") String email) {
+        return new ResponseEntity<>(
+                userAdminService.getIsBannedUserByEmail(email),
                 HttpStatus.OK
         );
     }
