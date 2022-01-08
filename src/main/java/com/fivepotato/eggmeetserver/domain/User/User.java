@@ -55,7 +55,7 @@ public class User {
     private float menteeGrade = 0.0f;
 
     @NotNull
-    private int point = 0;
+    private int point = 5;
 
     // chats, messages, reporterReports, reporteeReports, blacklistUsers
 
