@@ -31,7 +31,7 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<AppTokenDto> login(@RequestBody SocialTokenDto socialTokenDto) {
         return new ResponseEntity<>(
                 authService.getAppTokenDto(socialTokenDto),

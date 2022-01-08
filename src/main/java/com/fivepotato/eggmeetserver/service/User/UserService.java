@@ -7,8 +7,6 @@ import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
