@@ -16,7 +16,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/auth/user")
+    @PostMapping("/auth/user")
     public ResponseEntity<Boolean> getIsExistUser(@RequestBody SocialTokenDto socialTokenDto) {
         return new ResponseEntity<>(
                 authService.getIsExistUser(socialTokenDto),
@@ -39,7 +39,7 @@ public class AuthController {
         );
     }
 
-    @GetMapping("/auth/reissue")
+    @PostMapping("/auth/reissue")
     public ResponseEntity<AppTokenDto> reissue(@RequestBody AppTokenReissueDto appTokenReissueDto) {
         return new ResponseEntity<>(
                 authService.reissueAppTokenDto(appTokenReissueDto),
