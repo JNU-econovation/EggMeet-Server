@@ -3,6 +3,7 @@ package com.fivepotato.eggmeetserver.service.User;
 import com.fivepotato.eggmeetserver.domain.User.LoginType;
 import com.fivepotato.eggmeetserver.domain.User.User;
 import com.fivepotato.eggmeetserver.domain.User.UserRepository;
+import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_EMAIL + email));
+    }
+
+    public UserProfileDto getUserProfileDtoByEmail(String email) {
+        User user = getUserByEmail(email);
+
+        return new UserProfileDto(user);
     }
 
     public User getUserByUserId(Long userId) {
