@@ -21,6 +21,10 @@ public class UserService {
         return userRepository.existsByLoginTypeAndEmail(loginType, email);
     }
 
+    public Boolean getIsExistUserByName(String name) {
+        return userRepository.existsByName(name);
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_EMAIL + email));

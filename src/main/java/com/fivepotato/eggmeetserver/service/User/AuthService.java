@@ -66,6 +66,10 @@ public class AuthService {
         return userService.getIsExistUserByEmail(socialTokenDto.getLoginType(), email);
     }
 
+    public boolean getIsExistName(String name) {
+        return userService.getIsExistUserByName(name);
+    }
+
     public void registerUser(UserSaveDto userSaveDto) {
         if (userSaveDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
             userSaveDto.setEmail(BACKDOOR_EMAIL);

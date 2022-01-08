@@ -24,6 +24,14 @@ public class AuthController {
         );
     }
 
+    @GetMapping("/auth/user/name")
+    public ResponseEntity<Boolean> getIsExistName(@RequestParam(value = "name") String name) {
+        return new ResponseEntity<>(
+                authService.getIsExistName(name),
+                HttpStatus.OK
+        );
+    }
+
     @PostMapping("/auth/register")
     public ResponseEntity<Void> register(@RequestBody UserSaveDto userSaveDto) {
         authService.registerUser(userSaveDto);
