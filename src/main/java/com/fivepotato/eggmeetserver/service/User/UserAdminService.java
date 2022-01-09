@@ -4,7 +4,6 @@ import com.fivepotato.eggmeetserver.domain.Ban.BanRepository;
 import com.fivepotato.eggmeetserver.domain.User.User;
 import com.fivepotato.eggmeetserver.domain.User.UserRepository;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
-import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.ban.BanDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

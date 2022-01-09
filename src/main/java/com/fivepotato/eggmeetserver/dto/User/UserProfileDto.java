@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 public class UserProfileDto {
 
     private String name;
-    private byte age;
+    private int age;
     private Sex sex;
     private Location location;
     private String description;
-    private byte pictureIndex;
+    private int pictureIndex;
 
     private boolean isOnlineAvailable;
     private boolean isOfflineAvailable;

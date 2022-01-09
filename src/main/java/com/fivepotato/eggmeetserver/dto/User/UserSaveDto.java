@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserSaveDto {
 
     private String name;
-    private byte age;
+    private int age;
     private Sex sex;
     private Location location;
     private String description;
-    private byte pictureIndex;
+    private int pictureIndex;
 
     private boolean isOnlineAvailable;
     private boolean isOfflineAvailable;
@@ -24,7 +24,7 @@ public class UserSaveDto {
     private String mentorDescription;
     private String mentorCareer;
     private String mentorLink;
-    private Byte mentorGrowthPoint;
+    private int mentorGrowthPoint;
     private Category menteeCategory;
     private String menteeDescription;
 
@@ -34,7 +34,7 @@ public class UserSaveDto {
     private Role role;
 
     @Builder
-    public UserSaveDto(String name, byte age, Sex sex, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, byte mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
+    public UserSaveDto(String name, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
         this.name = name;
         this.age = age;
         this.sex = sex;
@@ -58,11 +58,11 @@ public class UserSaveDto {
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .name(name)
-                .age(age)
+                .age((byte) age)
                 .sex(sex)
                 .location(location)
                 .description(description)
-                .pictureIndex(pictureIndex)
+                .pictureIndex((byte) pictureIndex)
                 .isOnlineAvailable(isOnlineAvailable)
                 .isOfflineAvailable(isOfflineAvailable)
                 .loginType(loginType)

@@ -50,8 +50,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath phoneNumber = createString("phoneNumber");
-
     public final NumberPath<Byte> pictureIndex = createNumber("pictureIndex", Byte.class);
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
