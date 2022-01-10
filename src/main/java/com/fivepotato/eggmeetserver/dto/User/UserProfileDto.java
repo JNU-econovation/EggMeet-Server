@@ -27,8 +27,8 @@ public class UserProfileDto {
     private Integer mentorGrowthPoint;
     private Category menteeCategory;
     private String menteeDescription;
-    private float mentorGrade;
-    private float menteeGrade;
+    private float mentorRating;
+    private float menteeRating;
 
     public UserProfileDto(User user) {
         this.name = user.getName();
@@ -46,7 +46,7 @@ public class UserProfileDto {
         this.mentorGrowthPoint = user.getMentorArea().getGrowthPoint();
         this.menteeCategory = user.getMenteeArea().getCategory();
         this.menteeDescription = user.getMenteeArea().getDescription();
-        this.mentorGrade = user.getMentorGrade();
-        this.menteeGrade = user.getMenteeGrade();
+        this.mentorRating = user.getMentorRating();
+        this.menteeRating = user.getMenteeRating();
     }
 }

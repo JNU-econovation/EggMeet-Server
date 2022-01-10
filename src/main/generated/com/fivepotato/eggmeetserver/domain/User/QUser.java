@@ -22,7 +22,7 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final NumberPath<Byte> age = createNumber("age", Byte.class);
+    public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
     public final StringPath description = createString("description");
 
@@ -42,15 +42,15 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.fivepotato.eggmeetserver.domain.Mentoring.QMenteeArea menteeArea;
 
-    public final NumberPath<Float> menteeGrade = createNumber("menteeGrade", Float.class);
+    public final NumberPath<Float> menteeRating = createNumber("menteeRating", Float.class);
 
     public final com.fivepotato.eggmeetserver.domain.Mentoring.QMentorArea mentorArea;
 
-    public final NumberPath<Float> mentorGrade = createNumber("mentorGrade", Float.class);
+    public final NumberPath<Float> mentorRating = createNumber("mentorRating", Float.class);
 
     public final StringPath name = createString("name");
 
-    public final NumberPath<Byte> pictureIndex = createNumber("pictureIndex", Byte.class);
+    public final NumberPath<Integer> pictureIndex = createNumber("pictureIndex", Integer.class);
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
 

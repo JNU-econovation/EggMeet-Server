@@ -35,7 +35,7 @@ public class MentorArea {
     private int growthPoint;
 
     @Builder
-    public MentorArea(User mentor, Category category, String description, String career, String link, Integer growthPoint) {
+    public MentorArea(User mentor, Category category, String description, String career, String link, int growthPoint) {
         this.mentor = mentor;
         this.category = category;
         this.description = description;

@@ -49,10 +49,10 @@ public class User {
     private MenteeArea menteeArea;
 
     @NotNull
-    private float mentorGrade = 0.0f;
+    private float mentorRating = 0.0f;
 
     @NotNull
-    private float menteeGrade = 0.0f;
+    private float menteeRating = 0.0f;
 
     @NotNull
     private int point = 5;
