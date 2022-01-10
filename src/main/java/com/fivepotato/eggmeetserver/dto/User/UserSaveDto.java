@@ -58,11 +58,11 @@ public class UserSaveDto {
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .name(name)
-                .age((byte) age)
+                .age(age)
                 .sex(sex)
                 .location(location)
                 .description(description)
-                .pictureIndex((byte) pictureIndex)
+                .pictureIndex(pictureIndex)
                 .isOnlineAvailable(isOnlineAvailable)
                 .isOfflineAvailable(isOfflineAvailable)
                 .loginType(loginType)

@@ -32,10 +32,10 @@ public class MentorArea {
     private String link;
 
     @NotNull
-    private Byte growthPoint;
+    private int growthPoint;
 
     @Builder
-    public MentorArea(User mentor, Category category, String description, String career, String link, Byte growthPoint) {
+    public MentorArea(User mentor, Category category, String description, String career, String link, Integer growthPoint) {
         this.mentor = mentor;
         this.category = category;
         this.description = description;

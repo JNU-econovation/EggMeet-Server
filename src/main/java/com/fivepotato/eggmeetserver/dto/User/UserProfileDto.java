@@ -24,7 +24,7 @@ public class UserProfileDto {
     private String mentorDescription;
     private String mentorCareer;
     private String mentorLink;
-    private Byte mentorGrowthPoint;
+    private Integer mentorGrowthPoint;
     private Category menteeCategory;
     private String menteeDescription;
     private float mentorGrade;

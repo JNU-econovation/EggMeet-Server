@@ -14,10 +14,10 @@ public class MentorAreaDto {
     private String description;
     private String career;
     private String link;
-    private Byte growthPoint;
+    private int growthPoint;
 
     @Builder
-    public MentorAreaDto(User mentor, Category category, String description, String career, String link, Byte growthPoint) {
+    public MentorAreaDto(User mentor, Category category, String description, String career, String link, int growthPoint) {
         this.mentor = mentor;
         this.category = category;
         this.description = description;

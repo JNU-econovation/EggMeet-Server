@@ -22,7 +22,7 @@ public class User {
     private String name;
 
     @NotNull
-    private byte age;
+    private int age;
 
     @NotNull
     private Sex sex;
@@ -34,7 +34,7 @@ public class User {
     private String description;
 
     @NotNull
-    private byte pictureIndex;
+    private int pictureIndex;
 
     @NotNull
     private boolean isOnlineAvailable;
@@ -73,7 +73,7 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, byte age, Sex sex, Location location, String description, byte pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
+    public User(String name, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
         this.name = name;
         this.age = age;
         this.sex = sex;
