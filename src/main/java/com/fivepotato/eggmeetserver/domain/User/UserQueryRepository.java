@@ -2,16 +2,15 @@ package com.fivepotato.eggmeetserver.domain.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
@@ -24,22 +23,33 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public Page<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable, Location location, Category mentorCategory,
+    public List<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable, Location location, Category mentorCategory,
                                                                 SortOrder mentorRatingSortOrder, SortOrder growthPointOrder) {
-        QueryResults<User> result = jpaQueryFactory
+        List<OrderSpecifier> orders = new ArrayList<>();
+        if (mentorRatingSortOrder != null) {
+            orders.add(orderByMentorRating(mentorRatingSortOrder));
+        }
+        if (growthPointOrder != null) {
+            orders.add(orderByGrowthPoint(growthPointOrder));
+        }
+
+        return jpaQueryFactory
                 .selectFrom(QUser.user)
                 .where(
+                        existMentorArea(),
                         eqLocation(location),
                         eqMentorCategory(mentorCategory)
                 )
                 .orderBy(
-                        orderByMentorRating(mentorRatingSortOrder),
-                        orderByGrowthPoint(growthPointOrder)
+                        orders.toArray(new OrderSpecifier[orders.size()])
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetchResults();
-        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+                .fetch();
+    }
+
+    private BooleanExpression existMentorArea() {
+        return QUser.user.mentorArea.id.isNotNull();
     }
 
     private BooleanExpression eqLocation(Location location) {
@@ -71,10 +81,10 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
 
     private OrderSpecifier orderByGrowthPoint(SortOrder sortOrder) {
         if (sortOrder.equals(SortOrder.ASCENDING)) {
-            return QUser.user.menteeRating.asc();
+            return QUser.user.mentorArea.growthPoint.asc();
 
         } else if (sortOrder.equals(SortOrder.DESCENDING)) {
-            return QUser.user.menteeRating.desc();
+            return QUser.user.mentorArea.growthPoint.desc();
         }
 
         return null;

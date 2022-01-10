@@ -54,8 +54,8 @@ public class UserService {
                                                                       Category category,
                                                                       SortOrder mentorRatingSortOrder,
                                                                       SortOrder growthPointSortOrder) {
-        Page<User> mentors = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder);
+        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder);
 
-        return mentors.get().map(MentorDto::new).collect(Collectors.toList());
+        return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
 }

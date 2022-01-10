@@ -4,7 +4,6 @@ import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.User.Location;
 import com.fivepotato.eggmeetserver.domain.User.Sex;
 import com.fivepotato.eggmeetserver.domain.User.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
