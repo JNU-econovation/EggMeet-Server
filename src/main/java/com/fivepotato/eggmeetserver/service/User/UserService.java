@@ -1,18 +1,25 @@
 package com.fivepotato.eggmeetserver.service.User;
 
-import com.fivepotato.eggmeetserver.domain.User.LoginType;
-import com.fivepotato.eggmeetserver.domain.User.User;
-import com.fivepotato.eggmeetserver.domain.User.UserRepository;
+import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
+import com.fivepotato.eggmeetserver.domain.User.*;
+import com.fivepotato.eggmeetserver.dto.Mentoring.MentorDto;
+import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserQueryRepository userQueryRepository;
 
     public void createUser(User user) {
         userRepository.save(user);
@@ -40,5 +47,15 @@ public class UserService {
     public User getUserByUserId(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_USERID + userId));
+    }
+
+    public List<MentorDto> getMentorDtosByMultipleConditionOnPageable(Pageable pageable,
+                                                                      Location location,
+                                                                      Category category,
+                                                                      SortOrder mentorRatingSortOrder,
+                                                                      SortOrder growthPointSortOrder) {
+        Page<User> mentors = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder);
+
+        return mentors.get().map(MentorDto::new).collect(Collectors.toList());
     }
 }

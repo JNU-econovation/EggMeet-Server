@@ -8,6 +8,8 @@ import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.service.User.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,21 +33,28 @@ public class UserApiController {
     }
 
     @GetMapping("/user/mentor")
-    public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleCondition(@RequestParam(value = "location", required = false) Location location,
-                                                                            @RequestParam(value = "category", required = false) Category category,
-                                                                            @RequestParam(value = "ratingSort", required = false) String ratingSortOrder,
-                                                                            @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
+    public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleConditionOnPageable(Pageable pageable,
+                                                                                      @RequestParam(value = "location", required = false) Location location,
+                                                                                      @RequestParam(value = "category", required = false) Category category,
+                                                                                      @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
+                                                                                      @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
         return new ResponseEntity<>(
-                null,
+                userService.getMentorDtosByMultipleConditionOnPageable(
+                        pageable,
+                        location,
+                        category,
+                        mentorRatingSortOrder,
+                        growthPointSortOrder
+                ),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/user/mentee")
-    public ResponseEntity<List<MenteeDto>> getMenteeDtosByMultipleCondition(@RequestParam(value = "location", required = false) Location location,
-                                                                            @RequestParam(value = "category", required = false) Category category,
-                                                                            @RequestParam(value = "ratingSort", required = false) String ratingSortOrder,
-                                                                            @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
+    public ResponseEntity<List<MenteeDto>> getMenteeDtosByMultipleConditionOnPageable(Pageable pageable,
+                                                                                      @RequestParam(value = "location", required = false) Location location,
+                                                                                      @RequestParam(value = "category", required = false) Category category,
+                                                                                      @RequestParam(value = "ratingSort", required = false) SortOrder menteeRatingSortOrder) {
         return new ResponseEntity<>(
                 null,
                 HttpStatus.OK
