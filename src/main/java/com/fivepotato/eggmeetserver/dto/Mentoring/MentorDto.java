@@ -22,7 +22,7 @@ public class MentorDto {
     private Sex sex;
 
     public MentorDto(User user) {
-        this.name = user.getName();
+        this.name = user.getNickname();
         this.mentorRating = user.getMentorRating();
         this.growthPoint = user.getMentorArea().getGrowthPoint();
         this.category = user.getMentorArea().getCategory();

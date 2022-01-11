@@ -21,7 +21,7 @@ public class MenteeDto {
     private Sex sex;
 
     public MenteeDto(User user) {
-        this.name = user.getName();
+        this.name = user.getNickname();
         this.menteeRating = user.getMenteeRating();
         this.category = user.getMenteeArea().getCategory();
         this.location = user.getLocation();

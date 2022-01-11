@@ -19,7 +19,7 @@ public class User {
     private Long id;
 
     @NotNull
-    private String name;
+    private String nickname;
 
     @NotNull
     private int age;
@@ -73,8 +73,8 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
-        this.name = name;
+    public User(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
+        this.nickname = nickname;
         this.age = age;
         this.sex = sex;
         this.location = location;

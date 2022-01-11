@@ -41,7 +41,7 @@ class UserQueryRepositoryTest {
     @BeforeAll
     void addTestUsers() {
         User user0 = User.builder()
-                .name("user0")
+                .nickname("user0")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_BUKGU)
@@ -58,7 +58,7 @@ class UserQueryRepositoryTest {
         userRepository.save(user0);
 
         User user1 = User.builder()
-                .name("user1")
+                .nickname("user1")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_BUKGU)
@@ -90,7 +90,7 @@ class UserQueryRepositoryTest {
         menteeAreaRepository.save(user1MenteeArea);
 
         User user2 = User.builder()
-                .name("user2")
+                .nickname("user2")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_BUKGU)
@@ -123,7 +123,7 @@ class UserQueryRepositoryTest {
         menteeAreaRepository.save(user2MenteeArea);
 
         User user3 = User.builder()
-                .name("user3")
+                .nickname("user3")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_SEOGU)
@@ -156,7 +156,7 @@ class UserQueryRepositoryTest {
         menteeAreaRepository.save(user3MenteeArea);
 
         User user4 = User.builder()
-                .name("user4")
+                .nickname("user4")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_SEOGU)
@@ -189,7 +189,7 @@ class UserQueryRepositoryTest {
         menteeAreaRepository.save(user4MenteeArea);
 
         User user5 = User.builder()
-                .name("user5")
+                .nickname("user5")
                 .age(10)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_BUKGU)
@@ -233,7 +233,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = null;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
     }
 
@@ -247,7 +247,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = null;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user3", "user4");
     }
 
@@ -261,7 +261,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = null;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user2", "user5");
     }
 
@@ -275,7 +275,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user2");
     }
 
@@ -289,7 +289,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user1", "user2", "user3", "user4");
     }
 
@@ -303,7 +303,7 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = SortOrder.DESCENDING;
 
         List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user4", "user3", "user2", "user1", "user5");
     }
 
@@ -318,11 +318,11 @@ class UserQueryRepositoryTest {
         SortOrder growthPointSortOrder = null;
 
         List<String> firstNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(firstPageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
         List<String> secondNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(secondPageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 
         Assertions.assertThat(firstNames).isNotEqualTo(secondNames);
@@ -337,7 +337,7 @@ class UserQueryRepositoryTest {
         SortOrder menteeRatingSortOrder = null;
 
         List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
     }
 
@@ -350,7 +350,7 @@ class UserQueryRepositoryTest {
         SortOrder menteeRatingSortOrder = null;
 
         List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2");
     }
 
@@ -363,7 +363,7 @@ class UserQueryRepositoryTest {
         SortOrder menteeRatingSortOrder = null;
 
         List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2");
     }
 
@@ -377,11 +377,11 @@ class UserQueryRepositoryTest {
         SortOrder menteeRatingSortOrder = null;
 
         List<String> firstNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(firstPageable, location, category, menteeRatingSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
         List<String> secondNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(secondPageable, location, category, menteeRatingSortOrder)
-                .stream().map(User::getName).collect(Collectors.toList());
+                .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 
         Assertions.assertThat(firstNames).isNotEqualTo(secondNames);

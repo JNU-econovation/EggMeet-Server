@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserProfileDto {
 
-    private String name;
+    private String nickname;
     private int age;
     private Sex sex;
     private Location location;
@@ -31,7 +31,7 @@ public class UserProfileDto {
     private float menteeRating;
 
     public UserProfileDto(User user) {
-        this.name = user.getName();
+        this.nickname = user.getNickname();
         this.age = user.getAge();
         this.sex = user.getSex();
         this.location = user.getLocation();

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Setter
 public class UserSaveDto {
 
-    private String name;
+    private String nickname;
     private int age;
     private Sex sex;
     private Location location;
@@ -34,8 +34,8 @@ public class UserSaveDto {
     private Role role;
 
     @Builder
-    public UserSaveDto(String name, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
-        this.name = name;
+    public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
+        this.nickname = nickname;
         this.age = age;
         this.sex = sex;
         this.location = location;
@@ -57,7 +57,7 @@ public class UserSaveDto {
 
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
-                .name(name)
+                .nickname(nickname)
                 .age(age)
                 .sex(sex)
                 .location(location)

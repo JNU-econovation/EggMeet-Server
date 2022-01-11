@@ -67,7 +67,7 @@ public class AuthService {
     }
 
     public boolean getIsExistUserByName(String name) {
-        return userService.getIsExistUserByName(name);
+        return userService.getIsExistUserByNickname(name);
     }
 
     public void registerUser(UserSaveDto userSaveDto) {

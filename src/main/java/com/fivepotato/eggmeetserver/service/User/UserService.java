@@ -8,7 +8,6 @@ import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +29,8 @@ public class UserService {
         return userRepository.existsByLoginTypeAndEmail(loginType, email);
     }
 
-    public Boolean getIsExistUserByName(String name) {
-        return userRepository.existsByName(name);
+    public Boolean getIsExistUserByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
     }
 
     public User getUserByEmail(String email) {
