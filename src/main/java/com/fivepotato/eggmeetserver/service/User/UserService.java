@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.service.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.User.*;
+import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MentorDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
@@ -57,5 +58,14 @@ public class UserService {
         List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder);
 
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
+    }
+
+    public List<MenteeDto> getMenteeDtosByMultipleConditionOnPageable(Pageable pageable,
+                                                                      Location location,
+                                                                      Category category,
+                                                                      SortOrder menteeRatingSortOrder) {
+        List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder);
+
+        return users.stream().map(MenteeDto::new).collect(Collectors.toList());
     }
 }

@@ -56,7 +56,12 @@ public class UserApiController {
                                                                                       @RequestParam(value = "category", required = false) Category category,
                                                                                       @RequestParam(value = "ratingSort", required = false) SortOrder menteeRatingSortOrder) {
         return new ResponseEntity<>(
-                null,
+                userService.getMenteeDtosByMultipleConditionOnPageable(
+                        pageable,
+                        location,
+                        category,
+                        menteeRatingSortOrder
+                ),
                 HttpStatus.OK
         );
     }

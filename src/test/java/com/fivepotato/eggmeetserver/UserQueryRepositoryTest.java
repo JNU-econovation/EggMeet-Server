@@ -1,8 +1,9 @@
-package com.fivepotato.eggmeetserver.service.User;
+package com.fivepotato.eggmeetserver;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.*;
 import com.fivepotato.eggmeetserver.domain.User.*;
 import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.service.User.UserService;
 import org.junit.jupiter.api.*;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
-class UserServiceTest {
+class UserQueryRepositoryTest {
 
     @Value("${backdoor-token-secret}")
     private String BACKDOOR_TOKEN;

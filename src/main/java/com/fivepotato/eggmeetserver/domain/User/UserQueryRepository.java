@@ -23,8 +23,11 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public List<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable, Location location, Category mentorCategory,
-                                                                SortOrder mentorRatingSortOrder, SortOrder growthPointOrder) {
+    public List<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable,
+                                                                Location location,
+                                                                Category mentorCategory,
+                                                                SortOrder mentorRatingSortOrder,
+                                                                SortOrder growthPointOrder) {
         List<OrderSpecifier> orders = new ArrayList<>();
         if (mentorRatingSortOrder != null) {
             orders.add(orderByMentorRating(mentorRatingSortOrder));
@@ -40,9 +43,29 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                         eqLocation(location),
                         eqMentorCategory(mentorCategory)
                 )
-                .orderBy(
-                        orders.toArray(new OrderSpecifier[orders.size()])
+                .orderBy(orders.toArray(new OrderSpecifier[orders.size()]))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    public List<User> findMenteesByMultipleConditionsOnPageable(Pageable pageable,
+                                                                Location location,
+                                                                Category category,
+                                                                SortOrder menteeRatingSortOrder) {
+        List<OrderSpecifier> orders = new ArrayList<>();
+        if (menteeRatingSortOrder != null) {
+            orders.add(orderByMenteeRating(menteeRatingSortOrder));
+        }
+
+        return jpaQueryFactory
+                .selectFrom(QUser.user)
+                .where(
+                        existMenteeArea(),
+                        eqLocation(location),
+                        eqMenteeCategory(category)
                 )
+                .orderBy(orders.toArray(new OrderSpecifier[orders.size()]))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -50,6 +73,10 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
 
     private BooleanExpression existMentorArea() {
         return QUser.user.mentorArea.id.isNotNull();
+    }
+
+    private BooleanExpression existMenteeArea() {
+        return QUser.user.menteeArea.id.isNotNull();
     }
 
     private BooleanExpression eqLocation(Location location) {
@@ -66,6 +93,14 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         }
 
         return QUser.user.mentorArea.category.eq(mentorCategory);
+    }
+
+    private BooleanExpression eqMenteeCategory(Category menteeCategory) {
+        if (menteeCategory == null) {
+            return null;
+        }
+
+        return QUser.user.menteeArea.category.eq(menteeCategory);
     }
 
     private OrderSpecifier orderByMentorRating(SortOrder sortOrder) {
@@ -85,6 +120,16 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
 
         } else if (sortOrder.equals(SortOrder.DESCENDING)) {
             return QUser.user.mentorArea.growthPoint.desc();
+        }
+
+        return null;
+    }
+
+    private OrderSpecifier orderByMenteeRating(SortOrder sortOrder) {
+        if (sortOrder.equals(SortOrder.ASCENDING)) {
+            return QUser.user.menteeRating.asc();
+        } else if (sortOrder.equals(SortOrder.DESCENDING)) {
+            return QUser.user.menteeRating.desc();
         }
 
         return null;

@@ -3,7 +3,7 @@ package com.fivepotato.eggmeetserver.dto.Mentoring;
 import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.User.Location;
 import com.fivepotato.eggmeetserver.domain.User.Sex;
-import lombok.Builder;
+import com.fivepotato.eggmeetserver.domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,15 +20,16 @@ public class MenteeDto {
     private int age;
     private Sex sex;
 
-    @Builder
-    public MenteeDto(String name, float menteeRating, Category category, Location location, boolean isOnlineAvailable, boolean isOfflineAvailable, int age, Sex sex) {
-        this.name = name;
-        this.menteeRating = menteeRating;
-        this.category = category;
-        this.location = location;
-        this.isOnlineAvailable = isOnlineAvailable;
-        this.isOfflineAvailable = isOfflineAvailable;
-        this.age = age;
-        this.sex = sex;
+    public MenteeDto(User user) {
+        this.name = user.getName();
+        this.menteeRating = user.getMenteeRating();
+        this.category = user.getMenteeArea().getCategory();
+        this.location = user.getLocation();
+        this.isOnlineAvailable = user.isOnlineAvailable();
+        this.isOfflineAvailable = user.isOfflineAvailable();
+        this.age = user.getAge();
+        this.sex = user.getSex();
     }
+
+
 }
