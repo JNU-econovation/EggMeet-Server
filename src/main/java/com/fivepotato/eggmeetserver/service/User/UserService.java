@@ -50,7 +50,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_USERID + userId));
     }
 
-    public List<MentorDto> getMentorDtosByMultipleConditionOnPageable(Pageable pageable,
+    public List<MentorDto> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                       Location location,
                                                                       Category category,
                                                                       SortOrder mentorRatingSortOrder,
@@ -60,7 +60,7 @@ public class UserService {
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
 
-    public List<MenteeDto> getMenteeDtosByMultipleConditionOnPageable(Pageable pageable,
+    public List<MenteeDto> getMenteeDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                       Location location,
                                                                       Category category,
                                                                       SortOrder menteeRatingSortOrder) {

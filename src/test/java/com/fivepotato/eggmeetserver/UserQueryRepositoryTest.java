@@ -80,6 +80,7 @@ class UserQueryRepositoryTest {
                 .growthPoint(1)
                 .build();
         MenteeArea user1MenteeArea = MenteeArea.builder()
+                .mentee(user1)
                 .category(Category.PROGRAMMING_PYTHON)
                 .description("user1Description")
                 .build();
@@ -111,6 +112,7 @@ class UserQueryRepositoryTest {
                 .growthPoint(2)
                 .build();
         MenteeArea user2MenteeArea = MenteeArea.builder()
+                .mentee(user2)
                 .category(Category.PROGRAMMING_PYTHON)
                 .description("user2Description")
                 .build();
@@ -143,6 +145,7 @@ class UserQueryRepositoryTest {
                 .growthPoint(3)
                 .build();
         MenteeArea user3MenteeArea = MenteeArea.builder()
+                .mentee(user3)
                 .category(Category.PROGRAMMING_C)
                 .description("user3Description")
                 .build();
@@ -175,6 +178,7 @@ class UserQueryRepositoryTest {
                 .growthPoint(4)
                 .build();
         MenteeArea user4MenteeArea = MenteeArea.builder()
+                .mentee(user4)
                 .category(Category.PROGRAMMING_C)
                 .description("user4Description")
                 .build();
@@ -207,7 +211,8 @@ class UserQueryRepositoryTest {
                 .growthPoint(0)
                 .build();
         MenteeArea user5MenteeArea = MenteeArea.builder()
-                .category(Category.PROGRAMMING_PYTHON)
+                .mentee(user5)
+                .category(Category.PROGRAMMING_JAVA)
                 .description("user5Description")
                 .build();
 
@@ -220,7 +225,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 location 조건에 맞게 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_eqLocation() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqLocation() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
         Category category = null;
@@ -234,7 +239,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 category 조건에 맞게 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_eqCategory() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
         Category category = Category.PROGRAMMING_PYTHON;
@@ -248,7 +253,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 location + category 조건에 맞게 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_eqLocationAndEqCategory() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
         Category category = Category.PROGRAMMING_C;
@@ -262,7 +267,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 location + category 조건에 맞게 growthPoint 오름차순에 정렬해서 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_eqLocationAndEqCategory_orderByGrowthPointAsc() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory_orderByGrowthPointAsc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
         Category category = Category.PROGRAMMING_C;
@@ -276,7 +281,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 growthPoint 오름차순 정렬해서 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_orderByGrowthPointAsc() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_orderByGrowthPointAsc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
         Category category = null;
@@ -290,7 +295,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 growthPoint 내림차순 정렬해서 불러오는가?")
-    void test_findMentorDtosByMultipleConditionOnPageable_orderByGrowthPointDesc() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_orderByGrowthPointDesc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
         Category category = null;
@@ -304,7 +309,7 @@ class UserQueryRepositoryTest {
 
     @Test
     @DisplayName("멘토를 올바르게 페이징하여 불러오는가")
-    void test_findMentorDtosByMultipleConditionOnPageable_orderByGrowthPoint() {
+    void test_findMentorDtosByMultipleConditionsOnPageable_OnPageable() {
         Pageable firstPageable = PageRequest.of(0, 1);
         Pageable secondPageable = PageRequest.of(1, 1);
         Location location = null;
@@ -317,6 +322,65 @@ class UserQueryRepositoryTest {
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
         List<String> secondNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(secondPageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+                .stream().map(User::getName).collect(Collectors.toList());
+        Assertions.assertThat(secondNames.size()).isEqualTo(1);
+
+        Assertions.assertThat(firstNames).isNotEqualTo(secondNames);
+    }
+
+    @Test
+    @DisplayName("멘티를 location 조건에 맞게 불러오는가")
+    void test_findMenteeDtosByMultipleConditionsOnPageable_eqLocation() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = Location.GWANGJU_BUKGU;
+        Category category = null;
+        SortOrder menteeRatingSortOrder = null;
+
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+                .stream().map(User::getName).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
+    }
+
+    @Test
+    @DisplayName("멘티를 category 조건에 맞게 불러오는가?")
+    void test_findMenteeDtosByMultipleConditionsOnPageable_eqMenteeCategory() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = null;
+        Category category = Category.PROGRAMMING_PYTHON;
+        SortOrder menteeRatingSortOrder = null;
+
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+                .stream().map(User::getName).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user1", "user2");
+    }
+
+    @Test
+    @DisplayName("멘티를 location + category 조건에 맞게 불러오는가?")
+    void test_findMenteeDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = Location.GWANGJU_BUKGU;
+        Category category = Category.PROGRAMMING_PYTHON;
+        SortOrder menteeRatingSortOrder = null;
+
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+                .stream().map(User::getName).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user1", "user2");
+    }
+
+    @Test
+    @DisplayName("멘티를 올바르게 페이징하여 불러오는가")
+    void test_findMenteeDtosByMultipleConditionsOnPageable_OnPageable() {
+        Pageable firstPageable = PageRequest.of(0, 1);
+        Pageable secondPageable = PageRequest.of(1, 1);
+        Location location = null;
+        Category category = null;
+        SortOrder menteeRatingSortOrder = null;
+
+        List<String> firstNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(firstPageable, location, category, menteeRatingSortOrder)
+                .stream().map(User::getName).collect(Collectors.toList());
+        Assertions.assertThat(firstNames.size()).isEqualTo(1);
+
+        List<String> secondNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(secondPageable, location, category, menteeRatingSortOrder)
                 .stream().map(User::getName).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 

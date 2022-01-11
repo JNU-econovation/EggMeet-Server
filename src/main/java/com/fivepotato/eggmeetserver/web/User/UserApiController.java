@@ -33,13 +33,13 @@ public class UserApiController {
     }
 
     @GetMapping("/user/mentor")
-    public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleConditionOnPageable(Pageable pageable,
+    public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                                       @RequestParam(value = "location", required = false) Location location,
                                                                                       @RequestParam(value = "category", required = false) Category category,
                                                                                       @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
                                                                                       @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
         return new ResponseEntity<>(
-                userService.getMentorDtosByMultipleConditionOnPageable(
+                userService.getMentorDtosByMultipleConditionsOnPageable(
                         pageable,
                         location,
                         category,
@@ -51,12 +51,12 @@ public class UserApiController {
     }
 
     @GetMapping("/user/mentee")
-    public ResponseEntity<List<MenteeDto>> getMenteeDtosByMultipleConditionOnPageable(Pageable pageable,
+    public ResponseEntity<List<MenteeDto>> getMenteeDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                                       @RequestParam(value = "location", required = false) Location location,
                                                                                       @RequestParam(value = "category", required = false) Category category,
                                                                                       @RequestParam(value = "ratingSort", required = false) SortOrder menteeRatingSortOrder) {
         return new ResponseEntity<>(
-                userService.getMenteeDtosByMultipleConditionOnPageable(
+                userService.getMenteeDtosByMultipleConditionsOnPageable(
                         pageable,
                         location,
                         category,
