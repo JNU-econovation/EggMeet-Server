@@ -27,9 +27,6 @@ class UserQueryRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private MentorAreaRepository mentorAreaRepository;
 
     @Autowired
