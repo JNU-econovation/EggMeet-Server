@@ -20,6 +20,9 @@ public enum ErrorCode {
 
     public static String NO_MEMBER_BY_EMAIL = "해당 이메일과 일치하는 유저가 존재하지 않음 : email = ";
     public static String NO_MEMBER_BY_USERID = "해당 ID와 일치하는 유저가 존재하지 않음 : id = ";
+    public static String NO_MENTOR_AREA_BY_USER = "해당 유저는 멘토 설정이 되어있지 않음 : mentorId = ";
+    public static String NO_MENTEE_AREA_BY_USER = "해당 유저는 멘티 설정이 되어있지 않음 : menteeId = ";
+
 
     public static String SYSTEM_IO_ERROR_MESSAGE = "서버의 IO 과정에서 문제 발생";
 

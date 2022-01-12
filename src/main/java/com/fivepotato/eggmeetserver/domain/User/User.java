@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.domain.User;
 
 import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeArea;
 import com.fivepotato.eggmeetserver.domain.Mentoring.MentorArea;
+import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -86,5 +87,14 @@ public class User {
         this.email = email;
         this.encodedEmail = encodedEmail;
         this.role = role;
+    }
+
+    public void updateUserProfile(UserProfileUpdateDto userProfileUpdateDto) {
+        this.nickname = userProfileUpdateDto.getNickname();
+        this.location = userProfileUpdateDto.getLocation();
+        this.description = userProfileUpdateDto.getDescription();
+        this.pictureIndex = userProfileUpdateDto.getPictureIndex();
+        this.isOnlineAvailable = userProfileUpdateDto.isOnlineAvailable();
+        this.isOfflineAvailable = userProfileUpdateDto.isOfflineAvailable();
     }
 }

@@ -6,15 +6,14 @@ import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MentorDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
+import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.service.User.UserService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -72,6 +71,16 @@ public class UserApiController {
                         category,
                         menteeRatingSortOrder
                 ),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/user/profile")
+    public ResponseEntity<Void> updateMyUserProfile(@RequestBody UserProfileUpdateDto userProfileUpdateDto) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        userService.updateUserProfile(myId, userProfileUpdateDto);
+
+        return new ResponseEntity<>(
                 HttpStatus.OK
         );
     }

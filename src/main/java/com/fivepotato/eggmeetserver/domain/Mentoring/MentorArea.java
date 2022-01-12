@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.Mentoring;
 
 import com.fivepotato.eggmeetserver.domain.User.User;
+import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,5 +43,12 @@ public class MentorArea {
         this.career = career;
         this.link = link;
         this.growthPoint = growthPoint;
+    }
+
+    public void updateMentorAreaByUserProfileUpdateDto(UserProfileUpdateDto userProfileUpdateDto) {
+        this.category = userProfileUpdateDto.getMentorCategory();
+        this.description = userProfileUpdateDto.getMentorDescription();
+        this.career = userProfileUpdateDto.getMentorCareer();
+        this.link = userProfileUpdateDto.getMentorLink();
     }
 }

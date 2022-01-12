@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.Mentoring;
 
 import com.fivepotato.eggmeetserver.domain.User.User;
+import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,5 +33,10 @@ public class MenteeArea {
         this.mentee = mentee;
         this.category = category;
         this.description = description;
+    }
+
+    public void updateMenteeAreaByUserProfileUpdateDto(UserProfileUpdateDto userProfileUpdateDto) {
+        this.category = userProfileUpdateDto.getMenteeCategory();
+        this.description = userProfileUpdateDto.getMenteeDescription();
     }
 }
