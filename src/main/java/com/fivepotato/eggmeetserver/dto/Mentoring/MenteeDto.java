@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MenteeDto {
 
-    private String name;
+    private Long id;
+    private String nickname;
     private float menteeRating;
     private Category category;
     private Location location;
@@ -21,7 +22,8 @@ public class MenteeDto {
     private Sex sex;
 
     public MenteeDto(User user) {
-        this.name = user.getNickname();
+        this.id = user.getId();
+        this.nickname = user.getNickname();
         this.menteeRating = user.getMenteeRating();
         this.category = user.getMenteeArea().getCategory();
         this.location = user.getLocation();

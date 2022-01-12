@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MentorDto {
 
-    private String name;
+    private Long id;
+    private String nickname;
     private float mentorRating;
     private int growthPoint;
     private Category category;
@@ -22,7 +23,8 @@ public class MentorDto {
     private Sex sex;
 
     public MentorDto(User user) {
-        this.name = user.getNickname();
+        this.id = user.getId();
+        this.nickname = user.getNickname();
         this.mentorRating = user.getMentorRating();
         this.growthPoint = user.getMentorArea().getGrowthPoint();
         this.category = user.getMentorArea().getCategory();

@@ -49,6 +49,12 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_USERID + userId));
     }
 
+    public UserProfileDto getUserProfileDtoByUserId(Long userId) {
+        User user = getUserByUserId(userId);
+
+        return new UserProfileDto(user);
+    }
+
     public List<MentorDto> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                       Location location,
                                                                       Category category,

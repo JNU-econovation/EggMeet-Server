@@ -7,8 +7,8 @@ import com.fivepotato.eggmeetserver.dto.Mentoring.MentorDto;
 import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.service.User.UserService;
+import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +24,20 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/user")
-    public ResponseEntity<UserProfileDto> getUserProfileDtoByEmail(@RequestParam(value = "email") String email) {
+    @GetMapping("/user/profile")
+    public ResponseEntity<UserProfileDto> getUserProfileDtoById(@RequestParam(value = "id") Long userId) {
         return new ResponseEntity<>(
-                userService.getUserProfileDtoByEmail(email),
+                userService.getUserProfileDtoByUserId(userId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/user/profile/me")
+    public ResponseEntity<UserProfileDto> getMyUserProfileDto() {
+        Long myId = SecurityUtils.getCurrentUserId();
+
+        return new ResponseEntity<>(
+                userService.getUserProfileDtoByUserId(myId),
                 HttpStatus.OK
         );
     }
