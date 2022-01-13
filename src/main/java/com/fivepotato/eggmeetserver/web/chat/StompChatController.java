@@ -14,15 +14,15 @@ public class StompChatController {
     private final SimpMessagingTemplate template;
 
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
-    // "/pub/chat/enter"
+    // "/pub/chat/room/enter"
     @MessageMapping("/chat/room/enter")
     public void enterChatRoom(ChatMessageDto chatMessageDto) {
         chatMessageDto.setMessage(chatMessageDto.getWriter() + "님이 채팅방에 참여했습니다.");
-        template.convertAndSend("/sub/chat/room" + chatMessageDto.getRoomId(), chatMessageDto);
+        template.convertAndSend("/sub/chat/room/" + chatMessageDto.getRoomId(), chatMessageDto);
     }
 
     @MessageMapping("/chat/message")
     public void sendMessage(ChatMessageDto chatMessageDto) {
-        template.convertAndSend("/sub/chat/room" + chatMessageDto.getRoomId(), chatMessageDto);
+        template.convertAndSend("/sub/chat/room/" + chatMessageDto.getRoomId(), chatMessageDto);
     }
 }
