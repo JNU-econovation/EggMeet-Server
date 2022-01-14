@@ -71,4 +71,11 @@ public class UserSaveDto {
                 .role(role)
                 .build();
     }
+
+    public SocialTokenDto toSocialTokenDto() {
+        return SocialTokenDto.builder()
+                .loginType(loginType)
+                .socialToken(socialToken)
+                .build();
+    }
 }

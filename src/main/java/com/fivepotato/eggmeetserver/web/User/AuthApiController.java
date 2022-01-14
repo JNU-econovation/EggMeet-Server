@@ -44,7 +44,7 @@ public class AuthApiController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<Void> register(@RequestBody UserSaveDto userSaveDto) {
-        boolean isExistUser = authService.getIsExistUserByNickname(userSaveDto.getNickname());
+        boolean isExistUser = authService.getIsExistUser(userSaveDto.toSocialTokenDto());
         if (isExistUser) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
