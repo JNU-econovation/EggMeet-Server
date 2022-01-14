@@ -23,14 +23,11 @@ public class ChatRoomRepository {
         return chatRoomDtos;
     }
 
-    public ChatRoomDto findRoomByRoomId(String roomId) {
+    public ChatRoomDto findRoomByRoomId(Long roomId) {
         return chatRoomDtoMap.get(roomId);
     }
 
-    public ChatRoomDto createChatRoomDto() {
-        ChatRoomDto room = ChatRoomDto.create();
-        chatRoomDtoMap.put(room.getId(), room);
-
-        return room;
+    public void createChatRoomDto(ChatRoomDto chatRoomDto) {
+        chatRoomDtoMap.put(chatRoomDto.getId(), chatRoomDto);
     }
 }

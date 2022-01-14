@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.dto.chat;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -11,13 +12,9 @@ import java.util.UUID;
 public class ChatRoomDto {
 
     private Long id;
-    private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public static ChatRoomDto create() {
-        ChatRoomDto room = new ChatRoomDto();
-
-        // TODO: Write the logic to init room id
-        room.id = 1L;
-        return room;
+    @Builder
+    public ChatRoomDto(Long id) {
+        this.id = id;
     }
 }

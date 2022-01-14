@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class ChatRoomController {
     }
 
     @PostMapping("/chat/room")
-    public ResponseEntity<Void> createChatRoom() {
-        chatRoomRepository.createChatRoomDto();
+    public ResponseEntity<Void> createChatRoom(@RequestBody ChatRoomDto chatRoomDto) {
+        chatRoomRepository.createChatRoomDto(chatRoomDto);
 
         return new ResponseEntity<>(
                 HttpStatus.OK
@@ -36,7 +37,7 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chat/room/{roomId}")
-    public ResponseEntity<ChatRoomDto> getChatRoomDtoByRoomId(@PathVariable String roomId) {
+    public ResponseEntity<ChatRoomDto> getChatRoomDtoByRoomId(@PathVariable Long roomId) {
         return new ResponseEntity<>(
                 chatRoomRepository.findRoomByRoomId(roomId),
                 HttpStatus.OK
