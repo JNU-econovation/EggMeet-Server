@@ -66,7 +66,7 @@ public class AuthService {
         return userService.getIsExistUserByEmail(socialTokenDto.getLoginType(), email);
     }
 
-    public boolean getIsExistUserByName(String name) {
+    public boolean getIsExistUserByNickname(String name) {
         return userService.getIsExistUserByNickname(name);
     }
 

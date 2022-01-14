@@ -29,7 +29,7 @@ public class AuthApiController {
     @GetMapping("/auth/user/name")
     public ResponseEntity<Boolean> getIsExistUserByName(@RequestParam(value = "name") String name) {
         return new ResponseEntity<>(
-                authService.getIsExistUserByName(name),
+                authService.getIsExistUserByNickname(name),
                 HttpStatus.OK
         );
     }
@@ -44,6 +44,11 @@ public class AuthApiController {
 
     @PostMapping("/auth/register")
     public ResponseEntity<Void> register(@RequestBody UserSaveDto userSaveDto) {
+        boolean isExistUser = authService.getIsExistUserByNickname(userSaveDto.getNickname());
+        if (isExistUser) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+
         authService.registerUser(userSaveDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
