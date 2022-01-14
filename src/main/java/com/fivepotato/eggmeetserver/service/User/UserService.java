@@ -8,6 +8,7 @@ import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
 import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
+import com.fivepotato.eggmeetserver.exception.NoContentException;
 import com.fivepotato.eggmeetserver.service.Mentoring.MentoringService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,7 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_EMAIL + email));
+                .orElseThrow(() -> new NoContentException(ErrorCode.NO_MEMBER_BY_EMAIL + email));
     }
 
     public UserProfileDto getUserProfileDtoByEmail(String email) {
@@ -50,7 +51,7 @@ public class UserService {
 
     public User getUserByUserId(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorCode.NO_MEMBER_BY_USERID + userId));
+                .orElseThrow(() -> new NoContentException(ErrorCode.NO_MEMBER_BY_USERID + userId));
     }
 
     public UserProfileDto getUserProfileDtoByUserId(Long userId) {

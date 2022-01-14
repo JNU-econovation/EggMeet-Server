@@ -43,4 +43,13 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler(NoContentException.class)
+    protected ResponseEntity handleNoContentException(final NoContentException e) {
+//        LogView.logErrorStacktraceWithMessage(e);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(e.getMessage());
+    }
 }
