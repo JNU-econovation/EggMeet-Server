@@ -9,7 +9,7 @@ import java.util.*;
 @Repository
 public class ChatRoomRepository {
 
-    private Map<String, ChatRoomDto> chatRoomDtoMap;
+    private Map<Long, ChatRoomDto> chatRoomDtoMap;
 
     @PostConstruct
     private void init() {

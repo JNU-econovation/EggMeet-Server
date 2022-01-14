@@ -75,7 +75,7 @@ public class UserApiController {
         );
     }
 
-    @PutMapping("/user/profile")
+    @PutMapping("/user/profile/me")
     public ResponseEntity<Void> updateMyUserProfile(@RequestBody UserProfileUpdateDto userProfileUpdateDto) {
         Long myId = SecurityUtils.getCurrentUserId();
         userService.updateUserProfile(myId, userProfileUpdateDto);
