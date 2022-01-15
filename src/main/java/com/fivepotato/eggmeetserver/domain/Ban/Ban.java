@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.domain.Ban;
 
+import com.fivepotato.eggmeetserver.domain.User.LoginType;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,13 +21,17 @@ public class Ban {
     private Long id;
 
     @NotNull
+    private LoginType bannedLoginType;
+
+    @NotNull
     private String bannedEmail;
 
     @NotNull
     private Reason reason;
 
     @Builder
-    public Ban(String bannedEmail, Reason reason) {
+    public Ban(LoginType bannedLoginType, String bannedEmail, Reason reason) {
+        this.bannedLoginType = bannedLoginType;
         this.bannedEmail = bannedEmail;
         this.reason = reason;
     }

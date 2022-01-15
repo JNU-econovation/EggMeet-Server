@@ -82,8 +82,8 @@ public class UserService {
         return users.stream().map(MenteeDto::new).collect(Collectors.toList());
     }
 
-    public boolean getIsBannedUserByEmail(String email) {
-        return banRepository.existsByBannedEmail(email);
+    public boolean getIsBannedUser(LoginType loginType, String email) {
+        return banRepository.existsByBannedLoginTypeAndBannedEmail(loginType, email);
     }
 
     @Transactional

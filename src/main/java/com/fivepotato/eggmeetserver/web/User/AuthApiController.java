@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.web.User;
 
+import com.fivepotato.eggmeetserver.domain.User.LoginType;
 import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
 import com.fivepotato.eggmeetserver.dto.User.AppTokenReissueDto;
 import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
@@ -38,9 +39,9 @@ public class AuthApiController {
     }
 
     @GetMapping("/auth/user/ban")
-    public ResponseEntity<Boolean> getIsBannedUserByEmail(@RequestParam(value = "email") String email) {
+    public ResponseEntity<Boolean> getIsBannedUserByEmail(@RequestParam(value = "loginType") LoginType loginType, @RequestParam(value = "email") String email) {
         return new ResponseEntity<>(
-                userSevice.getIsBannedUserByEmail(email),
+                userSevice.getIsBannedUser(loginType, email),
                 HttpStatus.OK
         );
     }
@@ -53,7 +54,7 @@ public class AuthApiController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
 
-        boolean isBannedUser = userSevice.getIsBannedUserByEmail(email);
+        boolean isBannedUser = userSevice.getIsBannedUser(userSaveDto.getLoginType(), email);
         if (isBannedUser) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
