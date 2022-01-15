@@ -18,9 +18,6 @@ public class UserAdminService {
     private final UserRepository userRepository;
     private final BanRepository banRepository;
 
-    public boolean getIsBannedUserByEmail(String email) {
-        return banRepository.existsByBannedEmail(email);
-    }
 
     public void banUser(BanDto banDto) {
         banRepository.save(banDto.toEntity());

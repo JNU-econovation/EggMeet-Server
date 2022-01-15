@@ -59,33 +59,12 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final MentoringService mentoringService;
 
-
-    public boolean getIsExistUser(SocialTokenDto socialTokenDto) {
-        String email = getEmailBySocialTokenDto(socialTokenDto);
-
-        return userService.getIsExistUserByEmail(socialTokenDto.getLoginType(), email);
-    }
-
     public boolean getIsExistUserByNickname(String name) {
         return userService.getIsExistUserByNickname(name);
     }
 
     public void registerUser(UserSaveDto userSaveDto) {
-        if (userSaveDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
-            userSaveDto.setEmail(BACKDOOR_EMAIL);
-
-        } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
-            validateAppleSocialToken(userSaveDto.getSocialToken());
-
-            String email = getEmailByAppleSocialToken(userSaveDto.getSocialToken());
-            userSaveDto.setEmail(email);
-
-        } else if (userSaveDto.getLoginType().equals(LoginType.KAKAO)) {
-            // TODO: 카카오 로그인 구현
-
-        } else {
-            throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
-        }
+        userSaveDto.setEmail(getEmailByUserSaveDto(userSaveDto));
 
         User user = userSaveDto.toEntity(passwordEncoder);
         userService.createUser(user);
@@ -114,6 +93,22 @@ public class AuthService {
         }
     }
 
+    public String getEmailByUserSaveDto(UserSaveDto userSaveDto) {
+        if (userSaveDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
+            return BACKDOOR_EMAIL;
+
+        } else if (userSaveDto.getLoginType().equals(LoginType.APPLE)) {
+            validateAppleSocialToken(userSaveDto.getSocialToken());
+
+            return getEmailByAppleSocialToken(userSaveDto.getSocialToken());
+
+        } else if (userSaveDto.getLoginType().equals(LoginType.KAKAO)) {
+            // TODO: 카카오 로그인 구현
+        }
+
+        throw new CustomAuthenticationException(ErrorCode.WRONG_LOGIN_TYPE);
+    }
+
     public AppTokenDto getAppTokenDto(SocialTokenDto socialTokenDto) {
         String email = getEmailBySocialTokenDto(socialTokenDto);
         User user = userService.getUserByEmail(email);
@@ -121,7 +116,7 @@ public class AuthService {
         return issueAppTokenDto(user.getEmail());
     }
 
-    private String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
+    public String getEmailBySocialTokenDto(SocialTokenDto socialTokenDto) {
         if (socialTokenDto.getSocialToken().equals(BACKDOOR_TOKEN)) {
             return BACKDOOR_EMAIL;
 
@@ -261,7 +256,7 @@ public class AuthService {
     }
 
     @Transactional
-    public AppTokenDto reissueAppTokenDto(AppTokenReissueDto appTokenReissueDto){
+    public AppTokenDto reissueAppTokenDto(AppTokenReissueDto appTokenReissueDto) {
         appTokenProvider.validateToken(appTokenReissueDto.getRefreshToken());
 
         // issue 메소드의 UsernamePasswordAuthenticationToken와는 다르게 모든 정보가 들어 있음

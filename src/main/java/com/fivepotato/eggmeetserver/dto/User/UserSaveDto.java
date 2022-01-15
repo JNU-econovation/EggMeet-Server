@@ -4,11 +4,12 @@ import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.User.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class UserSaveDto {
 
     private String nickname;
@@ -32,6 +33,10 @@ public class UserSaveDto {
     private String socialToken;
     private String email;
     private Role role;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Builder
     public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {

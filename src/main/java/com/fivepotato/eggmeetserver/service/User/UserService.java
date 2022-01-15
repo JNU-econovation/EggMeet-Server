@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.service.User;
 
+import com.fivepotato.eggmeetserver.domain.Ban.BanRepository;
 import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.User.*;
 import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeDto;
@@ -25,6 +26,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserQueryRepository userQueryRepository;
     private final MentoringService mentoringService;
+    private final BanRepository banRepository;
+
 
     public void createUser(User user) {
         userRepository.save(user);
@@ -77,6 +80,10 @@ public class UserService {
         List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder);
 
         return users.stream().map(MenteeDto::new).collect(Collectors.toList());
+    }
+
+    public boolean getIsBannedUserByEmail(String email) {
+        return banRepository.existsByBannedEmail(email);
     }
 
     @Transactional
