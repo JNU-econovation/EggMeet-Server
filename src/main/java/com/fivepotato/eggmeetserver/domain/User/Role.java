@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.User;
+package com.fivepotato.eggmeetserver.domain.user;
 
 public enum Role {
     ROLE_USER,

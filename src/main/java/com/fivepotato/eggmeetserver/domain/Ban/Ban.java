@@ -1,6 +1,6 @@
-package com.fivepotato.eggmeetserver.domain.Ban;
+package com.fivepotato.eggmeetserver.domain.ban;
 
-import com.fivepotato.eggmeetserver.domain.User.LoginType;
+import com.fivepotato.eggmeetserver.domain.user.LoginType;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;

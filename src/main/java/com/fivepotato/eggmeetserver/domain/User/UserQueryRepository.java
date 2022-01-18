@@ -1,7 +1,7 @@
-package com.fivepotato.eggmeetserver.domain.User;
+package com.fivepotato.eggmeetserver.domain.user;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
-import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.domain.mentoring.Category;
+import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

@@ -1,7 +1,6 @@
 package com.fivepotato.eggmeetserver.provider.security;
 
-import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
-import com.fivepotato.eggmeetserver.exception.CustomAuthenticationException;
+import com.fivepotato.eggmeetserver.dto.user.AppTokenDto;
 import com.fivepotato.eggmeetserver.exception.CustomTokenException;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import io.jsonwebtoken.*;

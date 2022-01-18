@@ -1,8 +1,8 @@
-package com.fivepotato.eggmeetserver.web.User;
+package com.fivepotato.eggmeetserver.web.user;
 
-import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
 import com.fivepotato.eggmeetserver.dto.ban.BanDto;
-import com.fivepotato.eggmeetserver.service.User.UserAdminService;
+import com.fivepotato.eggmeetserver.service.user.UserAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

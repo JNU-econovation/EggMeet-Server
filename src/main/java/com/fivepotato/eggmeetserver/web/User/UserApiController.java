@@ -1,13 +1,13 @@
-package com.fivepotato.eggmeetserver.web.User;
+package com.fivepotato.eggmeetserver.web.user;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
-import com.fivepotato.eggmeetserver.domain.User.Location;
-import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeDto;
-import com.fivepotato.eggmeetserver.dto.Mentoring.MentorDto;
-import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
-import com.fivepotato.eggmeetserver.dto.User.UserProfileDto;
-import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
-import com.fivepotato.eggmeetserver.service.User.UserService;
+import com.fivepotato.eggmeetserver.domain.mentoring.Category;
+import com.fivepotato.eggmeetserver.domain.user.Location;
+import com.fivepotato.eggmeetserver.dto.mentoring.MenteeDto;
+import com.fivepotato.eggmeetserver.dto.mentoring.MentorDto;
+import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
+import com.fivepotato.eggmeetserver.service.user.UserService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

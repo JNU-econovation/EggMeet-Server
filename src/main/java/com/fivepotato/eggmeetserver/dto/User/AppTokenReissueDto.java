@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.dto.User;
+package com.fivepotato.eggmeetserver.dto.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

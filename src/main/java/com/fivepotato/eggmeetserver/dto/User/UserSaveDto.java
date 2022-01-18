@@ -1,11 +1,10 @@
-package com.fivepotato.eggmeetserver.dto.User;
+package com.fivepotato.eggmeetserver.dto.user;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
-import com.fivepotato.eggmeetserver.domain.User.*;
+import com.fivepotato.eggmeetserver.domain.mentoring.Category;
+import com.fivepotato.eggmeetserver.domain.user.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter

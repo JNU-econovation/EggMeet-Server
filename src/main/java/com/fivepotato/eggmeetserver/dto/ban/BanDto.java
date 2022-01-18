@@ -1,8 +1,8 @@
 package com.fivepotato.eggmeetserver.dto.ban;
 
-import com.fivepotato.eggmeetserver.domain.Ban.Ban;
-import com.fivepotato.eggmeetserver.domain.Ban.Reason;
-import com.fivepotato.eggmeetserver.domain.User.LoginType;
+import com.fivepotato.eggmeetserver.domain.ban.Ban;
+import com.fivepotato.eggmeetserver.domain.ban.Reason;
+import com.fivepotato.eggmeetserver.domain.user.LoginType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

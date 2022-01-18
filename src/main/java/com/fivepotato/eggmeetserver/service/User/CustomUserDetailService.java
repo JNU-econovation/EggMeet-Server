@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.service.User;
+package com.fivepotato.eggmeetserver.service.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,12 +19,12 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        com.fivepotato.eggmeetserver.domain.User.User user = userService.getUserByEmail(email);
+        com.fivepotato.eggmeetserver.domain.user.User user = userService.getUserByEmail(email);
         return createUserDetails(user);
     }
 
 
-    private UserDetails createUserDetails(com.fivepotato.eggmeetserver.domain.User.User user) {
+    private UserDetails createUserDetails(com.fivepotato.eggmeetserver.domain.user.User user) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().toString());
 
         return new User(

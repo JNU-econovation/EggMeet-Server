@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.Mentoring;
+package com.fivepotato.eggmeetserver.domain.mentoring;
 
 public enum Category {
     PROGRAMMING_PYTHON,

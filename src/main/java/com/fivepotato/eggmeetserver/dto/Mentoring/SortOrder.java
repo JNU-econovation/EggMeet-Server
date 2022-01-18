@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.dto.Mentoring;
+package com.fivepotato.eggmeetserver.dto.mentoring;
 
 public enum SortOrder {
     ASCENDING,

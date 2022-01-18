@@ -1,12 +1,12 @@
-package com.fivepotato.eggmeetserver.web.User;
+package com.fivepotato.eggmeetserver.web.user;
 
-import com.fivepotato.eggmeetserver.domain.User.LoginType;
-import com.fivepotato.eggmeetserver.dto.User.AppTokenDto;
-import com.fivepotato.eggmeetserver.dto.User.AppTokenReissueDto;
-import com.fivepotato.eggmeetserver.dto.User.UserSaveDto;
-import com.fivepotato.eggmeetserver.dto.User.SocialTokenDto;
-import com.fivepotato.eggmeetserver.service.User.AuthService;
-import com.fivepotato.eggmeetserver.service.User.UserService;
+import com.fivepotato.eggmeetserver.domain.user.LoginType;
+import com.fivepotato.eggmeetserver.dto.user.AppTokenDto;
+import com.fivepotato.eggmeetserver.dto.user.AppTokenReissueDto;
+import com.fivepotato.eggmeetserver.dto.user.UserSaveDto;
+import com.fivepotato.eggmeetserver.dto.user.SocialTokenDto;
+import com.fivepotato.eggmeetserver.service.user.AuthService;
+import com.fivepotato.eggmeetserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

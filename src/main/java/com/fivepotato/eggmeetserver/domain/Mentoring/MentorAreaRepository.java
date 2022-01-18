@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.Mentoring;
+package com.fivepotato.eggmeetserver.domain.mentoring;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

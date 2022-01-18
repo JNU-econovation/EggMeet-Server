@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.Mentoring;
+package com.fivepotato.eggmeetserver.domain.mentoring;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -28,7 +28,7 @@ public class QMenteeArea extends EntityPathBase<MenteeArea> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final com.fivepotato.eggmeetserver.domain.User.QUser mentee;
+    public final com.fivepotato.eggmeetserver.domain.user.QUser mentee;
 
     public QMenteeArea(String variable) {
         this(MenteeArea.class, forVariable(variable), INITS);
@@ -48,7 +48,7 @@ public class QMenteeArea extends EntityPathBase<MenteeArea> {
 
     public QMenteeArea(Class<? extends MenteeArea> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.mentee = inits.isInitialized("mentee") ? new com.fivepotato.eggmeetserver.domain.User.QUser(forProperty("mentee"), inits.get("mentee")) : null;
+        this.mentee = inits.isInitialized("mentee") ? new com.fivepotato.eggmeetserver.domain.user.QUser(forProperty("mentee"), inits.get("mentee")) : null;
     }
 
 }

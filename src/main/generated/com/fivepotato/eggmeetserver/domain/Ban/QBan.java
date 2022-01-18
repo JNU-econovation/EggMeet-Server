@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.Ban;
+package com.fivepotato.eggmeetserver.domain.ban;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -20,6 +20,8 @@ public class QBan extends EntityPathBase<Ban> {
     public static final QBan ban = new QBan("ban");
 
     public final StringPath bannedEmail = createString("bannedEmail");
+
+    public final EnumPath<com.fivepotato.eggmeetserver.domain.user.LoginType> bannedLoginType = createEnum("bannedLoginType", com.fivepotato.eggmeetserver.domain.user.LoginType.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

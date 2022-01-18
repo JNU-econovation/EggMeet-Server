@@ -1,9 +1,9 @@
 package com.fivepotato.eggmeetserver;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.*;
-import com.fivepotato.eggmeetserver.domain.User.*;
-import com.fivepotato.eggmeetserver.dto.Mentoring.SortOrder;
-import com.fivepotato.eggmeetserver.service.User.UserService;
+import com.fivepotato.eggmeetserver.domain.mentoring.*;
+import com.fivepotato.eggmeetserver.domain.user.*;
+import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.service.user.UserService;
 import org.junit.jupiter.api.*;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;

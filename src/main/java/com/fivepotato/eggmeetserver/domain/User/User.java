@@ -1,8 +1,8 @@
-package com.fivepotato.eggmeetserver.domain.User;
+package com.fivepotato.eggmeetserver.domain.user;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeArea;
-import com.fivepotato.eggmeetserver.domain.Mentoring.MentorArea;
-import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
+import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
+import com.fivepotato.eggmeetserver.domain.mentoring.MentorArea;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;

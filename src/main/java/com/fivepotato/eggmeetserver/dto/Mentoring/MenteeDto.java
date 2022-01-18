@@ -1,9 +1,9 @@
-package com.fivepotato.eggmeetserver.dto.Mentoring;
+package com.fivepotato.eggmeetserver.dto.mentoring;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.Category;
-import com.fivepotato.eggmeetserver.domain.User.Location;
-import com.fivepotato.eggmeetserver.domain.User.Sex;
-import com.fivepotato.eggmeetserver.domain.User.User;
+import com.fivepotato.eggmeetserver.domain.mentoring.Category;
+import com.fivepotato.eggmeetserver.domain.user.Location;
+import com.fivepotato.eggmeetserver.domain.user.Sex;
+import com.fivepotato.eggmeetserver.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.User;
+package com.fivepotato.eggmeetserver.domain.user;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -40,11 +40,11 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<LoginType> loginType = createEnum("loginType", LoginType.class);
 
-    public final com.fivepotato.eggmeetserver.domain.Mentoring.QMenteeArea menteeArea;
+    public final com.fivepotato.eggmeetserver.domain.mentoring.QMenteeArea menteeArea;
 
     public final NumberPath<Float> menteeRating = createNumber("menteeRating", Float.class);
 
-    public final com.fivepotato.eggmeetserver.domain.Mentoring.QMentorArea mentorArea;
+    public final com.fivepotato.eggmeetserver.domain.mentoring.QMentorArea mentorArea;
 
     public final NumberPath<Float> mentorRating = createNumber("mentorRating", Float.class);
 
@@ -76,8 +76,8 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.menteeArea = inits.isInitialized("menteeArea") ? new com.fivepotato.eggmeetserver.domain.Mentoring.QMenteeArea(forProperty("menteeArea"), inits.get("menteeArea")) : null;
-        this.mentorArea = inits.isInitialized("mentorArea") ? new com.fivepotato.eggmeetserver.domain.Mentoring.QMentorArea(forProperty("mentorArea"), inits.get("mentorArea")) : null;
+        this.menteeArea = inits.isInitialized("menteeArea") ? new com.fivepotato.eggmeetserver.domain.mentoring.QMenteeArea(forProperty("menteeArea"), inits.get("menteeArea")) : null;
+        this.mentorArea = inits.isInitialized("mentorArea") ? new com.fivepotato.eggmeetserver.domain.mentoring.QMentorArea(forProperty("mentorArea"), inits.get("mentorArea")) : null;
     }
 
 }

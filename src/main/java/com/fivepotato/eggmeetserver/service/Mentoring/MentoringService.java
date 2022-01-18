@@ -1,12 +1,12 @@
-package com.fivepotato.eggmeetserver.service.Mentoring;
+package com.fivepotato.eggmeetserver.service.mentoring;
 
-import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeArea;
-import com.fivepotato.eggmeetserver.domain.Mentoring.MenteeAreaRepository;
-import com.fivepotato.eggmeetserver.domain.Mentoring.MentorArea;
-import com.fivepotato.eggmeetserver.domain.Mentoring.MentorAreaRepository;
-import com.fivepotato.eggmeetserver.dto.Mentoring.MenteeAreaDto;
-import com.fivepotato.eggmeetserver.dto.Mentoring.MentorAreaDto;
-import com.fivepotato.eggmeetserver.dto.User.UserProfileUpdateDto;
+import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
+import com.fivepotato.eggmeetserver.domain.mentoring.MenteeAreaRepository;
+import com.fivepotato.eggmeetserver.domain.mentoring.MentorArea;
+import com.fivepotato.eggmeetserver.domain.mentoring.MentorAreaRepository;
+import com.fivepotato.eggmeetserver.dto.mentoring.MenteeAreaDto;
+import com.fivepotato.eggmeetserver.dto.mentoring.MentorAreaDto;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.NoContentException;
 import lombok.RequiredArgsConstructor;

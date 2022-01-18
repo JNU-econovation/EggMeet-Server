@@ -1,4 +1,4 @@
-package com.fivepotato.eggmeetserver.domain.Ban;
+package com.fivepotato.eggmeetserver.domain.ban;
 
 public enum Reason {
     IMPROPER_CONVERSATION,

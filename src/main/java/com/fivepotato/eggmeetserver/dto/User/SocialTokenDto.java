@@ -1,6 +1,6 @@
-package com.fivepotato.eggmeetserver.dto.User;
+package com.fivepotato.eggmeetserver.dto.user;
 
-import com.fivepotato.eggmeetserver.domain.User.LoginType;
+import com.fivepotato.eggmeetserver.domain.user.LoginType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
