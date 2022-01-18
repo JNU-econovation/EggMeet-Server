@@ -91,7 +91,7 @@ class UserQueryRepositoryTest {
 
         User user2 = User.builder()
                 .nickname("user2")
-                .age(10)
+                .age(15)
                 .sex(Sex.MALE)
                 .location(Location.GWANGJU_BUKGU)
                 .description("user2Description")
@@ -124,13 +124,13 @@ class UserQueryRepositoryTest {
 
         User user3 = User.builder()
                 .nickname("user3")
-                .age(10)
-                .sex(Sex.MALE)
+                .age(20)
+                .sex(Sex.UNDEFINED)
                 .location(Location.GWANGJU_SEOGU)
                 .description("user3Description")
                 .pictureIndex(0)
                 .isOfflineAvailable(true)
-                .isOnlineAvailable(true)
+                .isOnlineAvailable(false)
                 .loginType(LoginType.APPLE)
                 .email("user3@user3.com")
                 .encodedEmail("user3@user3.com")
@@ -157,13 +157,13 @@ class UserQueryRepositoryTest {
 
         User user4 = User.builder()
                 .nickname("user4")
-                .age(10)
-                .sex(Sex.MALE)
+                .age(25)
+                .sex(Sex.FEMALE)
                 .location(Location.GWANGJU_SEOGU)
                 .description("user4Description")
                 .pictureIndex(0)
-                .isOfflineAvailable(true)
-                .isOnlineAvailable(true)
+                .isOfflineAvailable(false)
+                .isOnlineAvailable(false)
                 .loginType(LoginType.APPLE)
                 .email("user4@user4.com")
                 .encodedEmail("user4@user4.com")
@@ -190,13 +190,13 @@ class UserQueryRepositoryTest {
 
         User user5 = User.builder()
                 .nickname("user5")
-                .age(10)
-                .sex(Sex.MALE)
+                .age(30)
+                .sex(Sex.FEMALE)
                 .location(Location.GWANGJU_BUKGU)
                 .description("user5Description")
                 .pictureIndex(0)
-                .isOfflineAvailable(true)
-                .isOnlineAvailable(true)
+                .isOfflineAvailable(false)
+                .isOnlineAvailable(false)
                 .loginType(LoginType.APPLE)
                 .email("user5@user5.com")
                 .encodedEmail("user5@user5.com")
@@ -228,13 +228,71 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_eqLocation() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
+    }
+
+    @Test
+    @DisplayName("멘토를 sex 조건에 맞게 불러오는가?")
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqSex() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = null;
+        Sex sex = Sex.MALE;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
+        Category category = null;
+        SortOrder mentorRatingSortOrder = null;
+        SortOrder growthPointSortOrder = null;
+
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+                .stream().map(User::getNickname).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user1", "user2");
+    }
+
+    @Test
+    @DisplayName("멘토를 age 조건에 맞게 불러오는가?")
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqAge() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = null;
+        Sex sex = null;
+        Integer age = 20;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
+        Category category = null;
+        SortOrder mentorRatingSortOrder = null;
+        SortOrder growthPointSortOrder = null;
+
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+                .stream().map(User::getNickname).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user3", "user4");
+    }
+
+    @Test
+    @DisplayName("멘토를 isOnlineAvailable/isOfflineAvailable 조건에 맞게 불러오는가?")
+    void test_findMentorDtosByMultipleConditionsOnPageable_eqIsOnlineAvailableAndEqIsOfflineAvailable() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = false;
+        Boolean isOfflineAvailable = false;
+        Category category = null;
+        SortOrder mentorRatingSortOrder = null;
+        SortOrder growthPointSortOrder = null;
+
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+                .stream().map(User::getNickname).collect(Collectors.toList());
+        Assertions.assertThat(names).containsExactly("user4", "user5");
     }
 
     @Test
@@ -242,11 +300,15 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_eqCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = Category.PROGRAMMING_PYTHON;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user3", "user4");
     }
@@ -256,11 +318,15 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = Category.PROGRAMMING_C;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user2", "user5");
     }
@@ -270,11 +336,15 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory_orderByGrowthPointAsc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = Category.PROGRAMMING_C;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user2");
     }
@@ -284,11 +354,15 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_orderByGrowthPointAsc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user1", "user2", "user3", "user4");
     }
@@ -298,11 +372,15 @@ class UserQueryRepositoryTest {
     void test_findMentorDtosByMultipleConditionsOnPageable_orderByGrowthPointDesc() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.DESCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user4", "user3", "user2", "user1", "user5");
     }
@@ -313,15 +391,19 @@ class UserQueryRepositoryTest {
         Pageable firstPageable = PageRequest.of(0, 1);
         Pageable secondPageable = PageRequest.of(1, 1);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> firstNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(firstPageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> firstNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(firstPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
-        List<String> secondNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(secondPageable, location, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> secondNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(secondPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 
@@ -333,10 +415,14 @@ class UserQueryRepositoryTest {
     void test_findMenteeDtosByMultipleConditionsOnPageable_eqLocation() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder menteeRatingSortOrder = null;
 
-        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
     }
@@ -346,10 +432,15 @@ class UserQueryRepositoryTest {
     void test_findMenteeDtosByMultipleConditionsOnPageable_eqMenteeCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = Category.PROGRAMMING_PYTHON;
         SortOrder menteeRatingSortOrder = null;
 
-        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2");
     }
@@ -359,10 +450,14 @@ class UserQueryRepositoryTest {
     void test_findMenteeDtosByMultipleConditionsOnPageable_eqLocationAndEqCategory() {
         Pageable pageable = PageRequest.of(0, 10);
         Location location = Location.GWANGJU_BUKGU;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = Category.PROGRAMMING_PYTHON;
         SortOrder menteeRatingSortOrder = null;
 
-        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder)
+        List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2");
     }
@@ -373,14 +468,18 @@ class UserQueryRepositoryTest {
         Pageable firstPageable = PageRequest.of(0, 1);
         Pageable secondPageable = PageRequest.of(1, 1);
         Location location = null;
+        Sex sex = null;
+        Integer age = null;
+        Boolean isOnlineAvailable = null;
+        Boolean isOfflineAvailable = null;
         Category category = null;
         SortOrder menteeRatingSortOrder = null;
 
-        List<String> firstNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(firstPageable, location, category, menteeRatingSortOrder)
+        List<String> firstNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(firstPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
-        List<String> secondNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(secondPageable, location, category, menteeRatingSortOrder)
+        List<String> secondNames = userQueryRepository.findMenteesByMultipleConditionsOnPageable(secondPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 

@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QBan extends EntityPathBase<Ban> {
 
-    private static final long serialVersionUID = 1113529101L;
+    private static final long serialVersionUID = -551124179L;
 
     public static final QBan ban = new QBan("ban");
 

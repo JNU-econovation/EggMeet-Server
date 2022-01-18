@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.web.user;
 
 import com.fivepotato.eggmeetserver.domain.mentoring.Category;
 import com.fivepotato.eggmeetserver.domain.user.Location;
+import com.fivepotato.eggmeetserver.domain.user.Sex;
 import com.fivepotato.eggmeetserver.dto.mentoring.MenteeDto;
 import com.fivepotato.eggmeetserver.dto.mentoring.MentorDto;
 import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
@@ -43,14 +44,22 @@ public class UserApiController {
 
     @GetMapping("/user/mentor")
     public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
-                                                                                      @RequestParam(value = "location", required = false) Location location,
-                                                                                      @RequestParam(value = "category", required = false) Category category,
-                                                                                      @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
-                                                                                      @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
+                                                                                       @RequestParam(value = "location", required = false) Location location,
+                                                                                       @RequestParam(value = "sex", required = false) Sex sex,
+                                                                                       @RequestParam(value = "age", required = false) int age,
+                                                                                       @RequestParam(value = "isOnlineAvailable", required = false) boolean isOnlineAvailable,
+                                                                                       @RequestParam(value = "isOfflineAvailable", required = false) boolean isOfflineAvailable,
+                                                                                       @RequestParam(value = "category", required = false) Category category,
+                                                                                       @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
+                                                                                       @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
         return new ResponseEntity<>(
                 userService.getMentorDtosByMultipleConditionsOnPageable(
                         pageable,
                         location,
+                        sex,
+                        age,
+                        isOnlineAvailable,
+                        isOfflineAvailable,
                         category,
                         mentorRatingSortOrder,
                         growthPointSortOrder
@@ -62,12 +71,20 @@ public class UserApiController {
     @GetMapping("/user/mentee")
     public ResponseEntity<List<MenteeDto>> getMenteeDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                                       @RequestParam(value = "location", required = false) Location location,
+                                                                                       @RequestParam(value = "sex", required = false) Sex sex,
+                                                                                       @RequestParam(value = "age", required = false) Integer age,
+                                                                                       @RequestParam(value = "isOnlineAvailable", required = false) Boolean isOnlineAvailable,
+                                                                                       @RequestParam(value = "isOfflineAvailable", required = false) Boolean isOfflineAvailable,
                                                                                       @RequestParam(value = "category", required = false) Category category,
                                                                                       @RequestParam(value = "ratingSort", required = false) SortOrder menteeRatingSortOrder) {
         return new ResponseEntity<>(
                 userService.getMenteeDtosByMultipleConditionsOnPageable(
                         pageable,
                         location,
+                        sex,
+                        age,
+                        isOnlineAvailable,
+                        isOfflineAvailable,
                         category,
                         menteeRatingSortOrder
                 ),

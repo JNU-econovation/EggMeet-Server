@@ -65,19 +65,27 @@ public class UserService {
 
     public List<MentorDto> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                       Location location,
+                                                                      Sex sex,
+                                                                      Integer age,
+                                                                      Boolean isOnlineAvailable,
+                                                                      Boolean isOfflineAvailable,
                                                                       Category category,
                                                                       SortOrder mentorRatingSortOrder,
                                                                       SortOrder growthPointSortOrder) {
-        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, category, mentorRatingSortOrder, growthPointSortOrder);
+        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
 
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
 
     public List<MenteeDto> getMenteeDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                       Location location,
+                                                                       Sex sex,
+                                                                       Integer age,
+                                                                       Boolean isOnlineAvailable,
+                                                                       Boolean isOfflineAvailable,
                                                                       Category category,
                                                                       SortOrder menteeRatingSortOrder) {
-        List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, category, menteeRatingSortOrder);
+        List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder);
 
         return users.stream().map(MenteeDto::new).collect(Collectors.toList());
     }

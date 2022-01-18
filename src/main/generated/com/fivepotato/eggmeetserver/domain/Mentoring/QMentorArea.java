@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QMentorArea extends EntityPathBase<MentorArea> {
 
-    private static final long serialVersionUID = -934108866L;
+    private static final long serialVersionUID = -1131582178L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
