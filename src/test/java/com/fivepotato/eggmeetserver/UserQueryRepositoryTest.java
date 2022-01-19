@@ -77,7 +77,7 @@ class UserQueryRepositoryTest {
                 .description("user1Description")
                 .career("user1Career")
                 .link("user1Link")
-                .growthPoint(1)
+                .growthCost(1)
                 .build();
         MenteeArea user1MenteeArea = MenteeArea.builder()
                 .mentee(user1)
@@ -109,7 +109,7 @@ class UserQueryRepositoryTest {
                 .description("user2Description")
                 .career("user2Career")
                 .link("user2Link")
-                .growthPoint(2)
+                .growthCost(2)
                 .build();
         MenteeArea user2MenteeArea = MenteeArea.builder()
                 .mentee(user2)
@@ -142,7 +142,7 @@ class UserQueryRepositoryTest {
                 .description("user3Description")
                 .career("user3Career")
                 .link("user3Link")
-                .growthPoint(3)
+                .growthCost(3)
                 .build();
         MenteeArea user3MenteeArea = MenteeArea.builder()
                 .mentee(user3)
@@ -175,7 +175,7 @@ class UserQueryRepositoryTest {
                 .description("user4Description")
                 .career("user4Career")
                 .link("user4Link")
-                .growthPoint(4)
+                .growthCost(4)
                 .build();
         MenteeArea user4MenteeArea = MenteeArea.builder()
                 .mentee(user4)
@@ -208,7 +208,7 @@ class UserQueryRepositoryTest {
                 .description("user5Description")
                 .career("user5Career")
                 .link("user5Link")
-                .growthPoint(0)
+                .growthCost(0)
                 .build();
         MenteeArea user5MenteeArea = MenteeArea.builder()
                 .mentee(user5)

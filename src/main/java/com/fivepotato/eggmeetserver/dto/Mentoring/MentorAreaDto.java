@@ -14,16 +14,16 @@ public class MentorAreaDto {
     private String description;
     private String career;
     private String link;
-    private int growthPoint;
+    private int growthCost;
 
     @Builder
-    public MentorAreaDto(User mentor, Category category, String description, String career, String link, int growthPoint) {
+    public MentorAreaDto(User mentor, Category category, String description, String career, String link, int growthCost) {
         this.mentor = mentor;
         this.category = category;
         this.description = description;
         this.career = career;
         this.link = link;
-        this.growthPoint = growthPoint;
+        this.growthCost = growthCost;
     }
 
     public MentorArea toEntity() {
@@ -33,7 +33,7 @@ public class MentorAreaDto {
                 .description(description)
                 .career(career)
                 .link(link)
-                .growthPoint(growthPoint)
+                .growthCost(growthCost)
                 .build();
     }
 }

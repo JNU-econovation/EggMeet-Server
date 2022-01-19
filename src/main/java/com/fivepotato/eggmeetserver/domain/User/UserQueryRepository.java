@@ -170,10 +170,10 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
 
     private OrderSpecifier orderByGrowthPoint(SortOrder sortOrder) {
         if (sortOrder.equals(SortOrder.ASCENDING)) {
-            return QUser.user.mentorArea.growthPoint.asc();
+            return QUser.user.mentorArea.growthCost.asc();
 
         } else if (sortOrder.equals(SortOrder.DESCENDING)) {
-            return QUser.user.mentorArea.growthPoint.desc();
+            return QUser.user.mentorArea.growthCost.desc();
         }
 
         return null;

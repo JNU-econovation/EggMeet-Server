@@ -30,6 +30,10 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath encodedEmail = createString("encodedEmail");
 
+    public final NumberPath<Integer> growthGrade = createNumber("growthGrade", Integer.class);
+
+    public final NumberPath<Integer> growthPoint = createNumber("growthPoint", Integer.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isOfflineAvailable = createBoolean("isOfflineAvailable");
@@ -51,8 +55,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickname = createString("nickname");
 
     public final NumberPath<Integer> pictureIndex = createNumber("pictureIndex", Integer.class);
-
-    public final NumberPath<Integer> point = createNumber("point", Integer.class);
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
 

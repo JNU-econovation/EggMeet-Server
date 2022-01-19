@@ -76,7 +76,7 @@ public class AuthService {
                     .description(userSaveDto.getMentorDescription())
                     .career(userSaveDto.getMentorCareer())
                     .link(userSaveDto.getMentorLink())
-                    .growthPoint(userSaveDto.getMentorGrowthPoint())
+                    .growthCost(userSaveDto.getMentorGrowthCost())
                     .build();
 
             mentoringService.setMentorArea(mentorAreaDto);

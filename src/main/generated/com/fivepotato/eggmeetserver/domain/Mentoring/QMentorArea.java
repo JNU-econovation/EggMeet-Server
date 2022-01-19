@@ -28,7 +28,7 @@ public class QMentorArea extends EntityPathBase<MentorArea> {
 
     public final StringPath description = createString("description");
 
-    public final NumberPath<Integer> growthPoint = createNumber("growthPoint", Integer.class);
+    public final NumberPath<Integer> growthCost = createNumber("growthCost", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

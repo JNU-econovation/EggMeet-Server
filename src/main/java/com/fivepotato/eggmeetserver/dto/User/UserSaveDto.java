@@ -24,7 +24,7 @@ public class UserSaveDto {
     private String mentorDescription;
     private String mentorCareer;
     private String mentorLink;
-    private int mentorGrowthPoint;
+    private int mentorGrowthCost;
     private Category menteeCategory;
     private String menteeDescription;
 
@@ -38,7 +38,7 @@ public class UserSaveDto {
     }
 
     @Builder
-    public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthPoint, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
+    public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthCost, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
         this.nickname = nickname;
         this.age = age;
         this.sex = sex;
@@ -51,7 +51,7 @@ public class UserSaveDto {
         this.mentorDescription = mentorDescription;
         this.mentorCareer = mentorCareer;
         this.mentorLink = mentorLink;
-        this.mentorGrowthPoint = mentorGrowthPoint;
+        this.mentorGrowthCost = mentorGrowthCost;
         this.menteeCategory = menteeCategory;
         this.menteeDescription = menteeDescription;
         this.loginType = loginType;

@@ -33,16 +33,16 @@ public class MentorArea {
     private String link;
 
     @NotNull
-    private int growthPoint;
+    private int growthCost;
 
     @Builder
-    public MentorArea(User mentor, Category category, String description, String career, String link, int growthPoint) {
+    public MentorArea(User mentor, Category category, String description, String career, String link, int growthCost) {
         this.mentor = mentor;
         this.category = category;
         this.description = description;
         this.career = career;
         this.link = link;
-        this.growthPoint = growthPoint;
+        this.growthCost = growthCost;
     }
 
     public void updateMentorAreaByUserProfileUpdateDto(UserProfileUpdateDto userProfileUpdateDto) {

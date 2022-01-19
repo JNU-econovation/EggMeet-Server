@@ -14,7 +14,7 @@ public class MentorDto {
     private Long id;
     private String nickname;
     private float mentorRating;
-    private int growthPoint;
+    private int growthCost;
     private Category category;
     private Location location;
     private boolean isOnlineAvailable;
@@ -26,7 +26,7 @@ public class MentorDto {
         this.id = user.getId();
         this.nickname = user.getNickname();
         this.mentorRating = user.getMentorRating();
-        this.growthPoint = user.getMentorArea().getGrowthPoint();
+        this.growthCost = user.getMentorArea().getGrowthCost();
         this.category = user.getMentorArea().getCategory();
         this.location = user.getLocation();
         this.isOnlineAvailable = user.isOnlineAvailable();

@@ -56,9 +56,12 @@ public class User {
     private float menteeRating = 0.0f;
 
     @NotNull
-    private int point = 5;
+    private int growthPoint = 5;
 
-    // chats, messages, reporterReports, reporteeReports, blacklistUsers
+    @NotNull
+    private int growthGrade = 1;
+
+    // chats, messages, blocklist
 
     @NotNull
     @Enumerated(EnumType.STRING)

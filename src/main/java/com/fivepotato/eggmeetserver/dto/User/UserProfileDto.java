@@ -24,7 +24,7 @@ public class UserProfileDto {
     private String mentorDescription;
     private String mentorCareer;
     private String mentorLink;
-    private Integer mentorGrowthPoint;
+    private Integer mentorGrowthCost;
     private Category menteeCategory;
     private String menteeDescription;
     private float mentorRating;
@@ -43,7 +43,7 @@ public class UserProfileDto {
         this.mentorDescription = user.getMentorArea().getDescription();
         this.mentorCareer = user.getMentorArea().getCareer();
         this.mentorLink = user.getMentorArea().getLink();
-        this.mentorGrowthPoint = user.getMentorArea().getGrowthPoint();
+        this.mentorGrowthCost = user.getMentorArea().getGrowthCost();
         this.menteeCategory = user.getMenteeArea().getCategory();
         this.menteeDescription = user.getMenteeArea().getDescription();
         this.mentorRating = user.getMentorRating();
