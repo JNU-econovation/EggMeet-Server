@@ -3,7 +3,6 @@ package com.fivepotato.eggmeetserver;
 import com.fivepotato.eggmeetserver.domain.mentoring.*;
 import com.fivepotato.eggmeetserver.domain.user.*;
 import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
-import com.fivepotato.eggmeetserver.service.user.UserService;
 import org.junit.jupiter.api.*;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
 class UserQueryRepositoryTest {
 
@@ -35,7 +36,7 @@ class UserQueryRepositoryTest {
     @Autowired
     private UserQueryRepository userQueryRepository;
 
-    @BeforeAll
+    @BeforeEach
     void addTestUsers() {
         User user0 = User.builder()
                 .nickname("user0")
