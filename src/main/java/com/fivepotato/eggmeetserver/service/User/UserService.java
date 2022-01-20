@@ -94,6 +94,16 @@ public class UserService {
         return banRepository.existsByBannedLoginTypeAndBannedEmail(loginType, email);
     }
 
+    public List<MentorDto> getMentorDtosByNicknameSearching(Pageable pageable, String nickname) {
+        return userRepository.findUsersByMentorAreaIsNotNullAndNicknameContaining(pageable, nickname)
+                .stream().map(MentorDto::new).collect(Collectors.toList());
+    }
+
+    public List<MenteeDto> getMenteeDtosByNicknameSearching(Pageable pageable, String nickname) {
+        return userRepository.findUsersByMenteeAreaIsNotNullAndNicknameContaining(pageable, nickname)
+                .stream().map(MenteeDto::new).collect(Collectors.toList());
+    }
+
     @Transactional
     public void updateUserProfile(Long userId, UserProfileUpdateDto userProfileUpdateDto) {
         User user = getUserByUserId(userId);

@@ -92,6 +92,22 @@ public class UserApiController {
         );
     }
 
+    @GetMapping("/user/mentor/search")
+    public ResponseEntity<List<MentorDto>> getMentorDtosByNicknameSearching(Pageable pageable, @RequestParam(value = "keyword") String keyword) {
+        return new ResponseEntity<>(
+                userService.getMentorDtosByNicknameSearching(pageable, keyword),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/user/mentee/search")
+    public ResponseEntity<List<MenteeDto>> getMenteeDtosByNicknameSearching(Pageable pageable, @RequestParam(value = "keyword") String keyword) {
+        return new ResponseEntity<>(
+                userService.getMenteeDtosByNicknameSearching(pageable, keyword),
+                HttpStatus.OK
+        );
+    }
+
     @PutMapping("/user/profile/me")
     public ResponseEntity<Void> updateMyUserProfile(@RequestBody UserProfileUpdateDto userProfileUpdateDto) {
         Long myId = SecurityUtils.getCurrentUserId();
