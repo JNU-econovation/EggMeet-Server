@@ -16,7 +16,7 @@ public class StompChatController {
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     // "/pub/chat/room/enter"
     @MessageMapping("/chat/room/enter")
-    public void enterChatRoom(ChatMessageDto chatMessageDto) {
+    public void enterChatroom(ChatMessageDto chatMessageDto) {
         chatMessageDto.setMessage(chatMessageDto.getWriter() + "님이 채팅방에 참여했습니다.");
         template.convertAndSend("/sub/chat/room/" + chatMessageDto.getRoomId(), chatMessageDto);
     }

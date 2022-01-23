@@ -1,5 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.user;
 
+import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
+import com.fivepotato.eggmeetserver.domain.chat.Message;
 import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
 import com.fivepotato.eggmeetserver.domain.mentoring.MentorArea;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
@@ -9,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -61,7 +65,14 @@ public class User {
     @NotNull
     private int growthGrade = 1;
 
-    // chats, messages, blocklist
+    @ManyToMany
+    @JoinTable(name = "user_chatroom")
+    private List<Chatroom> chatrooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Message> messages = new ArrayList<>();
+
+    // blocklist, blockedlist?
 
     @NotNull
     @Enumerated(EnumType.STRING)

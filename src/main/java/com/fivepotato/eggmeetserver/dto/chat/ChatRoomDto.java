@@ -11,12 +11,12 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
-public class ChatRoomDto {
+public class ChatroomDto {
 
     private Long id;
 
     @Builder
-    public ChatRoomDto(Long id) {
+    public ChatroomDto(Long id) {
         this.id = id;
     }
 }

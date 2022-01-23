@@ -1,7 +1,7 @@
 package com.fivepotato.eggmeetserver.web.chat;
 
-import com.fivepotato.eggmeetserver.domain.chat.ChatRoomRepository;
-import com.fivepotato.eggmeetserver.dto.chat.ChatRoomDto;
+import com.fivepotato.eggmeetserver.domain.chat.ChatroomRepository;
+import com.fivepotato.eggmeetserver.dto.chat.ChatroomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,21 +15,21 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ChatRoomController {
+public class ChatroomController {
 
-    private final ChatRoomRepository chatRoomRepository;
+    private final ChatroomRepository chatroomRepository;
 
     @GetMapping("/chat/room/list")
-    public ResponseEntity<List<ChatRoomDto>> getRoomList() {
+    public ResponseEntity<List<ChatroomDto>> getRoomList() {
         return new ResponseEntity<>(
-                chatRoomRepository.findAllRooms(),
+                chatroomRepository.findAllRooms(),
                 HttpStatus.OK
         );
     }
 
     @PostMapping("/chat/room")
-    public ResponseEntity<Void> createChatRoom(@RequestBody ChatRoomDto chatRoomDto) {
-        chatRoomRepository.createChatRoomDto(chatRoomDto);
+    public ResponseEntity<Void> createChatroom(@RequestBody ChatroomDto chatroomDto) {
+        chatroomRepository.createChatroomDto(chatroomDto);
 
         return new ResponseEntity<>(
                 HttpStatus.OK
@@ -37,9 +37,9 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chat/room/{roomId}")
-    public ResponseEntity<ChatRoomDto> getChatRoomDtoByRoomId(@PathVariable Long roomId) {
+    public ResponseEntity<ChatroomDto> getChatroomDtoByRoomId(@PathVariable Long roomId) {
         return new ResponseEntity<>(
-                chatRoomRepository.findRoomByRoomId(roomId),
+                chatroomRepository.findRoomByRoomId(roomId),
                 HttpStatus.OK
         );
     }

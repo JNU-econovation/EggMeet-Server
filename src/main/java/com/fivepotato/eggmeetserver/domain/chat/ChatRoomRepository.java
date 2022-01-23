@@ -1,33 +1,33 @@
 package com.fivepotato.eggmeetserver.domain.chat;
 
-import com.fivepotato.eggmeetserver.dto.chat.ChatRoomDto;
+import com.fivepotato.eggmeetserver.dto.chat.ChatroomDto;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Repository
-public class ChatRoomRepository {
+public class ChatroomRepository {
 
-    private Map<Long, ChatRoomDto> chatRoomDtoMap;
+    private Map<Long, ChatroomDto> chatroomDtoMap;
 
     @PostConstruct
     private void init() {
-        chatRoomDtoMap = new LinkedHashMap<>();
+        chatroomDtoMap = new LinkedHashMap<>();
     }
 
-    public List<ChatRoomDto> findAllRooms() {
-        List<ChatRoomDto> chatRoomDtos = new ArrayList<>(chatRoomDtoMap.values());
-        Collections.reverse(chatRoomDtos);
+    public List<ChatroomDto> findAllRooms() {
+        List<ChatroomDto> chatroomDtos = new ArrayList<>(chatroomDtoMap.values());
+        Collections.reverse(chatroomDtos);
 
-        return chatRoomDtos;
+        return chatroomDtos;
     }
 
-    public ChatRoomDto findRoomByRoomId(Long roomId) {
-        return chatRoomDtoMap.get(roomId);
+    public ChatroomDto findRoomByRoomId(Long roomId) {
+        return chatroomDtoMap.get(roomId);
     }
 
-    public void createChatRoomDto(ChatRoomDto chatRoomDto) {
-        chatRoomDtoMap.put(chatRoomDto.getId(), chatRoomDto);
+    public void createChatroomDto(ChatroomDto chatroomDto) {
+        chatroomDtoMap.put(chatroomDto.getId(), chatroomDto);
     }
 }
