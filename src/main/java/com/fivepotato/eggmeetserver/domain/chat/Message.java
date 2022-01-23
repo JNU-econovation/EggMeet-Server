@@ -2,8 +2,8 @@ package com.fivepotato.eggmeetserver.domain.chat;
 
 import com.fivepotato.eggmeetserver.domain.BaseTimeEntity;
 import com.fivepotato.eggmeetserver.domain.user.User;
-import com.fivepotato.eggmeetserver.dto.chat.MessageType;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +32,12 @@ public class Message extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User writer;
+
+    @Builder
+    public Message(Chatroom chatroom, MessageType type, String content, User writer) {
+        this.chatroom = chatroom;
+        this.type = type;
+        this.content = content;
+        this.writer = writer;
+    }
 }

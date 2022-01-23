@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.web.chat;
 
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
+import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,8 @@ public class ChatroomController {
 
     @PostMapping("/chat/room")
     public ResponseEntity<Void> createChatroom(@RequestParam(value = "participantId") Long participantId) {
-        chatRoomService.createChatroom(participantId);
+        Long myId = SecurityUtils.getCurrentUserId();
+        chatRoomService.createChatroom(myId, participantId);
 
         return new ResponseEntity<>(
                 HttpStatus.OK
@@ -36,7 +38,7 @@ public class ChatroomController {
     @GetMapping("/chat/room/{roomId}")
     public ResponseEntity<ChatroomInfoDto> getChatroomDtoByRoomId(@PathVariable Long roomId) {
         return new ResponseEntity<>(
-                chatRoomService.findChatroomByRoomId(roomId),
+                chatRoomService.findChatroomInfoDtoByRoomId(roomId),
                 HttpStatus.OK
         );
     }

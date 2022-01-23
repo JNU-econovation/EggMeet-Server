@@ -24,6 +24,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
+    public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom> chatrooms = this.<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom>createList("chatrooms", com.fivepotato.eggmeetserver.domain.chat.Chatroom.class, com.fivepotato.eggmeetserver.domain.chat.QChatroom.class, PathInits.DIRECT2);
+
     public final StringPath description = createString("description");
 
     public final StringPath email = createString("email");
@@ -51,6 +53,8 @@ public class QUser extends EntityPathBase<User> {
     public final com.fivepotato.eggmeetserver.domain.mentoring.QMentorArea mentorArea;
 
     public final NumberPath<Float> mentorRating = createNumber("mentorRating", Float.class);
+
+    public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Message, com.fivepotato.eggmeetserver.domain.chat.QMessage> messages = this.<com.fivepotato.eggmeetserver.domain.chat.Message, com.fivepotato.eggmeetserver.domain.chat.QMessage>createList("messages", com.fivepotato.eggmeetserver.domain.chat.Message.class, com.fivepotato.eggmeetserver.domain.chat.QMessage.class, PathInits.DIRECT2);
 
     public final StringPath nickname = createString("nickname");
 
