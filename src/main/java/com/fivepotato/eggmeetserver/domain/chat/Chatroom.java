@@ -22,4 +22,12 @@ public class Chatroom {
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
+
+    public void enterParticipant(User user) {
+        participants.add(user);
+    }
+
+    public void exitParticipant(Long participantId) {
+        participants.removeIf(p -> p.getId().equals(participantId));
+    }
 }
