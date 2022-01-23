@@ -1,12 +1,13 @@
 package com.fivepotato.eggmeetserver.domain.chat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @NoArgsConstructor
 @Getter
@@ -17,17 +18,11 @@ public class Chatroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "chatrooms")
+    @ManyToMany(mappedBy = "chatrooms", fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<User> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonManagedReference
     private List<Message> messages = new ArrayList<>();
-
-    public void enterParticipant(User user) {
-        participants.add(user);
-    }
-
-    public void exitParticipant(Long participantId) {
-        participants.removeIf(p -> p.getId().equals(participantId));
-    }
 }

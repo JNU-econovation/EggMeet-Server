@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.Message;
 import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
@@ -66,10 +67,15 @@ public class User {
     private int growthGrade = 1;
 
     @ManyToMany
-    @JoinTable(name = "user_chatroom")
+    @JoinTable(
+            name = "user_chatroom",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chatroom_id")
+    )
     private List<Chatroom> chatrooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonManagedReference
     private List<Message> messages = new ArrayList<>();
 
     // blocklist, blockedlist?
@@ -110,5 +116,13 @@ public class User {
         this.pictureIndex = userProfileUpdateDto.getPictureIndex();
         this.isOnlineAvailable = userProfileUpdateDto.isOnlineAvailable();
         this.isOfflineAvailable = userProfileUpdateDto.isOfflineAvailable();
+    }
+
+    public void enterChatroom(Chatroom chatroom) {
+        this.chatrooms.add(chatroom);
+    }
+
+    public void exitChatroom(Chatroom chatroom) {
+        this.chatrooms.remove(chatroom);
     }
 }

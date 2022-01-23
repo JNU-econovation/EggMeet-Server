@@ -22,13 +22,15 @@ public class ChatroomService {
     private final UserService userService;
 
     @Transactional
-    public void createChatroom(Long myId, Long participantId) {
+    public Chatroom createChatroom(Long myId, Long participantId) {
         Chatroom chatroom = chatroomRepository.save(new Chatroom());
 
         User me = userService.getUserByUserId(myId);
         User participant = userService.getUserByUserId(participantId);
-        chatroom.enterParticipant(me);
-        chatroom.enterParticipant(participant);
+        me.enterChatroom(chatroom);
+        participant.enterChatroom(chatroom);
+
+        return chatroom;
     }
 
     public List<ChatroomInfoDto> findAllChatroom() {
@@ -43,5 +45,17 @@ public class ChatroomService {
     public ChatroomInfoDto findChatroomInfoDtoByRoomId(Long roomId) {
         Chatroom chatroom = findChatroomByRoomId(roomId);
         return new ChatroomInfoDto(chatroom);
+    }
+
+    @Transactional
+    public void deleteChatroomByChatroomId(long chatroomId) {
+        Chatroom chatroom = findChatroomByRoomId(chatroomId);
+        for (User participant : chatroom.getParticipants()) {
+            participant.exitChatroom(chatroom);
+        }
+//        chatroom.getParticipants().forEach(p -> p.exitChatroom(chatroom));
+//        chatroom.clearRoom();
+//        chatroomRepository.delete(chatroom);
+        chatroomRepository.delete(chatroom);
     }
 }

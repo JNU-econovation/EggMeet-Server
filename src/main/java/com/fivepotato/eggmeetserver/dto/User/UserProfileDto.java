@@ -39,14 +39,20 @@ public class UserProfileDto {
         this.pictureIndex = user.getPictureIndex();
         this.isOnlineAvailable = user.isOnlineAvailable();
         this.isOfflineAvailable = user.isOfflineAvailable();
-        this.mentorCategory = user.getMentorArea().getCategory();
-        this.mentorDescription = user.getMentorArea().getDescription();
-        this.mentorCareer = user.getMentorArea().getCareer();
-        this.mentorLink = user.getMentorArea().getLink();
-        this.mentorGrowthCost = user.getMentorArea().getGrowthCost();
-        this.menteeCategory = user.getMenteeArea().getCategory();
-        this.menteeDescription = user.getMenteeArea().getDescription();
         this.mentorRating = user.getMentorRating();
         this.menteeRating = user.getMenteeRating();
+
+        if (user.getMentorArea() != null) {
+            this.mentorCategory = user.getMentorArea().getCategory();
+            this.mentorDescription = user.getMentorArea().getDescription();
+            this.mentorCareer = user.getMentorArea().getCareer();
+            this.mentorLink = user.getMentorArea().getLink();
+            this.mentorGrowthCost = user.getMentorArea().getGrowthCost();
+        }
+
+        if (user.getMenteeArea() != null) {
+            this.menteeCategory = user.getMenteeArea().getCategory();
+            this.menteeDescription = user.getMenteeArea().getDescription();
+        }
     }
 }

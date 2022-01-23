@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.domain.mentoring;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.sun.istack.NotNull;

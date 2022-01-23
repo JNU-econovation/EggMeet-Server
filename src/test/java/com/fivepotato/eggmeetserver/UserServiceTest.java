@@ -8,17 +8,14 @@ import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.service.user.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTest {
 
-    @Value("${backdoor-token-secret}")
-    private String BACKDOOR_TOKEN;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -29,13 +26,12 @@ class UserServiceTest {
     @Autowired
     private MenteeAreaRepository menteeAreaRepository;
 
-    private User testUser;
-    private MentorArea testMentorArea;
-    private MenteeArea testMenteeArea;
 
-    @BeforeEach
+    @BeforeAll
     void addTestUser() {
-        testUser = User.builder()
+        userRepository.deleteAll();
+
+        User user = User.builder()
                 .nickname("user")
                 .age(10)
                 .sex(Sex.MALE)
@@ -49,48 +45,50 @@ class UserServiceTest {
                 .encodedEmail("user@user.com")
                 .role(Role.ROLE_USER)
                 .build();
-        testMentorArea = MentorArea.builder()
-                .mentor(testUser)
+        MentorArea mentorArea = MentorArea.builder()
+                .mentor(user)
                 .category(Category.PROGRAMMING_JAVA)
                 .description("userDescription")
                 .career("userCareer")
                 .link("userLink")
                 .growthCost(1)
                 .build();
-        testMenteeArea = MenteeArea.builder()
-                .mentee(testUser)
+        MenteeArea menteeArea = MenteeArea.builder()
+                .mentee(user)
                 .category(Category.PROGRAMMING_PYTHON)
                 .description("userDescription")
                 .build();
 
-        userService.createUser(testUser);
-        mentorAreaRepository.save(testMentorArea);
-        menteeAreaRepository.save(testMenteeArea);
+        userService.createUser(user);
+        mentorAreaRepository.save(mentorArea);
+        menteeAreaRepository.save(menteeArea);
     }
 
     @Test
     @DisplayName("유저 정보 업데이트가 작동하는가?")
     void test_updateUserProfile_update_nicknameAndMentorCategoryMenteeCategory() {
+        User originUser = userService.getUserByEmail("user@user.com");
+
         UserProfileUpdateDto userProfileUpdateDto = UserProfileUpdateDto.builder()
                 .nickname("user999")
-                .location(testUser.getLocation())
-                .description(testUser.getDescription())
-                .pictureIndex(testUser.getPictureIndex())
-                .isOnlineAvailable(testUser.isOnlineAvailable())
-                .isOfflineAvailable(testUser.isOfflineAvailable())
+                .location(originUser.getLocation())
+                .description(originUser.getDescription())
+                .pictureIndex(originUser.getPictureIndex())
+                .isOnlineAvailable(originUser.isOnlineAvailable())
+                .isOfflineAvailable(originUser.isOfflineAvailable())
                 .mentorCategory(Category.PROGRAMMING_PYTHON)
-                .mentorDescription(testMentorArea.getDescription())
-                .mentorCareer(testMentorArea.getCareer())
-                .mentorLink(testMentorArea.getLink())
-                .mentorGrowthCost(testMentorArea.getGrowthCost())
+                .mentorDescription(originUser.getMentorArea().getDescription())
+                .mentorCareer(originUser.getMentorArea().getCareer())
+                .mentorLink(originUser.getMentorArea().getLink())
+                .mentorGrowthCost(originUser.getMentorArea().getGrowthCost())
                 .menteeCategory(Category.PROGRAMMING_JAVA)
-                .menteeDescription(testMenteeArea.getDescription())
+                .menteeDescription(originUser.getMenteeArea().getDescription())
                 .build();
-        userService.updateUserProfile(1L, userProfileUpdateDto);
+        userService.updateUserProfile(originUser.getId(), userProfileUpdateDto);
 
-        User user = userService.getUserByUserId(1L);
-        Assertions.assertEquals(userProfileUpdateDto.getNickname(), user.getNickname());
-        Assertions.assertEquals(userProfileUpdateDto.getMentorCategory(), user.getMentorArea().getCategory());
-        Assertions.assertEquals(userProfileUpdateDto.getMenteeCategory(), user.getMenteeArea().getCategory());
+        User updatedUser = userService.getUserByUserId(originUser.getId());
+        Assertions.assertEquals(userProfileUpdateDto.getNickname(), updatedUser.getNickname());
+        Assertions.assertEquals(userProfileUpdateDto.getMentorCategory(), updatedUser.getMentorArea().getCategory());
+        Assertions.assertEquals(userProfileUpdateDto.getMenteeCategory(), updatedUser.getMenteeArea().getCategory());
     }
 }

@@ -3,29 +3,26 @@ package com.fivepotato.eggmeetserver;
 import com.fivepotato.eggmeetserver.domain.mentoring.*;
 import com.fivepotato.eggmeetserver.domain.user.*;
 import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
+import com.fivepotato.eggmeetserver.service.user.UserAdminService;
 import org.junit.jupiter.api.*;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserQueryRepositoryTest {
-
-    @Value("${backdoor-token-secret}")
-    private String BACKDOOR_TOKEN;
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserAdminService userAdminService;
 
     @Autowired
     private MentorAreaRepository mentorAreaRepository;
@@ -36,8 +33,10 @@ class UserQueryRepositoryTest {
     @Autowired
     private UserQueryRepository userQueryRepository;
 
-    @BeforeEach
+    @BeforeAll
     void addTestUsers() {
+        userRepository.deleteAll();
+
         User user0 = User.builder()
                 .nickname("user0")
                 .age(10)
