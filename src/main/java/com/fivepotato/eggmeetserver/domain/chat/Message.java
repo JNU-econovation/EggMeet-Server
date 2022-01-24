@@ -30,7 +30,7 @@ public class Message extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "writer_id")
     private User writer;
 
     @Builder

@@ -10,6 +10,7 @@ import com.fivepotato.eggmeetserver.service.user.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class ChatServiceTest {
@@ -109,7 +110,10 @@ class ChatServiceTest {
         // 채팅방 삭제가 DB에 반영되었는지?
         Assertions.assertEquals(0, chatroomService.findAllChatroom().size());
 
-        // 채팅방 삭제가 유저 entity에게 영향을 미치지 않은지?
+        // 채팅방 삭제가 유저 엔티티의 컬럼에도 반영 되었는지?
+//        Assertions.assertEquals(0, user0.getChatrooms().size());
+
+        // 채팅방 삭제가 유저 엔티티에게 영향을 미치지 않은지?
         Assertions.assertTrue(userRepository.existsByNickname("user0"));
         Assertions.assertTrue(userRepository.existsByNickname("user1"));
     }

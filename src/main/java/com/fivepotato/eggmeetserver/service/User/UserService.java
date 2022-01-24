@@ -1,11 +1,9 @@
 package com.fivepotato.eggmeetserver.service.user;
 
 import com.fivepotato.eggmeetserver.domain.ban.BanRepository;
-import com.fivepotato.eggmeetserver.domain.mentoring.Category;
+import com.fivepotato.eggmeetserver.domain.mentoring.*;
 import com.fivepotato.eggmeetserver.domain.user.*;
-import com.fivepotato.eggmeetserver.dto.mentoring.MenteeDto;
-import com.fivepotato.eggmeetserver.dto.mentoring.MentorDto;
-import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
+import com.fivepotato.eggmeetserver.dto.mentoring.*;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
@@ -25,12 +23,51 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserQueryRepository userQueryRepository;
-    private final MentoringService mentoringService;
+    private final MentorAreaRepository mentorAreaRepository;
+    private final MenteeAreaRepository menteeAreaRepository;
     private final BanRepository banRepository;
 
 
     public void createUser(User user) {
         userRepository.save(user);
+    }
+
+    public void setMentorArea(MentorAreaDto mentorAreaDto) {
+        mentorAreaRepository.save(mentorAreaDto.toEntity());
+    }
+
+    public void setMenteeArea(MenteeAreaDto menteeAreaDto) {
+        menteeAreaRepository.save(menteeAreaDto.toEntity());
+    }
+
+    public MentorArea getMentorAreaByMentorId(Long mentorId) {
+        return mentorAreaRepository.findByMentor_Id(mentorId)
+                .orElseThrow(() -> new NoContentException(ErrorCode.NO_MENTOR_AREA_BY_USER + mentorId));
+    }
+
+    public MenteeArea getMenteeAreaByMentorId(Long menteeId) {
+        return menteeAreaRepository.findByMentee_Id(menteeId)
+                .orElseThrow(() -> new NoContentException(ErrorCode.NO_MENTEE_AREA_BY_USER + menteeId));
+    }
+
+    @Transactional
+    public void updateMentorAreaByMentorId(Long mentorId, UserProfileUpdateDto userProfileUpdateDto) {
+        try {
+            MentorArea mentorArea = getMentorAreaByMentorId(mentorId);
+            mentorArea.updateMentorAreaByUserProfileUpdateDto(userProfileUpdateDto);
+        } catch (NoContentException ignored) {
+
+        }
+    }
+
+    @Transactional
+    public void updateMenteeAreaByMenteeId(Long menteeId, UserProfileUpdateDto userProfileUpdateDto) {
+        try {
+            MenteeArea menteeArea = getMenteeAreaByMentorId(menteeId);
+            menteeArea.updateMenteeAreaByUserProfileUpdateDto(userProfileUpdateDto);
+        } catch (NoContentException ignored) {
+
+        }
     }
 
     public Boolean getIsExistUserByEmail(LoginType loginType, String email) {
@@ -108,7 +145,7 @@ public class UserService {
     public void updateUserProfile(Long userId, UserProfileUpdateDto userProfileUpdateDto) {
         User user = getUserByUserId(userId);
         user.updateUserProfile(userProfileUpdateDto);
-        mentoringService.updateMentorAreaByMentorId(userId, userProfileUpdateDto);
-        mentoringService.updateMenteeAreaByMenteeId(userId, userProfileUpdateDto);
+        updateMentorAreaByMentorId(userId, userProfileUpdateDto);
+        updateMenteeAreaByMenteeId(userId, userProfileUpdateDto);
     }
 }

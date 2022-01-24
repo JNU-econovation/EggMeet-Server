@@ -57,7 +57,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final MentoringService mentoringService;
+
 
     public boolean getIsExistUserByNickname(String name) {
         return userService.getIsExistUserByNickname(name);
@@ -79,7 +79,7 @@ public class AuthService {
                     .growthCost(userSaveDto.getMentorGrowthCost())
                     .build();
 
-            mentoringService.setMentorArea(mentorAreaDto);
+            userService.setMentorArea(mentorAreaDto);
         }
 
         if (userSaveDto.getMenteeCategory() != null) {
@@ -89,7 +89,7 @@ public class AuthService {
                     .description(userSaveDto.getMenteeDescription())
                     .build();
 
-            mentoringService.setMenteeArea(menteeAreaDto);
+            userService.setMenteeArea(menteeAreaDto);
         }
     }
 

@@ -48,9 +48,13 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.fivepotato.eggmeetserver.domain.mentoring.QMenteeArea menteeArea;
 
+    public final ListPath<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring> menteeMentoring = this.<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring>createList("menteeMentoring", com.fivepotato.eggmeetserver.domain.mentoring.Mentoring.class, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring.class, PathInits.DIRECT2);
+
     public final NumberPath<Float> menteeRating = createNumber("menteeRating", Float.class);
 
     public final com.fivepotato.eggmeetserver.domain.mentoring.QMentorArea mentorArea;
+
+    public final ListPath<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring> mentorMentoring = this.<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring>createList("mentorMentoring", com.fivepotato.eggmeetserver.domain.mentoring.Mentoring.class, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring.class, PathInits.DIRECT2);
 
     public final NumberPath<Float> mentorRating = createNumber("mentorRating", Float.class);
 

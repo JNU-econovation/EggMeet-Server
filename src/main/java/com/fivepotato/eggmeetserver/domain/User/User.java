@@ -5,6 +5,7 @@ import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.Message;
 import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
 import com.fivepotato.eggmeetserver.domain.mentoring.MentorArea;
+import com.fivepotato.eggmeetserver.domain.mentoring.Mentoring;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
@@ -54,6 +55,12 @@ public class User {
     @OneToOne(mappedBy = "mentee", orphanRemoval = true)
     private MenteeArea menteeArea;
 
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Mentoring> mentorMentoring = new ArrayList<>();
+
+    @OneToMany(mappedBy = "mentee", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Mentoring>  menteeMentoring = new ArrayList<>();
+
     @NotNull
     private float mentorRating = 0.0f;
 
@@ -75,7 +82,6 @@ public class User {
     private List<Chatroom> chatrooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonManagedReference
     private List<Message> messages = new ArrayList<>();
 
     // blocklist, blockedlist?

@@ -53,9 +53,7 @@ public class ChatroomService {
         for (User participant : chatroom.getParticipants()) {
             participant.exitChatroom(chatroom);
         }
-//        chatroom.getParticipants().forEach(p -> p.exitChatroom(chatroom));
-//        chatroom.clearRoom();
-//        chatroomRepository.delete(chatroom);
+
         chatroomRepository.delete(chatroom);
     }
 }
