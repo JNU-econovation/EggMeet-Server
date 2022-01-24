@@ -74,6 +74,24 @@ public class MentoringApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @DeleteMapping("/mentoring/request")
-//    public ResponseEntity<Void> denyRequestedMentoring(@RequestParam(value = "requestId") Long requestId)
+    @DeleteMapping("/mentoring/request")
+    public ResponseEntity<Void> denyRequestedMentoring(@RequestParam(value = "requestId") Long requestId) {
+        mentoringService.denyRequestedMentoring(requestId);
+
+        long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTOR_SYSTEM)
+                        .content(SystemMessageContent.MENTORING_REJECT)
+                        .build()
+        );
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTEE_SYSTEM)
+                        .content(SystemMessageContent.MENTORING_REJECT)
+                        .build()
+        );
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

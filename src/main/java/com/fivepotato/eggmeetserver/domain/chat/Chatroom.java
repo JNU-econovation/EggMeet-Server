@@ -28,7 +28,6 @@ public class Chatroom {
     @JsonManagedReference
     private List<Message> messages = new ArrayList<>();
 
-    @NotNull
     @OneToOne(mappedBy = "chatroom", orphanRemoval = true)
     private Mentoring mentoring;
 }

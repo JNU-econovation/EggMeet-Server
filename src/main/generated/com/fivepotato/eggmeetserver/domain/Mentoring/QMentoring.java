@@ -22,6 +22,8 @@ public class QMentoring extends EntityPathBase<Mentoring> {
 
     public static final QMentoring mentoring = new QMentoring("mentoring");
 
+    public final com.fivepotato.eggmeetserver.domain.chat.QChatroom chatroom;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isPending = createBoolean("isPending");
@@ -50,6 +52,7 @@ public class QMentoring extends EntityPathBase<Mentoring> {
 
     public QMentoring(Class<? extends Mentoring> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.chatroom = inits.isInitialized("chatroom") ? new com.fivepotato.eggmeetserver.domain.chat.QChatroom(forProperty("chatroom"), inits.get("chatroom")) : null;
         this.mentee = inits.isInitialized("mentee") ? new com.fivepotato.eggmeetserver.domain.user.QUser(forProperty("mentee"), inits.get("mentee")) : null;
         this.mentor = inits.isInitialized("mentor") ? new com.fivepotato.eggmeetserver.domain.user.QUser(forProperty("mentor"), inits.get("mentor")) : null;
     }

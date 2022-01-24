@@ -31,7 +31,6 @@ public class Mentoring {
     @JoinColumn(name = "mentee_id")
     private User mentee;
 
-    @NotNull
     @OneToOne
     @JoinColumn(name = "chatroom_id")
     private Chatroom chatroom;

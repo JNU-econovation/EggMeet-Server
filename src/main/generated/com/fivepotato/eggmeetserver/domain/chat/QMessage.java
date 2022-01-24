@@ -58,7 +58,7 @@ public class QMessage extends EntityPathBase<Message> {
 
     public QMessage(Class<? extends Message> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.chatroom = inits.isInitialized("chatroom") ? new QChatroom(forProperty("chatroom")) : null;
+        this.chatroom = inits.isInitialized("chatroom") ? new QChatroom(forProperty("chatroom"), inits.get("chatroom")) : null;
         this.writer = inits.isInitialized("writer") ? new com.fivepotato.eggmeetserver.domain.user.QUser(forProperty("writer"), inits.get("writer")) : null;
     }
 
