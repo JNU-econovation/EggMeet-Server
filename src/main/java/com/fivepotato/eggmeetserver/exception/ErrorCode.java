@@ -23,6 +23,7 @@ public enum ErrorCode {
     public static String NO_MENTOR_AREA_BY_USER = "해당 유저는 멘토 설정이 되어있지 않음 : mentorId = ";
     public static String NO_MENTEE_AREA_BY_USER = "해당 유저는 멘티 설정이 되어있지 않음 : menteeId = ";
     public static String NO_CHATROOM_BY_ROOMID = "해당 ID와 일치하는 채팅방이 없음 : roomId = ";
+    public static String NO_MENTORING_BY_MENTORINGID = "해당 ID와 일치하는 멘토링이 없음 : mentoringId = ";
 
 
     public static String SYSTEM_IO_ERROR_MESSAGE = "서버의 IO 과정에서 문제 발생";

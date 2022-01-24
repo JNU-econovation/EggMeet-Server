@@ -2,7 +2,9 @@ package com.fivepotato.eggmeetserver.domain.chat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fivepotato.eggmeetserver.domain.mentoring.Mentoring;
 import com.fivepotato.eggmeetserver.domain.user.User;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +27,8 @@ public class Chatroom {
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonManagedReference
     private List<Message> messages = new ArrayList<>();
+
+    @NotNull
+    @OneToOne(mappedBy = "chatroom", orphanRemoval = true)
+    private Mentoring mentoring;
 }

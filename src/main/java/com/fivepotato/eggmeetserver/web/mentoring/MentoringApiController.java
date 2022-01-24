@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.web.mentoring;
 
+import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
@@ -21,31 +22,58 @@ public class MentoringApiController {
     private final StompChatController stompChatController;
 
     @PostMapping("/mentoring/request")
-    public ResponseEntity<Long> sendMentoringRequestAndGetChatroomId(@RequestParam(value = "mentorId") Long mentorId) {
+    public ResponseEntity<Void> sendMentoringRequest(@RequestParam(value = "mentorId") Long mentorId) {
         Long myId = SecurityUtils.getCurrentUserId();
-        mentoringService.createMentoring(myId, mentorId);
+        Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
 
-        Long chatroomId = chatroomService.createChatroom(myId, mentorId).getId();
+        mentoringService.createMentoring(myId, mentorId, chatroom);
 
-        stompChatController.sendSystemMessage(chatroomId,
+        stompChatController.sendSystemMessage(chatroom.getId(),
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTEE_SYSTEM)
                         .content(SystemMessageContent.MENTORING_REQUEST)
                         .build()
         );
-
-        return new ResponseEntity<>(
-                chatroomId,
-                HttpStatus.OK
+        stompChatController.sendSystemMessage(chatroom.getId(),
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTOR_SYSTEM)
+                        .content(SystemMessageContent.MENTORING_REQUEST)
+                        .build()
         );
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @GetMapping("/mentoring/request")
 //    public ResponseEntity<List<MentoringRequestDto>> getAllMentoringRequestDtos()
 
-//    @PutMapping("/mentoring/request")
-//    public ResponseEntity<Long> acceptMentoringRequestAndGetChatroomId(@RequestParam(value = "requestId") Long requestId)
+    @PutMapping("/mentoring/request")
+    public ResponseEntity<Void> acceptRequestedMentoring(@RequestParam(value = "requestId") Long requestId) {
+        mentoringService.acceptRequestedMentoring(requestId);
+
+        long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTOR_SYSTEM)
+                        .content(SystemMessageContent.MENTORING_ACCEPT)
+                        .build()
+        );
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTEE_SYSTEM)
+                        .content(SystemMessageContent.MENTORING_ACCEPT)
+                        .build()
+        );
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTEE_SYSTEM)
+                        .content(SystemMessageContent.REGISTER_SCHEDULE)
+                        .build()
+        );
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 //    @DeleteMapping("/mentoring/request")
-//    public ResponseEntity<Void> denyMentoringRequest(@RequestParam(value = "requestId") Long requestId)
+//    public ResponseEntity<Void> denyRequestedMentoring(@RequestParam(value = "requestId") Long requestId)
 }
