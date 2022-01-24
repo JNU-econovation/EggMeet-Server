@@ -5,21 +5,27 @@ import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.ZoneOffset;
+
 @Getter
 @NoArgsConstructor
 public class MessageInfoDto {
 
     private Long id;
-    private MessageType type;
-    private String content;
+    private Long chatroomId;
     private Long writerId;
     private String writerNickname;
+    private MessageType type;
+    private String content;
+    private Long dateTime;
 
     public MessageInfoDto(Message message) {
         this.id = message.getId();
-        this.type = message.getType();
-        this.content = message.getContent();
+        this.chatroomId = message.getChatroom().getId();
         this.writerId = message.getWriter().getId();
         this.writerNickname = message.getWriter().getNickname();
+        this.type = message.getType();
+        this.content = message.getContent();
+        this.dateTime = message.getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
     }
 }
