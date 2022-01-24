@@ -58,9 +58,8 @@ public class ChatroomService {
         return new ChatroomTempInfoDto(chatroom);
     }
 
-    public boolean isParticipantByChatroomId(long chatroomId) {
-        Long myId = SecurityUtils.getCurrentUserId();
-        return chatroomQueryRepository.isParticipantByChatroomId(chatroomId, myId);
+    public boolean isParticipantByChatroomId(long chatroomId, long userId) {
+        return chatroomQueryRepository.isParticipantByChatroomId(chatroomId, userId);
     }
 
     @Transactional

@@ -26,11 +26,11 @@ public class StompChatController {
     // "/pub/chat/room/enter"
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendMessage(@DestinationVariable Long roomId, MessageSaveDto messageSaveDto) {
-        if (!chatroomService.isParticipantByChatroomId(roomId)) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
         }
 
-        Long myId = SecurityUtils.getCurrentUserId();
         messageService.createMessage(roomId, myId, messageSaveDto);
 
         template.convertAndSend("/sub/chat/room/" + roomId, messageSaveDto);
