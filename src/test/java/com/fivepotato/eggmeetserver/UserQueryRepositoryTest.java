@@ -3,7 +3,6 @@ package com.fivepotato.eggmeetserver;
 import com.fivepotato.eggmeetserver.domain.mentoring.*;
 import com.fivepotato.eggmeetserver.domain.user.*;
 import com.fivepotato.eggmeetserver.dto.mentoring.SortOrder;
-import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
 import com.fivepotato.eggmeetserver.service.user.UserAdminService;
 import org.junit.jupiter.api.*;
 import org.assertj.core.api.Assertions;
@@ -233,7 +232,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2", "user5");
     }
@@ -251,7 +250,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user1", "user2");
     }
@@ -269,7 +268,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user3", "user4");
     }
@@ -287,7 +286,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user4", "user5");
     }
@@ -305,7 +304,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user3", "user4");
     }
@@ -323,7 +322,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user2", "user5");
     }
@@ -341,7 +340,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user2");
     }
@@ -359,7 +358,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user5", "user1", "user2", "user3", "user4");
     }
@@ -377,7 +376,7 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.DESCENDING;
 
-        List<String> names = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> names = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(names).containsExactly("user4", "user3", "user2", "user1", "user5");
     }
@@ -396,11 +395,11 @@ class UserQueryRepositoryTest {
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
-        List<String> firstNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(firstPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> firstNames = userQueryRepository.findAllByMultipleConditionsOnPageable(firstPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(firstNames.size()).isEqualTo(1);
 
-        List<String> secondNames = userQueryRepository.findMentorsByMultipleConditionsOnPageable(secondPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
+        List<String> secondNames = userQueryRepository.findAllByMultipleConditionsOnPageable(secondPageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder)
                 .stream().map(User::getNickname).collect(Collectors.toList());
         Assertions.assertThat(secondNames.size()).isEqualTo(1);
 

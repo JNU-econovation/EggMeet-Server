@@ -24,15 +24,15 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public List<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable,
-                                                                Location location,
-                                                                Sex sex,
-                                                                Integer age,
-                                                                Boolean isOnlineAvailable,
-                                                                Boolean isOfflineAvailable,
-                                                                Category mentorCategory,
-                                                                SortOrder mentorRatingSortOrder,
-                                                                SortOrder growthPointOrder) {
+    public List<User> findAllByMultipleConditionsOnPageable(Pageable pageable,
+                                                            Location location,
+                                                            Sex sex,
+                                                            Integer age,
+                                                            Boolean isOnlineAvailable,
+                                                            Boolean isOfflineAvailable,
+                                                            Category mentorCategory,
+                                                            SortOrder mentorRatingSortOrder,
+                                                            SortOrder growthPointOrder) {
         List<OrderSpecifier> orders = new ArrayList<>();
         if (mentorRatingSortOrder != null) {
             orders.add(orderByMentorRating(mentorRatingSortOrder));

@@ -1,12 +1,15 @@
 package com.fivepotato.eggmeetserver.service.chat;
 
 import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
+import com.fivepotato.eggmeetserver.domain.chat.ChatroomQueryRepository;
 import com.fivepotato.eggmeetserver.domain.chat.ChatroomRepository;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
+import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.NoContentException;
 import com.fivepotato.eggmeetserver.service.user.UserService;
+import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class ChatroomService {
 
     private final ChatroomRepository chatroomRepository;
+    private final ChatroomQueryRepository chatroomQueryRepository;
     private final UserService userService;
 
     @Transactional
@@ -33,8 +37,8 @@ public class ChatroomService {
         return chatroom;
     }
 
-    public List<ChatroomInfoDto> findAllChatroom() {
-        return chatroomRepository.findAll().stream().map(ChatroomInfoDto::new).collect(Collectors.toList());
+    public List<ChatroomTempInfoDto> findAllChatroom() {
+        return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
     }
 
     public Chatroom findChatroomByRoomId(long roomId) {
@@ -42,9 +46,16 @@ public class ChatroomService {
                 .orElseThrow(() -> new NoContentException(ErrorCode.NO_CHATROOM_BY_ROOMID + roomId));
     }
 
-    public ChatroomInfoDto findChatroomInfoDtoByRoomId(Long roomId) {
+    public List<ChatroomInfoDto> getMyChatroomInfoDtos() {
+        Long myId = SecurityUtils.getCurrentUserId();
+
+        return chatroomQueryRepository.findAllByParticipantsContainsUserId(myId)
+                .stream().map(ChatroomInfoDto::new).collect(Collectors.toList());
+    }
+
+    public ChatroomTempInfoDto findChatroomInfoDtoByRoomId(Long roomId) {
         Chatroom chatroom = findChatroomByRoomId(roomId);
-        return new ChatroomInfoDto(chatroom);
+        return new ChatroomTempInfoDto(chatroom);
     }
 
     @Transactional

@@ -8,7 +8,6 @@ import com.fivepotato.eggmeetserver.dto.user.UserProfileDto;
 import com.fivepotato.eggmeetserver.dto.user.UserProfileUpdateDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.NoContentException;
-import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -109,7 +108,7 @@ public class UserService {
                                                                        Category category,
                                                                        SortOrder mentorRatingSortOrder,
                                                                        SortOrder growthPointSortOrder) {
-        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
+        List<User> users = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
 
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
