@@ -5,8 +5,9 @@ import com.fivepotato.eggmeetserver.domain.chat.Message;
 import com.fivepotato.eggmeetserver.domain.chat.MessageRepository;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
-import com.fivepotato.eggmeetserver.dto.chat.MessageSaveDto;
+import com.fivepotato.eggmeetserver.dto.chat.PersonalMessageSaveDto;
 import com.fivepotato.eggmeetserver.domain.chat.MessageType;
+import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
 import com.fivepotato.eggmeetserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,32 @@ public class MessageService {
     private final ChatroomService chatroomService;
     private final UserService userService;
 
-    public void createMessage(Long chatroomId, Long myId, MessageSaveDto messageSaveDto) {
+    public MessageInfoDto createPersonalMessage(Long chatroomId, Long writerId, PersonalMessageSaveDto personalMessageSaveDto) {
         Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
-        User me = userService.getUserByUserId(myId);
-        Message message = Message.builder()
-                .chatroom(chatroom)
-                .type(MessageType.MESSAGE)
-                .content(messageSaveDto.getMessage())
-                .writer(me)
-                .build();
+        User me = userService.getUserByUserId(writerId);
+        Message message = messageRepository.save(
+                Message.builder()
+                        .chatroom(chatroom)
+                        .type(MessageType.MESSAGE)
+                        .content(personalMessageSaveDto.getContent())
+                        .writer(me)
+                        .build()
+        );
 
-        messageRepository.save(message);
+        return new MessageInfoDto(message);
+    }
+
+    public MessageInfoDto createSystemMessage(Long chatroomId, SystemMessageSaveDto systemMessageSaveDto) {
+        Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
+        Message message = messageRepository.save(
+                Message.builder()
+                        .chatroom(chatroom)
+                        .type(systemMessageSaveDto.getType())
+                        .content(systemMessageSaveDto.getContent().toString())
+                        .build()
+        );
+
+        return new MessageInfoDto(message);
     }
 
     public List<MessageInfoDto> getMessagesByChatroomId(Long chatroomId) {

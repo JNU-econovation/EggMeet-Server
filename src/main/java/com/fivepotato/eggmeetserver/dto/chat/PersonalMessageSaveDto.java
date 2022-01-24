@@ -7,12 +7,12 @@ import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
-public class MessageSaveDto {
+public class PersonalMessageSaveDto {
 
-    private String message;
+    private String content;
 
     @Builder
-    public MessageSaveDto(String message) {
-        this.message = message;
+    public PersonalMessageSaveDto(String content) {
+        this.content = content;
     }
 }
