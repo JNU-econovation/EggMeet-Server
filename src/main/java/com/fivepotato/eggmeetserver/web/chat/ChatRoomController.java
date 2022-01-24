@@ -22,7 +22,7 @@ public class ChatroomController {
     @GetMapping("/chat/room/list")
     public ResponseEntity<List<ChatroomTempInfoDto>> getRoomList() {
         return new ResponseEntity<>(
-                chatRoomService.findAllChatroom(),
+                chatRoomService.getAllChatroom(),
                 HttpStatus.OK
         );
     }
@@ -42,7 +42,7 @@ public class ChatroomController {
     @GetMapping("/chat/room/{roomId}")
     public ResponseEntity<ChatroomTempInfoDto> getChatroomDtoByRoomId(@PathVariable Long roomId) {
         return new ResponseEntity<>(
-                chatRoomService.findChatroomInfoDtoByRoomId(roomId),
+                chatRoomService.getChatroomInfoDtoByRoomId(roomId),
                 HttpStatus.OK
         );
     }

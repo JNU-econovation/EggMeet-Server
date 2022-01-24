@@ -23,7 +23,7 @@ public class MessageService {
     private final UserService userService;
 
     public void createMessage(Long chatroomId, Long myId, MessageSaveDto messageSaveDto) {
-        Chatroom chatroom = chatroomService.findChatroomByRoomId(chatroomId);
+        Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
         User me = userService.getUserByUserId(myId);
         Message message = Message.builder()
                 .chatroom(chatroom)

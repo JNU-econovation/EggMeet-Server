@@ -1,6 +1,8 @@
 package com.fivepotato.eggmeetserver.web.chat;
 
 import com.fivepotato.eggmeetserver.dto.chat.MessageSaveDto;
+import com.fivepotato.eggmeetserver.exception.NoContentException;
+import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.service.chat.MessageService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class StompChatController {
 
     private final MessageService messageService;
+    private final ChatroomService chatroomService;
 
     // 특정 Broker로 메세지 전달
     private final SimpMessagingTemplate template;
@@ -23,6 +26,10 @@ public class StompChatController {
     // "/pub/chat/room/enter"
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendMessage(@DestinationVariable Long roomId, MessageSaveDto messageSaveDto) {
+        if (!chatroomService.isParticipantByChatroomId(roomId)) {
+            throw new IllegalArgumentException();
+        }
+
         Long myId = SecurityUtils.getCurrentUserId();
         messageService.createMessage(roomId, myId, messageSaveDto);
 

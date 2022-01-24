@@ -37,11 +37,11 @@ public class ChatroomService {
         return chatroom;
     }
 
-    public List<ChatroomTempInfoDto> findAllChatroom() {
+    public List<ChatroomTempInfoDto> getAllChatroom() {
         return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
     }
 
-    public Chatroom findChatroomByRoomId(long roomId) {
+    public Chatroom getChatroomByRoomId(long roomId) {
         return chatroomRepository.findById(roomId)
                 .orElseThrow(() -> new NoContentException(ErrorCode.NO_CHATROOM_BY_ROOMID + roomId));
     }
@@ -53,14 +53,19 @@ public class ChatroomService {
                 .stream().map(ChatroomInfoDto::new).collect(Collectors.toList());
     }
 
-    public ChatroomTempInfoDto findChatroomInfoDtoByRoomId(Long roomId) {
-        Chatroom chatroom = findChatroomByRoomId(roomId);
+    public ChatroomTempInfoDto getChatroomInfoDtoByRoomId(Long roomId) {
+        Chatroom chatroom = getChatroomByRoomId(roomId);
         return new ChatroomTempInfoDto(chatroom);
+    }
+
+    public boolean isParticipantByChatroomId(long chatroomId) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        return chatroomQueryRepository.isParticipantByChatroomId(chatroomId, myId);
     }
 
     @Transactional
     public void deleteChatroomByChatroomId(long chatroomId) {
-        Chatroom chatroom = findChatroomByRoomId(chatroomId);
+        Chatroom chatroom = getChatroomByRoomId(chatroomId);
         for (User participant : chatroom.getParticipants()) {
             participant.exitChatroom(chatroom);
         }
