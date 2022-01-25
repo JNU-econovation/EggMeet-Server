@@ -67,7 +67,7 @@ public class MentoringApiController {
         stompChatController.sendSystemMessage(chatroomId,
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTEE_SYSTEM)
-                        .content(SystemMessageContent.REGISTER_SCHEDULE)
+                        .content(SystemMessageContent.SCHEDULE_REQUEST)
                         .build()
         );
 
