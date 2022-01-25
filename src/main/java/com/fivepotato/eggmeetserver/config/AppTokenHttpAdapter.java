@@ -10,11 +10,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 // 직접 만든 AppTokenProvider 와 AppTokenFilter 를 SecurityConfig 에 적용할 때 사용
 @RequiredArgsConstructor
-public class AppTokenSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+public class AppTokenHttpAdapter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private final AppTokenProvider appTokenProvider;
-
-    // AppTokenProvider를 주입받아서 AppTokenFilter를 통해 Security 로직에 필터를 등록
 
     @Override
     public void configure(HttpSecurity http) {

@@ -5,7 +5,6 @@ import com.fivepotato.eggmeetserver.exception.AppTokenAuthenticationEntryPointHa
 import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class HttpSecurityConfig extends WebSecurityConfigurerAdapter {
 
         private final AppTokenProvider appTokenProvider;
         private final AppTokenAuthenticationEntryPointHandler appTokenAuthenticationEntryPointHandler;
@@ -70,6 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                     // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                     .and()
-                    .apply(new AppTokenSecurityConfig(appTokenProvider));
+                    .apply(new AppTokenHttpAdapter(appTokenProvider));
         }
 }
