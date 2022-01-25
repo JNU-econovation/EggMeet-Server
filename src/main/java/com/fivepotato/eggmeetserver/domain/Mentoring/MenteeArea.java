@@ -25,6 +25,7 @@ public class MenteeArea {
     private User mentee;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String description;

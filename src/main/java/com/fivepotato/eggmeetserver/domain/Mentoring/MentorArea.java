@@ -25,6 +25,7 @@ public class MentorArea {
     private User mentor;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String description;
