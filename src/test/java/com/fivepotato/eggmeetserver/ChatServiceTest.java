@@ -83,7 +83,7 @@ class ChatServiceTest {
     @DisplayName("유저가 삭제되면, 정상적으로 작성한 메세지가 삭제되는지?")
     void test_MessageOrphanRemoval_onUserDeletion() {
         Long chatroomId = chatroomService.createChatroom(user0.getId(), user1.getId()).getId();
-        messageService.createPersonalMessage(chatroomId, user0.getId(), new PersonalMessageSaveDto("yeah"));
+//        messageService.createPersonalMessage(chatroomId, user0.getId(), new PersonalMessageSaveDto("yeah"));
 
         userRepository.delete(user0);
 
