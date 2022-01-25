@@ -1,6 +1,6 @@
 package com.fivepotato.eggmeetserver.config;
 
-import com.fivepotato.eggmeetserver.provider.security.AppTokenFilter;
+import com.fivepotato.eggmeetserver.provider.security.AppTokenHttpFilter;
 import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -16,7 +16,7 @@ public class AppTokenHttpAdapter extends SecurityConfigurerAdapter<DefaultSecuri
 
     @Override
     public void configure(HttpSecurity http) {
-        AppTokenFilter customFilter = new AppTokenFilter(appTokenProvider);
+        AppTokenHttpFilter customFilter = new AppTokenHttpFilter(appTokenProvider);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

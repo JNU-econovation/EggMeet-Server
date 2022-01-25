@@ -13,11 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RequiredArgsConstructor
-public class AppTokenFilter extends OncePerRequestFilter {
+import static com.fivepotato.eggmeetserver.util.SecurityUtils.parseTokenFromHttpHeader;
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_PREFIX = "Bearer ";
+@RequiredArgsConstructor
+public class AppTokenHttpFilter extends OncePerRequestFilter {
 
     private final AppTokenProvider appTokenProvider;
 
@@ -39,23 +38,5 @@ public class AppTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    // Http Authorization Header 에서 토큰 정보를 꺼내오기
-    public static String parseTokenFromHttpHeader(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
-
-    // WebSocket Authorization Header 에서 토큰 정보를 꺼내오기
-    public static String parseTokenFromWebSocketHeader(StompHeaderAccessor accessor) {
-        String bearerToken = accessor.getFirstNativeHeader(AppTokenFilter.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 }
