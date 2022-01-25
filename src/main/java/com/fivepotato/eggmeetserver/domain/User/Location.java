@@ -1,7 +1,10 @@
 package com.fivepotato.eggmeetserver.domain.user;
 
 public enum Location {
-    ALL,
+    SEOUL_JONGRO_JUNGGU_YOUNGSAN,
+    SEOUL_GANGNAM_SEOCHO_YANGZE,
+    SEOUL_MAPO_SEODAEMUN_EUNPYEONG,
+
     GWANGJU_BUKGU,
     GWANGJU_SEOGU,
     GWANGJU_NAMDONGGU,
