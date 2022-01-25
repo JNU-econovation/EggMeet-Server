@@ -22,8 +22,8 @@ public class MessageInfoDto {
     public MessageInfoDto(Message message) {
         this.id = message.getId();
         this.chatroomId = message.getChatroom().getId();
-        this.writerId = message.getWriter().getId();
-        this.writerNickname = message.getWriter().getNickname();
+//        this.writerId = message.getWriter().getId();
+//        this.writerNickname = message.getWriter().getNickname();
         this.type = message.getType();
         this.content = message.getContent();
         this.dateTime = message.getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
