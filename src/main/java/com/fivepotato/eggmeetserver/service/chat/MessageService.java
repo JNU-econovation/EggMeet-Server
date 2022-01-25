@@ -23,7 +23,22 @@ public class MessageService {
     private final ChatroomService chatroomService;
     private final UserService userService;
 
-//    public MessageInfoDto createPersonalMessage(Long chatroomId, Long writerId, PersonalMessageSaveDto personalMessageSaveDto) {
+    public MessageInfoDto createPersonalMessage(Long chatroomId, Long writerId, PersonalMessageSaveDto personalMessageSaveDto) {
+        Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
+        User me = userService.getUserByUserId(writerId);
+        Message message = messageRepository.save(
+                Message.builder()
+                        .chatroom(chatroom)
+                        .type(MessageType.MESSAGE)
+                        .content(personalMessageSaveDto.getContent())
+                        .writer(me)
+                        .build()
+        );
+
+        return new MessageInfoDto(message);
+    }
+
+//    public MessageInfoDto createPersonalMessage(Long chatroomId, PersonalMessageSaveDto personalMessageSaveDto) {
 //        Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
 //        User me = userService.getUserByUserId(writerId);
 //        Message message = messageRepository.save(
@@ -31,27 +46,12 @@ public class MessageService {
 //                        .chatroom(chatroom)
 //                        .type(MessageType.MESSAGE)
 //                        .content(personalMessageSaveDto.getContent())
-//                        .writer(me)
+//                        .writer(null)
 //                        .build()
 //        );
 //
 //        return new MessageInfoDto(message);
 //    }
-
-    public MessageInfoDto createPersonalMessage(Long chatroomId, PersonalMessageSaveDto personalMessageSaveDto) {
-        Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
-//        User me = userService.getUserByUserId(writerId);
-        Message message = messageRepository.save(
-                Message.builder()
-                        .chatroom(chatroom)
-                        .type(MessageType.MESSAGE)
-                        .content(personalMessageSaveDto.getContent())
-                        .writer(null)
-                        .build()
-        );
-
-        return new MessageInfoDto(message);
-    }
 
     public MessageInfoDto createSystemMessage(Long chatroomId, SystemMessageSaveDto systemMessageSaveDto) {
         Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);

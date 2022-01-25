@@ -24,24 +24,24 @@ public class StompChatController {
 
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     // "/pub/chat/room/~"
-//    @MessageMapping("/chat/room/{roomId}/message")
-//    public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
-//        Long myId = SecurityUtils.getCurrentUserId();
-//        if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
-//            throw new IllegalArgumentException();
-//        }
-//
-//        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, personalMessageSaveDto);
-//
-//        template.convertAndSend("/sub/chat/room/" + roomId, messageInfoDto);
-//    }
-
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
-        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, personalMessageSaveDto);
+        Long myId = SecurityUtils.getCurrentUserId();
+        if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
+            throw new IllegalArgumentException();
+        }
+
+        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, personalMessageSaveDto);
 
         template.convertAndSend("/sub/chat/room/" + roomId, messageInfoDto);
     }
+
+//    @MessageMapping("/chat/room/{roomId}/message")
+//    public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
+//        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, personalMessageSaveDto);
+//
+//        template.convertAndSend("/sub/chat/room/" + roomId, messageInfoDto);
+//    }
 
     public void sendSystemMessage(Long roomId, SystemMessageSaveDto systemMessageSaveDto) {
         MessageInfoDto messageInfoDto = messageService.createSystemMessage(roomId, systemMessageSaveDto);
