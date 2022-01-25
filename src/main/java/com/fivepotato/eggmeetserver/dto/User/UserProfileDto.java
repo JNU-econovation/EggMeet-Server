@@ -29,6 +29,7 @@ public class UserProfileDto {
     private String menteeDescription;
     private float mentorRating;
     private float menteeRating;
+    private int growthPoint;
 
     public UserProfileDto(User user) {
         this.nickname = user.getNickname();
@@ -41,6 +42,7 @@ public class UserProfileDto {
         this.isOfflineAvailable = user.isOfflineAvailable();
         this.mentorRating = user.getMentorRating();
         this.menteeRating = user.getMenteeRating();
+        this.growthPoint = user.getGrowthPoint();
 
         if (user.getMentorArea() != null) {
             this.mentorCategory = user.getMentorArea().getCategory();
