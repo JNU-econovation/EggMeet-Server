@@ -7,6 +7,7 @@ import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.service.chat.MessageService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class StompChatController {
 
     private final MessageService messageService;
@@ -27,6 +29,7 @@ public class StompChatController {
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
         Long myId = SecurityUtils.getCurrentUserId();
+        log.info("id : " + myId);
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
         }
