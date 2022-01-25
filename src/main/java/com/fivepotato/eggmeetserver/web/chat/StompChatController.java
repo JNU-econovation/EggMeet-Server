@@ -8,8 +8,10 @@ import com.fivepotato.eggmeetserver.service.chat.MessageService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -29,15 +31,16 @@ public class StompChatController {
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     // "/pub/chat/room/~"
     @MessageMapping("/chat/room/{roomId}/message")
-    public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto, Principal principal) {
+    public void sendPersonalMessage(@DestinationVariable Long roomId, @Payload String content, Principal principal) {
+        log.debug("[CONTENT] : " + content);
         Long myId = Long.parseLong(principal.getName());
 //        Long myId = SecurityUtils.getCurrentUserId();
-        log.info("[id] : " + myId);
+        log.debug("[id] : " + myId);
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
         }
 
-        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, personalMessageSaveDto);
+        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, content);
 
         template.convertAndSend("/sub/chat/room/" + roomId, messageInfoDto);
     }

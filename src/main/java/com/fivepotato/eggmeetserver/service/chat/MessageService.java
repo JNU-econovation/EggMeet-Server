@@ -23,14 +23,14 @@ public class MessageService {
     private final ChatroomService chatroomService;
     private final UserService userService;
 
-    public MessageInfoDto createPersonalMessage(Long chatroomId, Long writerId, PersonalMessageSaveDto personalMessageSaveDto) {
+    public MessageInfoDto createPersonalMessage(Long chatroomId, Long writerId, String content) {
         Chatroom chatroom = chatroomService.getChatroomByRoomId(chatroomId);
         User me = userService.getUserByUserId(writerId);
         Message message = messageRepository.save(
                 Message.builder()
                         .chatroom(chatroom)
                         .type(MessageType.MESSAGE)
-                        .content(personalMessageSaveDto.getContent())
+                        .content(content)
                         .writer(me)
                         .build()
         );
