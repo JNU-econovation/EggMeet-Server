@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.provider.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -26,7 +27,7 @@ public class AppTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
         // Request Header 에서 토큰을 꺼냄
-        String jwt = resolveToken(request);
+        String jwt = parseTokenFromHttpHeader(request);
 
         // validateToken 으로 토큰 유효성 검사
         // 정상 토큰이면 SecurityContext 에 Authentication 저장
@@ -40,9 +41,18 @@ public class AppTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Request Header 에서 토큰 정보를 꺼내오기
-    private String resolveToken(HttpServletRequest request) {
+    // Http Authorization Header 에서 토큰 정보를 꺼내오기
+    public static String parseTokenFromHttpHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    // WebSocket Authorization Header 에서 토큰 정보를 꺼내오기
+    public static String parseTokenFromWebSocketHeader(StompHeaderAccessor accessor) {
+        String bearerToken = accessor.getFirstNativeHeader(AppTokenFilter.AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
