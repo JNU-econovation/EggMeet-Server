@@ -32,10 +32,10 @@ public class StompChatController {
     // "/pub/chat/room/~"
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendPersonalMessage(@DestinationVariable Long roomId, @Payload PersonalMessageSaveDto personalMessageSaveDto, Principal principal) {
-        log.debug("[CONTENT] : " + personalMessageSaveDto.getContent());
+        log.info("[CONTENT] : " + personalMessageSaveDto.getContent());
         Long myId = Long.parseLong(principal.getName());
 //        Long myId = SecurityUtils.getCurrentUserId();
-        log.debug("[id] : " + myId);
+        log.info("[id] : " + myId);
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
         }
