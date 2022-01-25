@@ -29,7 +29,7 @@ public class StompChatController {
     @MessageMapping("/chat/room/{roomId}/message")
     public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
         Long myId = SecurityUtils.getCurrentUserId();
-        log.info("id : " + myId);
+        log.info("[id] : " + myId);
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
         }
