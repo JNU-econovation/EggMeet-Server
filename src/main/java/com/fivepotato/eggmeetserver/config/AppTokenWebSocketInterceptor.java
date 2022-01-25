@@ -1,5 +1,6 @@
 package com.fivepotato.eggmeetserver.config;
 
+import com.fivepotato.eggmeetserver.provider.security.AppTokenFilter;
 import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,8 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         if (accessor.getCommand() == StompCommand.CONNECT) {
-            log.info(accessor.getFirstNativeHeader("token"));
-            appTokenProvider.validateToken(accessor.getFirstNativeHeader("token"));
+            log.info(accessor.getFirstNativeHeader(AppTokenFilter.AUTHORIZATION_HEADER));
+            appTokenProvider.validateToken(accessor.getFirstNativeHeader(AppTokenFilter.AUTHORIZATION_HEADER));
         }
 
         return message;
