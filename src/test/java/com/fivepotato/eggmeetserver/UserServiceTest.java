@@ -47,7 +47,7 @@ class UserServiceTest {
                 .build();
         MentorArea mentorArea = MentorArea.builder()
                 .mentor(user)
-                .category(Category.PROGRAMMING_JAVA)
+                .category(Category.IT_BACKEND)
                 .description("userDescription")
                 .career("userCareer")
                 .link("userLink")
@@ -55,7 +55,7 @@ class UserServiceTest {
                 .build();
         MenteeArea menteeArea = MenteeArea.builder()
                 .mentee(user)
-                .category(Category.PROGRAMMING_PYTHON)
+                .category(Category.IT_WEB)
                 .description("userDescription")
                 .build();
 
@@ -76,12 +76,12 @@ class UserServiceTest {
                 .pictureIndex(originUser.getPictureIndex())
                 .isOnlineAvailable(originUser.isOnlineAvailable())
                 .isOfflineAvailable(originUser.isOfflineAvailable())
-                .mentorCategory(Category.PROGRAMMING_PYTHON)
+                .mentorCategory(Category.IT_WEB)
                 .mentorDescription(originUser.getMentorArea().getDescription())
                 .mentorCareer(originUser.getMentorArea().getCareer())
                 .mentorLink(originUser.getMentorArea().getLink())
                 .mentorGrowthCost(originUser.getMentorArea().getGrowthCost())
-                .menteeCategory(Category.PROGRAMMING_JAVA)
+                .menteeCategory(Category.IT_BACKEND)
                 .menteeDescription(originUser.getMenteeArea().getDescription())
                 .build();
         userService.updateUserProfile(originUser.getId(), userProfileUpdateDto);

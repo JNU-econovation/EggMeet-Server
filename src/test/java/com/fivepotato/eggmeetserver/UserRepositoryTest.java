@@ -62,7 +62,7 @@ class UserRepositoryTest {
                 .build();
         MentorArea user1MentorArea = MentorArea.builder()
                 .mentor(user1)
-                .category(Category.PROGRAMMING_JAVA)
+                .category(Category.IT_BACKEND)
                 .description("user1Description")
                 .career("user1Career")
                 .link("user1Link")
@@ -88,7 +88,7 @@ class UserRepositoryTest {
                 .build();
         MentorArea user2MentorArea = MentorArea.builder()
                 .mentor(user2)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user2Description")
                 .career("user2Career")
                 .link("user2Link")
@@ -115,7 +115,7 @@ class UserRepositoryTest {
                 .build();
         MenteeArea user3MenteeArea = MenteeArea.builder()
                 .mentee(user3)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user3Description")
                 .build();
 
@@ -139,7 +139,7 @@ class UserRepositoryTest {
                 .build();
         MenteeArea user4MenteeArea = MenteeArea.builder()
                 .mentee(user4)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user4Description")
                 .build();
 

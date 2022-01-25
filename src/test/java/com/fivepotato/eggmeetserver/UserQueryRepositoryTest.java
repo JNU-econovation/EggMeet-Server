@@ -69,7 +69,7 @@ class UserQueryRepositoryTest {
                 .build();
         MentorArea user1MentorArea = MentorArea.builder()
                 .mentor(user1)
-                .category(Category.PROGRAMMING_JAVA)
+                .category(Category.IT_BACKEND)
                 .description("user1Description")
                 .career("user1Career")
                 .link("user1Link")
@@ -77,7 +77,7 @@ class UserQueryRepositoryTest {
                 .build();
         MenteeArea user1MenteeArea = MenteeArea.builder()
                 .mentee(user1)
-                .category(Category.PROGRAMMING_PYTHON)
+                .category(Category.IT_WEB)
                 .description("user1Description")
                 .build();
 
@@ -101,7 +101,7 @@ class UserQueryRepositoryTest {
                 .build();
         MentorArea user2MentorArea = MentorArea.builder()
                 .mentor(user2)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user2Description")
                 .career("user2Career")
                 .link("user2Link")
@@ -109,7 +109,7 @@ class UserQueryRepositoryTest {
                 .build();
         MenteeArea user2MenteeArea = MenteeArea.builder()
                 .mentee(user2)
-                .category(Category.PROGRAMMING_PYTHON)
+                .category(Category.IT_WEB)
                 .description("user2Description")
                 .build();
 
@@ -134,7 +134,7 @@ class UserQueryRepositoryTest {
                 .build();
         MentorArea user3MentorArea = MentorArea.builder()
                 .mentor(user3)
-                .category(Category.PROGRAMMING_PYTHON)
+                .category(Category.IT_WEB)
                 .description("user3Description")
                 .career("user3Career")
                 .link("user3Link")
@@ -142,7 +142,7 @@ class UserQueryRepositoryTest {
                 .build();
         MenteeArea user3MenteeArea = MenteeArea.builder()
                 .mentee(user3)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user3Description")
                 .build();
 
@@ -167,7 +167,7 @@ class UserQueryRepositoryTest {
                 .build();
         MentorArea user4MentorArea = MentorArea.builder()
                 .mentor(user4)
-                .category(Category.PROGRAMMING_PYTHON)
+                .category(Category.IT_WEB)
                 .description("user4Description")
                 .career("user4Career")
                 .link("user4Link")
@@ -175,7 +175,7 @@ class UserQueryRepositoryTest {
                 .build();
         MenteeArea user4MenteeArea = MenteeArea.builder()
                 .mentee(user4)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user4Description")
                 .build();
 
@@ -200,7 +200,7 @@ class UserQueryRepositoryTest {
                 .build();
         MentorArea user5MentorArea = MentorArea.builder()
                 .mentor(user5)
-                .category(Category.PROGRAMMING_C)
+                .category(Category.IT_APP)
                 .description("user5Description")
                 .career("user5Career")
                 .link("user5Link")
@@ -208,7 +208,7 @@ class UserQueryRepositoryTest {
                 .build();
         MenteeArea user5MenteeArea = MenteeArea.builder()
                 .mentee(user5)
-                .category(Category.PROGRAMMING_JAVA)
+                .category(Category.IT_BACKEND)
                 .description("user5Description")
                 .build();
 
@@ -300,7 +300,7 @@ class UserQueryRepositoryTest {
         Integer age = null;
         Boolean isOnlineAvailable = null;
         Boolean isOfflineAvailable = null;
-        Category category = Category.PROGRAMMING_PYTHON;
+        Category category = Category.IT_WEB;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
@@ -318,7 +318,7 @@ class UserQueryRepositoryTest {
         Integer age = null;
         Boolean isOnlineAvailable = null;
         Boolean isOfflineAvailable = null;
-        Category category = Category.PROGRAMMING_C;
+        Category category = Category.IT_APP;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = null;
 
@@ -336,7 +336,7 @@ class UserQueryRepositoryTest {
         Integer age = null;
         Boolean isOnlineAvailable = null;
         Boolean isOfflineAvailable = null;
-        Category category = Category.PROGRAMMING_C;
+        Category category = Category.IT_APP;
         SortOrder mentorRatingSortOrder = null;
         SortOrder growthPointSortOrder = SortOrder.ASCENDING;
 
@@ -432,7 +432,7 @@ class UserQueryRepositoryTest {
         Integer age = null;
         Boolean isOnlineAvailable = null;
         Boolean isOfflineAvailable = null;
-        Category category = Category.PROGRAMMING_PYTHON;
+        Category category = Category.IT_WEB;
         SortOrder menteeRatingSortOrder = null;
 
 
@@ -450,7 +450,7 @@ class UserQueryRepositoryTest {
         Integer age = null;
         Boolean isOnlineAvailable = null;
         Boolean isOfflineAvailable = null;
-        Category category = Category.PROGRAMMING_PYTHON;
+        Category category = Category.IT_WEB;
         SortOrder menteeRatingSortOrder = null;
 
         List<String> names = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, age, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder)
