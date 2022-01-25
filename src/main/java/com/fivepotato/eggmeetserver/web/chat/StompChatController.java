@@ -13,6 +13,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -27,8 +29,9 @@ public class StompChatController {
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     // "/pub/chat/room/~"
     @MessageMapping("/chat/room/{roomId}/message")
-    public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto) {
-        Long myId = SecurityUtils.getCurrentUserId();
+    public void sendPersonalMessage(@DestinationVariable Long roomId, PersonalMessageSaveDto personalMessageSaveDto, Principal principal) {
+        Long myId = Long.parseLong(principal.getName());
+//        Long myId = SecurityUtils.getCurrentUserId();
         log.info("[id] : " + myId);
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
             throw new IllegalArgumentException();
