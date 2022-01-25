@@ -31,8 +31,8 @@ public class StompChatController {
     // StompConfig에서 설정한 applicationDestinationPrefixes와 @MessageMapping 경로가 병합됨
     // "/pub/chat/room/~"
     @MessageMapping("/chat/room/{roomId}/message")
-    public void sendPersonalMessage(@DestinationVariable Long roomId, @Payload String content, Principal principal) {
-        log.debug("[CONTENT] : " + content);
+    public void sendPersonalMessage(@DestinationVariable Long roomId, @Payload PersonalMessageSaveDto personalMessageSaveDto, Principal principal) {
+        log.debug("[CONTENT] : " + personalMessageSaveDto.getContent());
         Long myId = Long.parseLong(principal.getName());
 //        Long myId = SecurityUtils.getCurrentUserId();
         log.debug("[id] : " + myId);
@@ -40,7 +40,7 @@ public class StompChatController {
             throw new IllegalArgumentException();
         }
 
-        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, content);
+        MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, personalMessageSaveDto.getContent());
 
         template.convertAndSend("/sub/chat/room/" + roomId, messageInfoDto);
     }
