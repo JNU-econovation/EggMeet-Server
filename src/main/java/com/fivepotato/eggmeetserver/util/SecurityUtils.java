@@ -30,7 +30,8 @@ public class SecurityUtils {
     // Http Authorization Header 에서 토큰 정보를 꺼내오기
     public static String parseTokenFromHttpHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+        if (StringUtils.hasText(bearerToken) &&
+                (bearerToken.startsWith(UPPER_BEARER_PREFIX) || bearerToken.startsWith(LOWER_BEARER_PREFIX))) {
             return bearerToken.substring(7);
         }
         return null;
