@@ -25,10 +25,11 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
     // WebSocket 을 통해 들어온 요청이 처리되기 전에 실
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+//        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
         log.info("[MESSAGE] : " + message);
-//        if (StompCommand.CONNECT.equals(accessor.getCommand()) ||
-//                StompCommand.SEND.equals(accessor.getCommand())) {
+        if (StompCommand.CONNECT.equals(accessor.getCommand()) ||
+                StompCommand.SEND.equals(accessor.getCommand())) {
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             String jwt = parseTokenFromWebSocketHeader(accessor);
             appTokenProvider.validateToken(jwt);
@@ -36,7 +37,7 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
             Authentication authentication = appTokenProvider.getAuthentication(jwt);
             log.info("[AUTH}: " + authentication.getName());
             log.info("[AUTH}: " + authentication.getAuthorities().toString());
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             accessor.setUser(authentication);
         }
 
