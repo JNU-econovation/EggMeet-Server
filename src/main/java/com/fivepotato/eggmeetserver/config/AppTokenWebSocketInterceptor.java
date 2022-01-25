@@ -8,6 +8,8 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import static com.fivepotato.eggmeetserver.util.SecurityUtils.parseTokenFromWebSocketHeader;
@@ -24,10 +26,15 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         log.info(message.toString());
-        if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+        if (StompCommand.CONNECT.equals(accessor.getCommand()) ||
+                StompCommand.SEND.equals(accessor.getCommand())) {
             String jwt = parseTokenFromWebSocketHeader(accessor);
             log.info(jwt);
             appTokenProvider.validateToken(jwt);
+
+            Authentication authentication = appTokenProvider.getAuthentication(jwt);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            accessor.setUser(authentication);
         }
 
         return message;

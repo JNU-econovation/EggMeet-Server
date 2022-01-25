@@ -30,5 +30,6 @@ public class WebSocketSecurityConfig implements WebSocketMessageBrokerConfigurer
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(appTokenWebSocketInterceptor);
+        WebSocketMessageBrokerConfigurer.super.configureClientInboundChannel(registration);
     }
 }
