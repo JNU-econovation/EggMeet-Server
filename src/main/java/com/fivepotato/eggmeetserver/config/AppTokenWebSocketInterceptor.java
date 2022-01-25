@@ -34,7 +34,9 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
             appTokenProvider.validateToken(jwt);
 
             Authentication authentication = appTokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.info("[AUTH}: " + authentication.getName());
+            log.info("[AUTH}: " + authentication.getAuthorities().toString());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
             accessor.setUser(authentication);
         }
 
