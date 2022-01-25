@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SecurityUtils {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_PREFIX = "Bearer ";
+    public static final String UPPER_BEARER_PREFIX = "Bearer ";
+    public static final String LOWER_BEARER_PREFIX = "bearer ";
 
     public static Long getCurrentUserId() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -38,7 +39,8 @@ public class SecurityUtils {
     // WebSocket Authorization Header 에서 토큰 정보를 꺼내오기
     public static String parseTokenFromWebSocketHeader(StompHeaderAccessor accessor) {
         String bearerToken = accessor.getFirstNativeHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+        if (StringUtils.hasText(bearerToken) &&
+                (bearerToken.startsWith(UPPER_BEARER_PREFIX) || bearerToken.startsWith(LOWER_BEARER_PREFIX))) {
             return bearerToken.substring(7);
         }
         return null;
