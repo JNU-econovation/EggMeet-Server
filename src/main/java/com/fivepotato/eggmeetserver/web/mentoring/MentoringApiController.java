@@ -5,7 +5,6 @@ import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
-import com.fivepotato.eggmeetserver.service.mentoring.MeetingService;
 import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import com.fivepotato.eggmeetserver.web.chat.StompChatController;
@@ -50,8 +49,8 @@ public class MentoringApiController {
     }
 
     @PutMapping("/mentoring/request")
-    public ResponseEntity<Void> acceptRequestedMentoring(@RequestParam(value = "requestId") Long requestId) {
-        mentoringService.acceptRequestedMentoring(requestId);
+    public ResponseEntity<Void> acceptMentoringRequest(@RequestParam(value = "requestId") Long requestId) {
+        mentoringService.acceptMentoringRequest(requestId);
 
         long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);
         stompChatController.sendSystemMessage(chatroomId,
@@ -77,8 +76,8 @@ public class MentoringApiController {
     }
 
     @DeleteMapping("/mentoring/request")
-    public ResponseEntity<Void> denyRequestedMentoring(@RequestParam(value = "requestId") Long requestId) {
-        mentoringService.denyRequestedMentoring(requestId);
+    public ResponseEntity<Void> denyMentoringRequest(@RequestParam(value = "requestId") Long requestId) {
+        mentoringService.denyMentoringRequest(requestId);
 
         long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);
         stompChatController.sendSystemMessage(chatroomId,

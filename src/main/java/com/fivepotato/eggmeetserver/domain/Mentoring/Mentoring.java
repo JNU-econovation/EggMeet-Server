@@ -47,7 +47,7 @@ public class Mentoring {
         this.chatroom = chatroom;
     }
 
-    public void acceptRequestedMentoring() {
+    public void acceptMentoringRequest() {
         this.isPending = true;
     }
 }

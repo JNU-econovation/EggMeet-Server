@@ -29,12 +29,12 @@ public class MentoringService {
     }
 
     @Transactional
-    public void acceptRequestedMentoring(long mentoringId) {
+    public void acceptMentoringRequest(long mentoringId) {
         Mentoring mentoring = getMentoringById(mentoringId);
-        mentoring.acceptRequestedMentoring();
+        mentoring.acceptMentoringRequest();
     }
 
-    public void denyRequestedMentoring(long mentoringId) {
+    public void denyMentoringRequest(long mentoringId) {
         mentoringRepository.deleteById(mentoringId);
     }
 

@@ -35,4 +35,8 @@ public class Meeting {
     public void setMentoring(Mentoring mentoring) {
         this.mentoring = mentoring;
     }
+
+    public void acceptMeetingRequest() {
+        this.isPending = true;
+    }
 }
