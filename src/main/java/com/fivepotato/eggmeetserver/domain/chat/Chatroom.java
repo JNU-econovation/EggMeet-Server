@@ -20,9 +20,13 @@ public class Chatroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "chatrooms", fetch = FetchType.EAGER)
-    @JsonBackReference
-    private List<User> participants = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private User mentor;
+
+    @ManyToOne
+    @JoinColumn(name = "mentee_id")
+    private User mentee;
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonManagedReference

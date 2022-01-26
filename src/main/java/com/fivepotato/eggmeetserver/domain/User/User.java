@@ -73,13 +73,11 @@ public class User {
     @NotNull
     private int growthGrade = 1;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_chatroom",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chatroom_id")
-    )
-    private List<Chatroom> chatrooms = new ArrayList<>();
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Chatroom> mentorChatroom = new ArrayList<>();
+
+    @OneToMany(mappedBy = "mentee", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Chatroom> menteeChatroom = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
