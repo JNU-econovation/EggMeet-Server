@@ -24,15 +24,15 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public List<User> findAllByMultipleConditionsOnPageable(Pageable pageable,
-                                                            Location location,
-                                                            Sex sex,
-                                                            List<Integer> ages,
-                                                            Boolean isOnlineAvailable,
-                                                            Boolean isOfflineAvailable,
-                                                            Category mentorCategory,
-                                                            SortOrder mentorRatingSortOrder,
-                                                            SortOrder growthPointOrder) {
+    public List<User> findMentorsByMultipleConditionsOnPageable(Pageable pageable,
+                                                                Location location,
+                                                                Sex sex,
+                                                                List<Integer> ages,
+                                                                Boolean isOnlineAvailable,
+                                                                Boolean isOfflineAvailable,
+                                                                Category mentorCategory,
+                                                                SortOrder mentorRatingSortOrder,
+                                                                SortOrder growthPointOrder) {
         List<OrderSpecifier> orders = new ArrayList<>();
         if (mentorRatingSortOrder != null) {
             orders.add(orderByMentorRating(mentorRatingSortOrder));
@@ -108,10 +108,6 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         return locationBuilder;
     }
 
-    private BooleanExpression eqLocationAll() {
-        return QUser.user.location.eq(Location.ALL);
-    }
-
     private BooleanExpression eqSex(Sex sex) {
         if (sex == null) {
             return null;
@@ -129,7 +125,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         for (Integer age : ages) {
             int minAge = age;
             int maxAge = age + 9;
-            ageBuilder.and(QUser.user.age.between(minAge, maxAge));
+            ageBuilder.or(QUser.user.age.between(minAge, maxAge));
         }
 
         return ageBuilder;

@@ -108,7 +108,7 @@ public class UserService {
                                                                        Category category,
                                                                        SortOrder mentorRatingSortOrder,
                                                                        SortOrder growthPointSortOrder) {
-        List<User> users = userQueryRepository.findAllByMultipleConditionsOnPageable(pageable, location, sex, ages, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
+        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, ages, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
 
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
