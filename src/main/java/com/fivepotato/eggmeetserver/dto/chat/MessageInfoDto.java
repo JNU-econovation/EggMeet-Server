@@ -12,21 +12,23 @@ import java.time.ZoneOffset;
 public class MessageInfoDto {
 
     private Long id;
+    private MessageType type;
     private Long chatroomId;
     private Long writerId;
     private Integer writerPictureIndex;
     private String writerNickname;
-    private MessageType type;
     private String content;
     private Long dateTime;
 
     public MessageInfoDto(Message message) {
         this.id = message.getId();
-        this.chatroomId = message.getChatroom().getId();
-        this.writerId = message.getWriter().getId();
-        this.writerPictureIndex = message.getWriter().getPictureIndex();
-        this.writerNickname = message.getWriter().getNickname();
         this.type = message.getType();
+        this.chatroomId = message.getChatroom().getId();
+        if (message.getType().equals(MessageType.MESSAGE)) {
+            this.writerId = message.getWriter().getId();
+            this.writerPictureIndex = message.getWriter().getPictureIndex();
+            this.writerNickname = message.getWriter().getNickname();
+        }
         this.content = message.getContent();
         this.dateTime = message.getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
     }
