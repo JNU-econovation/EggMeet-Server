@@ -3,7 +3,9 @@ package com.fivepotato.eggmeetserver.web.chat;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
+import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
+import com.fivepotato.eggmeetserver.service.chat.MessageService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,10 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ChatroomController {
+public class ChatController {
 
     private final ChatroomService chatRoomService;
+    private final MessageService messageService;
 
     @Deprecated
     @GetMapping("/chat/room/list")
@@ -52,6 +55,19 @@ public class ChatroomController {
     public ResponseEntity<List<ChatroomInfoDto>> getMyChatroomInfoDtos() {
         return new ResponseEntity<>(
                 chatRoomService.getMyChatroomInfoDtos(),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/chat/room/{roomId}/message/history")
+    public ResponseEntity<List<MessageInfoDto>> getMessageInfoDtosHistoryByRoomId(@PathVariable Long roomId) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        if(!chatRoomService.isParticipantByChatroomId(roomId, myId)) {
+            throw new IllegalArgumentException(ErrorCode.NOT_CHATROOM_PARTICIPANT + myId);
+        }
+
+        return new ResponseEntity<>(
+                messageService.getMessagesByChatroomId(roomId),
                 HttpStatus.OK
         );
     }

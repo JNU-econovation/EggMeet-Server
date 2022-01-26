@@ -3,6 +3,7 @@ package com.fivepotato.eggmeetserver.web.chat;
 import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.PersonalMessageSaveDto;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
+import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.service.chat.MessageService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
@@ -34,7 +35,7 @@ public class StompChatController {
     public void sendPersonalMessage(@DestinationVariable Long roomId, @Payload PersonalMessageSaveDto personalMessageSaveDto, Principal principal) {
         Long myId = Long.parseLong(principal.getName());
         if (!chatroomService.isParticipantByChatroomId(roomId, myId)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorCode.NOT_CHATROOM_PARTICIPANT + myId);
         }
 
         MessageInfoDto messageInfoDto = messageService.createPersonalMessage(roomId, myId, personalMessageSaveDto);

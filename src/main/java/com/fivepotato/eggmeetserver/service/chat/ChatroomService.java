@@ -6,6 +6,7 @@ import com.fivepotato.eggmeetserver.domain.chat.ChatroomRepository;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
+import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.NoContentException;
 import com.fivepotato.eggmeetserver.service.user.UserService;
@@ -37,13 +38,14 @@ public class ChatroomService {
         return chatroom;
     }
 
-    public List<ChatroomTempInfoDto> getAllChatroom() {
-        return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
-    }
-
     public Chatroom getChatroomByRoomId(long roomId) {
         return chatroomRepository.findById(roomId)
                 .orElseThrow(() -> new NoContentException(ErrorCode.NO_CHATROOM_BY_ROOMID + roomId));
+    }
+
+    public ChatroomTempInfoDto getChatroomInfoDtoByRoomId(Long roomId) {
+        Chatroom chatroom = getChatroomByRoomId(roomId);
+        return new ChatroomTempInfoDto(chatroom);
     }
 
     public List<ChatroomInfoDto> getMyChatroomInfoDtos() {
@@ -53,9 +55,8 @@ public class ChatroomService {
                 .stream().map(ChatroomInfoDto::new).collect(Collectors.toList());
     }
 
-    public ChatroomTempInfoDto getChatroomInfoDtoByRoomId(Long roomId) {
-        Chatroom chatroom = getChatroomByRoomId(roomId);
-        return new ChatroomTempInfoDto(chatroom);
+    public List<ChatroomTempInfoDto> getAllChatroom() {
+        return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
     }
 
     public boolean isParticipantByChatroomId(long chatroomId, long userId) {
