@@ -5,8 +5,8 @@ import com.fivepotato.eggmeetserver.domain.chat.ChatroomQueryRepository;
 import com.fivepotato.eggmeetserver.domain.chat.ChatroomRepository;
 import com.fivepotato.eggmeetserver.domain.user.User;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
+import com.fivepotato.eggmeetserver.dto.chat.ChatroomPreviewDto;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
-import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.NoContentException;
 import com.fivepotato.eggmeetserver.service.user.UserService;
@@ -38,23 +38,23 @@ public class ChatroomService {
         return chatroom;
     }
 
-    public Chatroom getChatroomByRoomId(long roomId) {
-        return chatroomRepository.findById(roomId)
-                .orElseThrow(() -> new NoContentException(ErrorCode.NO_CHATROOM_BY_ROOMID + roomId));
+    public Chatroom getChatroomByRoomId(long chatroomId) {
+        return chatroomRepository.findById(chatroomId)
+                .orElseThrow(() -> new NoContentException(ErrorCode.NO_CHATROOM_BY_ROOMID + chatroomId));
     }
 
-    public ChatroomTempInfoDto getChatroomInfoDtoByRoomId(Long roomId) {
-        Chatroom chatroom = getChatroomByRoomId(roomId);
-        return new ChatroomTempInfoDto(chatroom);
-    }
-
-    public List<ChatroomInfoDto> getMyChatroomInfoDtos() {
+    public List<ChatroomPreviewDto> getMyChatroomPreviewDtos() {
         Long myId = SecurityUtils.getCurrentUserId();
 
         return chatroomQueryRepository.findAllByParticipantsContainsUserId(myId)
-                .stream().map(ChatroomInfoDto::new).collect(Collectors.toList());
+                .stream().map(ChatroomPreviewDto::new).collect(Collectors.toList());
     }
 
+    public ChatroomInfoDto getChatroomInfoDtoByRoomId(Long chatroomId) {
+        return new ChatroomInfoDto(getChatroomByRoomId(chatroomId));
+    }
+
+    @Deprecated
     public List<ChatroomTempInfoDto> getAllChatroom() {
         return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
     }

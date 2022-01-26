@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.web.chat;
 
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
+import com.fivepotato.eggmeetserver.dto.chat.ChatroomPreviewDto;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
@@ -42,19 +43,18 @@ public class ChatController {
         );
     }
 
-    @Deprecated
-    @GetMapping("/chat/room/{roomId}")
-    public ResponseEntity<ChatroomTempInfoDto> getChatroomDtoByRoomId(@PathVariable Long roomId) {
+    @GetMapping("/chat/room")
+    public ResponseEntity<List<ChatroomPreviewDto>> getMyChatroomPreviewDtos() {
         return new ResponseEntity<>(
-                chatRoomService.getChatroomInfoDtoByRoomId(roomId),
+                chatRoomService.getMyChatroomPreviewDtos(),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/chat/room")
-    public ResponseEntity<List<ChatroomInfoDto>> getMyChatroomInfoDtos() {
+    @GetMapping("/chat/room/{roomId}")
+    public ResponseEntity<ChatroomInfoDto> getChatroomInfoDtoByRoomId(@PathVariable Long roomId) {
         return new ResponseEntity<>(
-                chatRoomService.getMyChatroomInfoDtos(),
+                chatRoomService.getChatroomInfoDtoByRoomId(roomId),
                 HttpStatus.OK
         );
     }
