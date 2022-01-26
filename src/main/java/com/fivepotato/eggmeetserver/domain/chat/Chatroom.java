@@ -33,19 +33,19 @@ public class Chatroom {
     @OneToOne(mappedBy = "chatroom", orphanRemoval = true)
     private Mentoring mentoring;
 
-    public void setMentee(User user) {
+    public void setMenteeParticipant(User user) {
         this.mentee = user;
     }
 
-    public void setMentor(User user) {
+    public void setMentorParticipant(User user) {
         this.mentor = user;
     }
 
-    public void clearMentee() {
+    public void clearMenteeParticipant() {
         this.mentee = null;
     }
 
-    public void clearMentor() {
+    public void clearMentorParticipant() {
         this.mentor = null;
     }
 }
