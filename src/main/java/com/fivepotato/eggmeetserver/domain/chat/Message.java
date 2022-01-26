@@ -24,6 +24,7 @@ public class Message extends BaseTimeEntity {
     private Chatroom chatroom;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private MessageType type;
 
     @NotNull
