@@ -18,11 +18,14 @@ public class MentoringService {
     private final MentoringRepository mentoringRepository;
     private final UserService userService;
 
-    public void createMentoring(long menteeId, long mentorId, Chatroom chatroom) {
+    @Transactional
+    public Long createMentoring(long menteeId, long mentorId, Chatroom chatroom) {
         User mentee = userService.getUserByUserId(menteeId);
         User mentor = userService.getUserByUserId(mentorId);
         Mentoring mentoring = mentoringRepository.save(new Mentoring(mentee, mentor));
         mentoring.setChatroom(chatroom);
+
+        return mentoring.getId();
     }
 
     @Transactional

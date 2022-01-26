@@ -27,7 +27,7 @@ public class MentoringApiController {
         Long myId = SecurityUtils.getCurrentUserId();
         Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
 
-        mentoringService.createMentoring(myId, mentorId, chatroom);
+        Long mentoringId = mentoringService.createMentoring(myId, mentorId, chatroom);
 
         stompChatController.sendSystemMessage(chatroom.getId(),
                 SystemMessageSaveDto.builder()
@@ -39,6 +39,7 @@ public class MentoringApiController {
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTOR_SYSTEM)
                         .content(SystemMessageContent.MENTORING_REQUEST)
+                        .requestId(mentoringId)
                         .build()
         );
 

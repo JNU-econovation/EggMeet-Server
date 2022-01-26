@@ -18,6 +18,7 @@ public class MessageInfoDto {
     private Integer writerPictureIndex;
     private String writerNickname;
     private String content;
+    private Long requestId;
     private Long dateTime;
 
     public MessageInfoDto(Message message) {
@@ -29,6 +30,7 @@ public class MessageInfoDto {
             this.writerPictureIndex = message.getWriter().getPictureIndex();
             this.writerNickname = message.getWriter().getNickname();
         }
+        this.requestId = message.getRequestId();
         this.content = message.getContent();
         this.dateTime = message.getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
     }

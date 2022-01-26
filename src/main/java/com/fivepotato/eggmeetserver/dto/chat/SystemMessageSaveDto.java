@@ -12,10 +12,12 @@ public class SystemMessageSaveDto {
 
     private MessageType type;
     private SystemMessageContent content;
+    private Long requestId;
 
     @Builder
-    public SystemMessageSaveDto(MessageType type, SystemMessageContent content) {
+    public SystemMessageSaveDto(MessageType type, SystemMessageContent content, Long requestId) {
         this.type = type;
         this.content = content;
+        this.requestId = requestId;
     }
 }

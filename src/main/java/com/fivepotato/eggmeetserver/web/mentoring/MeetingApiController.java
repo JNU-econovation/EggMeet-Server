@@ -33,9 +33,9 @@ public class MeetingApiController {
             throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_PARTICIPANT + mentoringId);
         }
 
-        Meeting meeting = meetingService.createMeeting(mentoringId, meetingSaveDto);
+        Long meetingId = meetingService.createMeeting(mentoringId, meetingSaveDto);
 
-        long chatroomId = meeting.getMentoring().getChatroom().getId();
+        long chatroomId = mentoringService.getChatroomIdByMentoringId(mentoringId);
         stompChatController.sendSystemMessage(chatroomId,
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTEE_SYSTEM)
@@ -46,11 +46,12 @@ public class MeetingApiController {
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTOR_SYSTEM)
                         .content(SystemMessageContent.SCHEDULE_REQUEST)
+                        .requestId(meetingId)
                         .build()
         );
 
         return new ResponseEntity<>(
-                meeting.getId(),
+                meetingId,
                 HttpStatus.OK
         );
     }

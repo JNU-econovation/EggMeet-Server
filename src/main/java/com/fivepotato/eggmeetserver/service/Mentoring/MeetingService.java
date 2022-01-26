@@ -16,11 +16,11 @@ public class MeetingService {
     private MentoringService mentoringService;
 
     @Transactional
-    public Meeting createMeeting(Long mentoringId, MeetingSaveDto meetingSaveDto) {
+    public Long createMeeting(Long mentoringId, MeetingSaveDto meetingSaveDto) {
         Mentoring mentoring = mentoringService.getMentoringById(mentoringId);
         Meeting meeting = meetingRepository.save(meetingSaveDto.toEntity());
         meeting.setMentoring(mentoring);
 
-        return meeting;
+        return meeting.getId();
     }
 }

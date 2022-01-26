@@ -30,15 +30,18 @@ public class Message extends BaseTimeEntity {
     @NotNull
     private String content;
 
+    private Long requestId;
+
     @ManyToOne
     @JoinColumn(name = "writer_id")
     private User writer;
 
     @Builder
-    public Message(Chatroom chatroom, MessageType type, String content, User writer) {
+    public Message(Chatroom chatroom, MessageType type, String content, Long requestId, User writer) {
         this.chatroom = chatroom;
         this.type = type;
         this.content = content;
+        this.requestId = requestId;
         this.writer = writer;
     }
 }
