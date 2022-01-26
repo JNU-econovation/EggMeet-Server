@@ -52,7 +52,6 @@ public class UserApiController {
                                                                                        @RequestParam(value = "category", required = false) Category category,
                                                                                        @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
                                                                                        @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
-        System.out.println(ages);
         return new ResponseEntity<>(
                 userService.getMentorDtosByMultipleConditionsOnPageable(
                         pageable,
