@@ -27,7 +27,8 @@ public enum ErrorCode {
     public static String NO_MEETING_BY_MEETINGID = "해당 ID와 일치하는 만남이 없음 : meetingId = ";
 
     public static String NOT_CHATROOM_PARTICIPANT = "해당 채팅방의 참여자가 아님 : roomId = ";
-    public static String NOT_MENTORING_PARTICIPANT = "해당 멘토링의 참여자가 아님 : mentoringId = ";
+    public static String NOT_MENTORING_MENTOR = "해당 멘토링의 멘토가 아님 : mentoringId = ";
+    public static String NOT_MENTORING_MENTEE = "해당 멘토링의 멘티가 아님 : mentoringId = ";
     public static String NOT_MEETING_MENTOR = "해당 만남의 멘토가 아님 : meetingId = ";
 
 

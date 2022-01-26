@@ -4,6 +4,7 @@ import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
+import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
@@ -25,7 +26,6 @@ public class MentoringApiController {
     public ResponseEntity<Long> sendMentoringRequestAndGetChatroomId(@RequestParam(value = "mentorId") Long mentorId) {
         Long myId = SecurityUtils.getCurrentUserId();
         Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
-
         Long mentoringId = mentoringService.createMentoring(myId, mentorId, chatroom);
 
         stompChatController.sendSystemMessage(chatroom.getId(),
@@ -50,6 +50,11 @@ public class MentoringApiController {
 
     @PutMapping("/mentoring/request")
     public ResponseEntity<Void> acceptMentoringRequest(@RequestParam(value = "requestId") Long requestId) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        if (!mentoringService.isMentoringMentorByMentoringId(requestId, myId)) {
+            throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_MENTOR + requestId);
+        }
+
         mentoringService.acceptMentoringRequest(requestId);
 
         long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);
@@ -77,6 +82,11 @@ public class MentoringApiController {
 
     @DeleteMapping("/mentoring/request")
     public ResponseEntity<Void> denyMentoringRequest(@RequestParam(value = "requestId") Long requestId) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        if (!mentoringService.isMentoringMentorByMentoringId(requestId, myId)) {
+            throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_MENTOR + requestId);
+        }
+
         mentoringService.denyMentoringRequest(requestId);
 
         long chatroomId = mentoringService.getChatroomIdByMentoringId(requestId);

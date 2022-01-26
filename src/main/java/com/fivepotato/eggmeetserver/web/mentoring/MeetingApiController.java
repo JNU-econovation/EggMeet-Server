@@ -2,7 +2,6 @@ package com.fivepotato.eggmeetserver.web.mentoring;
 
 import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
-import com.fivepotato.eggmeetserver.domain.mentoring.Meeting;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
 import com.fivepotato.eggmeetserver.dto.mentoring.MeetingSaveDto;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
@@ -26,8 +25,8 @@ public class MeetingApiController {
     @PostMapping("/mentoring/{mentoringId}/meeting/request")
     public ResponseEntity<Void> sendMeetingRequest(@PathVariable Long mentoringId, @RequestBody MeetingSaveDto meetingSaveDto) {
         Long myId = SecurityUtils.getCurrentUserId();
-        if (!mentoringService.isParticipantByMentoringId(mentoringId, myId)) {
-            throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_PARTICIPANT + mentoringId);
+        if (!mentoringService.isMentoringMenteeByMentoringId(mentoringId, myId)) {
+            throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_MENTEE + mentoringId);
         }
 
         Long meetingId = meetingService.createMeeting(mentoringId, meetingSaveDto);

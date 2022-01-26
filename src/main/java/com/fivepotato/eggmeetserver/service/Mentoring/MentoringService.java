@@ -47,10 +47,15 @@ public class MentoringService {
         return getMentoringById(mentoringId).getChatroom().getId();
     }
 
-    public boolean isParticipantByMentoringId(long mentoringId, long userId) {
+    public boolean isMentoringMentorByMentoringId(long mentoringId, long userId) {
         Mentoring mentoring = getMentoringById(mentoringId);
-        User user = userService.getUserByUserId(userId);
 
-        return mentoring.getMentor().equals(user) || mentoring.getMentee().equals(user);
+        return mentoring.getMentor().getId().equals(userId);
+    }
+
+    public boolean isMentoringMenteeByMentoringId(long mentoringId, long userId) {
+        Mentoring mentoring = getMentoringById(mentoringId);
+
+        return mentoring.getMentee().getId().equals(userId);
     }
 }
