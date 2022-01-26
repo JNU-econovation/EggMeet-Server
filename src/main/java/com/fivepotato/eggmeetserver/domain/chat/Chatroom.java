@@ -1,6 +1,5 @@
 package com.fivepotato.eggmeetserver.domain.chat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fivepotato.eggmeetserver.domain.mentoring.Mentoring;
 import com.fivepotato.eggmeetserver.domain.user.User;
@@ -20,12 +19,12 @@ public class Chatroom {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private User mentor;
-
-    @ManyToOne
     @JoinColumn(name = "mentee_id")
     private User mentee;
+
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private User mentor;
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonManagedReference
@@ -33,4 +32,20 @@ public class Chatroom {
 
     @OneToOne(mappedBy = "chatroom", orphanRemoval = true)
     private Mentoring mentoring;
+
+    public void setMentee(User user) {
+        this.mentee = user;
+    }
+
+    public void setMentor(User user) {
+        this.mentor = user;
+    }
+
+    public void clearMentee() {
+        this.mentee = null;
+    }
+
+    public void clearMentor() {
+        this.mentor = null;
+    }
 }

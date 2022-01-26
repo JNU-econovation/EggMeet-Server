@@ -47,9 +47,6 @@ public class MentoringApiController {
         );
     }
 
-//    @GetMapping("/mentoring/request")
-//    public ResponseEntity<List<MentoringRequestDto>> getAllMentoringRequestDtos()
-
     @PutMapping("/mentoring/request")
     public ResponseEntity<Void> acceptRequestedMentoring(@RequestParam(value = "requestId") Long requestId) {
         mentoringService.acceptRequestedMentoring(requestId);

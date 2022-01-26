@@ -121,20 +121,4 @@ public class User {
         this.isOnlineAvailable = userProfileUpdateDto.isOnlineAvailable();
         this.isOfflineAvailable = userProfileUpdateDto.isOfflineAvailable();
     }
-
-    public void enterMentorChatroom(Chatroom chatroom) {
-        this.mentorChatroom.add(chatroom);
-    }
-
-    public void enterMenteeChatroom(Chatroom chatroom) {
-        this.menteeChatroom.add(chatroom);
-    }
-
-    public void exitMentorChatroom(Chatroom chatroom) {
-        this.mentorChatroom.remove(chatroom);
-    }
-
-    public void exitMenteeChatroom(Chatroom chatroom) {
-        this.menteeChatroom.remove(chatroom);
-    }
 }
