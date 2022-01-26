@@ -22,7 +22,7 @@ public class MentoringApiController {
     private final StompChatController stompChatController;
 
     @PostMapping("/mentoring/request")
-    public ResponseEntity<Void> sendMentoringRequest(@RequestParam(value = "mentorId") Long mentorId) {
+    public ResponseEntity<Long> sendMentoringRequestAndGetChatroomId(@RequestParam(value = "mentorId") Long mentorId) {
         Long myId = SecurityUtils.getCurrentUserId();
         Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
 
@@ -41,7 +41,10 @@ public class MentoringApiController {
                         .build()
         );
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(
+                chatroom.getId(),
+                HttpStatus.OK
+        );
     }
 
 //    @GetMapping("/mentoring/request")
