@@ -27,7 +27,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
     public List<User> findAllByMultipleConditionsOnPageable(Pageable pageable,
                                                             Location location,
                                                             Sex sex,
-                                                            Integer age,
+                                                            List<Integer> ages,
                                                             Boolean isOnlineAvailable,
                                                             Boolean isOfflineAvailable,
                                                             Category mentorCategory,
@@ -48,7 +48,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                         eqLocationAll(),
                         eqLocation(location),
                         eqSex(sex),
-                        eqAge(age),
+                        eqAges(ages),
                         eqIsOnlineAvailable(isOnlineAvailable),
                         eqIsOfflineAvailable(isOfflineAvailable),
                         eqMentorCategory(mentorCategory)
@@ -62,7 +62,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
     public List<User> findMenteesByMultipleConditionsOnPageable(Pageable pageable,
                                                                 Location location,
                                                                 Sex sex,
-                                                                Integer age,
+                                                                List<Integer> ages,
                                                                 Boolean isOnlineAvailable,
                                                                 Boolean isOfflineAvailable,
                                                                 Category category,
@@ -79,7 +79,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                         eqLocationAll(),
                         eqLocation(location),
                         eqSex(sex),
-                        eqAge(age),
+                        eqAges(ages),
                         eqIsOnlineAvailable(isOnlineAvailable),
                         eqIsOfflineAvailable(isOfflineAvailable),
                         eqMenteeCategory(category)
@@ -118,16 +118,18 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         return QUser.user.sex.eq(sex);
     }
 
-    private BooleanBuilder eqAge(Integer age) {
-        if (age == null) {
+    private BooleanBuilder eqAges(List<Integer> ages) {
+        if (ages == null) {
             return null;
         }
 
-        int minAge = age;
-        int maxAge = age + 9;
         BooleanBuilder ageBuilder = new BooleanBuilder();
-        ageBuilder.and(QUser.user.age.goe(minAge));
-        ageBuilder.and(QUser.user.age.loe(maxAge));
+        for (Integer age : ages) {
+            int minAge = age;
+            int maxAge = age + 9;
+            ageBuilder.and(QUser.user.age.between(minAge, maxAge));
+        }
+
         return ageBuilder;
     }
 
