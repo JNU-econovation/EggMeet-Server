@@ -45,8 +45,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                 .selectFrom(QUser.user)
                 .where(
                         existMentorArea(),
-                        eqLocationAll(),
-                        eqLocation(location),
+                        eqLocationAllOrCondition(location),
                         eqSex(sex),
                         eqAges(ages),
                         eqIsOnlineAvailable(isOnlineAvailable),
@@ -76,8 +75,7 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                 .selectFrom(QUser.user)
                 .where(
                         existMenteeArea(),
-                        eqLocationAll(),
-                        eqLocation(location),
+                        eqLocationAllOrCondition(location),
                         eqSex(sex),
                         eqAges(ages),
                         eqIsOnlineAvailable(isOnlineAvailable),
@@ -98,12 +96,16 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         return QUser.user.menteeArea.id.isNotNull();
     }
 
-    private BooleanExpression eqLocation(Location location) {
+    private BooleanBuilder eqLocationAllOrCondition(Location location) {
         if (location == null) {
             return null;
         }
 
-        return QUser.user.location.eq(location);
+        BooleanBuilder locationBuilder = new BooleanBuilder();
+        locationBuilder.or(QUser.user.location.eq(Location.ALL));
+        locationBuilder.or(QUser.user.location.eq(location));
+
+        return locationBuilder;
     }
 
     private BooleanExpression eqLocationAll() {
