@@ -25,6 +25,9 @@ public class AppTokenWebSocketInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+
+        log.info("[WEBSOCKET] : " + accessor);
+
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             String jwt = parseTokenFromWebSocketHeader(accessor);
             appTokenProvider.validateToken(jwt);

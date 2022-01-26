@@ -2,6 +2,7 @@ package com.fivepotato.eggmeetserver.web.chat;
 
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomInfoDto;
 import com.fivepotato.eggmeetserver.dto.chat.ChatroomTempInfoDto;
+import com.fivepotato.eggmeetserver.dto.chat.MessageInfoDto;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
