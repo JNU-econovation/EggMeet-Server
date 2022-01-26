@@ -24,8 +24,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
-    public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom> chatrooms = this.<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom>createList("chatrooms", com.fivepotato.eggmeetserver.domain.chat.Chatroom.class, com.fivepotato.eggmeetserver.domain.chat.QChatroom.class, PathInits.DIRECT2);
-
     public final StringPath description = createString("description");
 
     public final StringPath email = createString("email");
@@ -48,11 +46,15 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.fivepotato.eggmeetserver.domain.mentoring.QMenteeArea menteeArea;
 
+    public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom> menteeChatroom = this.<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom>createList("menteeChatroom", com.fivepotato.eggmeetserver.domain.chat.Chatroom.class, com.fivepotato.eggmeetserver.domain.chat.QChatroom.class, PathInits.DIRECT2);
+
     public final ListPath<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring> menteeMentoring = this.<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring>createList("menteeMentoring", com.fivepotato.eggmeetserver.domain.mentoring.Mentoring.class, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring.class, PathInits.DIRECT2);
 
     public final NumberPath<Float> menteeRating = createNumber("menteeRating", Float.class);
 
     public final com.fivepotato.eggmeetserver.domain.mentoring.QMentorArea mentorArea;
+
+    public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom> mentorChatroom = this.<com.fivepotato.eggmeetserver.domain.chat.Chatroom, com.fivepotato.eggmeetserver.domain.chat.QChatroom>createList("mentorChatroom", com.fivepotato.eggmeetserver.domain.chat.Chatroom.class, com.fivepotato.eggmeetserver.domain.chat.QChatroom.class, PathInits.DIRECT2);
 
     public final ListPath<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring> mentorMentoring = this.<com.fivepotato.eggmeetserver.domain.mentoring.Mentoring, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring>createList("mentorMentoring", com.fivepotato.eggmeetserver.domain.mentoring.Mentoring.class, com.fivepotato.eggmeetserver.domain.mentoring.QMentoring.class, PathInits.DIRECT2);
 

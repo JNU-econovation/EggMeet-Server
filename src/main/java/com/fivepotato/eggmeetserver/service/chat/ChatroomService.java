@@ -32,8 +32,8 @@ public class ChatroomService {
 
         User me = userService.getUserByUserId(myId);
         User participant = userService.getUserByUserId(participantId);
-        me.enterChatroom(chatroom);
-        participant.enterChatroom(chatroom);
+        me.enterMenteeChatroom(chatroom);
+        participant.enterMentorChatroom(chatroom);
 
         return chatroom;
     }
@@ -66,9 +66,8 @@ public class ChatroomService {
     @Transactional
     public void deleteChatroomByChatroomId(long chatroomId) {
         Chatroom chatroom = getChatroomByRoomId(chatroomId);
-        for (User participant : chatroom.getParticipants()) {
-            participant.exitChatroom(chatroom);
-        }
+        chatroom.getMentee().exitMenteeChatroom(chatroom);
+        chatroom.getMentor().exitMentorChatroom(chatroom);
 
         chatroomRepository.delete(chatroom);
     }

@@ -18,8 +18,7 @@ public class ChatroomTempInfoDto {
 
     public ChatroomTempInfoDto(Chatroom chatroom) {
         this.id = chatroom.getId();
-        for (User participants : chatroom.getParticipants()) {
-            participantNicknames.add(participants.getNickname());
-        }
+        participantNicknames.add(chatroom.getMentee().getNickname());
+        participantNicknames.add(chatroom.getMentor().getNickname());
     }
 }

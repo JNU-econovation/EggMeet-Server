@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.chat;
 
 import com.fivepotato.eggmeetserver.domain.user.QUser;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -43,8 +44,12 @@ public class ChatroomQueryRepository extends QuerydslRepositorySupport {
         }
     }
 
-    private BooleanExpression containsUserId(long userId) {
-        return QChatroom.chatroom.participants.any().id.eq(userId);
+    private BooleanBuilder containsUserId(long userId) {
+        BooleanBuilder userBuilder = new BooleanBuilder();
+        userBuilder.or(QChatroom.chatroom.mentee.id.eq(userId));
+        userBuilder.or(QChatroom.chatroom.mentor.id.eq(userId));
+
+        return userBuilder;
     }
 
     private BooleanExpression eqChatroomId(long chatroomId) {

@@ -6,6 +6,7 @@ import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @NoArgsConstructor
@@ -20,12 +21,14 @@ public class ChatroomInfoDto {
         this.id = chatroom.getId();
 
         Long myId = SecurityUtils.getCurrentUserId();
-        Optional<User> participant = chatroom.getParticipants()
-                .stream().filter(p -> !p.getId().equals(myId)).findFirst();
-        if (participant.isPresent()) {
-            this.participantNickname = participant.get().getNickname();
-        } else {
+        if (chatroom.getMentee() == null && chatroom.getMentor() == null) {
             this.participantNickname = "알 수 없음";
+        } else {
+            if (Objects.equals(chatroom.getMentee().getId(), myId)) {
+                this.participantNickname = chatroom.getMentor().getNickname();
+            } else {
+                this.participantNickname = chatroom.getMentee().getNickname();
+            }
         }
 
         this.recentMessageContent = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getContent();

@@ -97,7 +97,8 @@ class ChatServiceTest {
 
         userRepository.delete(user0);
 
-        Assertions.assertEquals(1, chatroomService.getChatroomByRoomId(chatroomId).getParticipants().size());
+        Assertions.assertNull(chatroomService.getChatroomByRoomId(chatroomId).getMentee());
+        Assertions.assertNotNull(chatroomService.getChatroomByRoomId(chatroomId).getMentor());
     }
 
     @Test
