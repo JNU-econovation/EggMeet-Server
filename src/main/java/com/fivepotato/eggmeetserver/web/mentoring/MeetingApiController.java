@@ -76,5 +76,29 @@ public class MeetingApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/mentoring/meeting/request")
+    public ResponseEntity<Void> denyMeetingRequest(@RequestParam(value = "requestId") Long requestId) {
+        Long myId = SecurityUtils.getCurrentUserId();
+        if (!meetingService.isMeetingMentorByMentorId(requestId, myId)) {
+            throw new IllegalArgumentException(ErrorCode.NOT_MEETING_MENTOR + requestId);
+        }
 
+        meetingService.denyMeetingRequest(requestId);
+
+        long chatroomId = meetingService.getChatroomIdByMeetingId(requestId);
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTEE_SYSTEM)
+                        .content(SystemMessageContent.SCHEDULE_REJECT)
+                        .build()
+        );
+        stompChatController.sendSystemMessage(chatroomId,
+                SystemMessageSaveDto.builder()
+                        .type(MessageType.MENTOR_SYSTEM)
+                        .content(SystemMessageContent.SCHEDULE_REJECT)
+                        .build()
+        );
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -43,6 +43,10 @@ public class MeetingService {
         meeting.acceptMeetingRequest();
     }
 
+    public void denyMeetingRequest(long meetingId) {
+        meetingRepository.deleteById(meetingId);
+    }
+
     public long getChatroomIdByMeetingId(long meetingId) {
         return getMeetingByMeetingId(meetingId).getMentoring().getChatroom().getId();
     }
