@@ -26,6 +26,7 @@ public enum ErrorCode {
     public static String NO_MENTORING_BY_MENTORINGID = "해당 ID와 일치하는 멘토링이 없음 : mentoringId = ";
 
     public static String NOT_CHATROOM_PARTICIPANT = "해당 채팅방의 참여자가 아님 : roomId = ";
+    public static String NOT_MENTORING_PARTICIPANT = "해당 멘토링의 참여자가 아님 : mentoringId = ";
 
 
     public static String SYSTEM_IO_ERROR_MESSAGE = "서버의 IO 과정에서 문제 발생";

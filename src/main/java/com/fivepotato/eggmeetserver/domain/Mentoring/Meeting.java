@@ -1,6 +1,7 @@
 package com.fivepotato.eggmeetserver.domain.mentoring;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,13 @@ public class Meeting {
 
     @NotNull
     private LocalDateTime dateTime;
+
+    @Builder
+    public Meeting(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setMentoring(Mentoring mentoring) {
+        this.mentoring = mentoring;
+    }
 }

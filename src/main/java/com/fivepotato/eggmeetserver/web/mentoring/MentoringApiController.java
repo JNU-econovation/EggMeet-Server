@@ -5,6 +5,7 @@ import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
+import com.fivepotato.eggmeetserver.service.mentoring.MeetingService;
 import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
 import com.fivepotato.eggmeetserver.util.SecurityUtils;
 import com.fivepotato.eggmeetserver.web.chat.StompChatController;

@@ -1,7 +1,6 @@
 package com.fivepotato.eggmeetserver.service.mentoring;
 
 import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
-import com.fivepotato.eggmeetserver.domain.mentoring.MeetingRepository;
 import com.fivepotato.eggmeetserver.domain.mentoring.Mentoring;
 import com.fivepotato.eggmeetserver.domain.mentoring.MentoringRepository;
 import com.fivepotato.eggmeetserver.domain.user.User;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MentoringService {
 
     private final MentoringRepository mentoringRepository;
-    private final MeetingRepository meetingRepository;
     private final UserService userService;
 
     public void createMentoring(long menteeId, long mentorId, Chatroom chatroom) {
@@ -44,5 +42,12 @@ public class MentoringService {
 
     public long getChatroomIdByMentoringId(long mentoringId) {
         return getMentoringById(mentoringId).getChatroom().getId();
+    }
+
+    public boolean isParticipantByMentoringId(long mentoringId, long userId) {
+        Mentoring mentoring = getMentoringById(mentoringId);
+        User user = userService.getUserByUserId(userId);
+
+        return mentoring.getMentor().equals(user) || mentoring.getMentee().equals(user);
     }
 }
