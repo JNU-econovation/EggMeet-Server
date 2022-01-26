@@ -36,6 +36,8 @@ public class QMessage extends EntityPathBase<Message> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
 
+    public final NumberPath<Long> requestId = createNumber("requestId", Long.class);
+
     public final EnumPath<MessageType> type = createEnum("type", MessageType.class);
 
     public final com.fivepotato.eggmeetserver.domain.user.QUser writer;

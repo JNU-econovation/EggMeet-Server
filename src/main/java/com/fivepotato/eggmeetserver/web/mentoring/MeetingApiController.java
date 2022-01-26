@@ -13,10 +13,7 @@ import com.fivepotato.eggmeetserver.web.chat.StompChatController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,7 +24,7 @@ public class MeetingApiController {
     private final StompChatController stompChatController;
 
     @PostMapping("/mentoring/{mentoringId}/meeting/request")
-    public ResponseEntity<Long> sendMeetingRequestAndGetMeetingId(@PathVariable Long mentoringId, @RequestBody MeetingSaveDto meetingSaveDto) {
+    public ResponseEntity<Void> sendMeetingRequest(@PathVariable Long mentoringId, @RequestBody MeetingSaveDto meetingSaveDto) {
         Long myId = SecurityUtils.getCurrentUserId();
         if (!mentoringService.isParticipantByMentoringId(mentoringId, myId)) {
             throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_PARTICIPANT + mentoringId);
@@ -50,9 +47,6 @@ public class MeetingApiController {
                         .build()
         );
 
-        return new ResponseEntity<>(
-                meetingId,
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
