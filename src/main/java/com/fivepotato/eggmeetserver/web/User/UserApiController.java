@@ -42,6 +42,14 @@ public class UserApiController {
         );
     }
 
+    @GetMapping("/user/profile/id/me")
+    public ResponseEntity<Long> getMyId() {
+        return new ResponseEntity<>(
+                SecurityUtils.getCurrentUserId(),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/user/mentor")
     public ResponseEntity<List<MentorDto>> getMentorDtosByMultipleConditionsOnPageable(Pageable pageable,
                                                                                        @RequestParam(value = "location", required = false) Location location,
