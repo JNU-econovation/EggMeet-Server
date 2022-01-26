@@ -71,4 +71,13 @@ public class ChatController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("/chat/room/{roomId}")
+    public ResponseEntity<Void> exitChatroomByRoomId(@PathVariable Long roomId) {
+        chatRoomService.deleteChatroomByChatroomId(roomId);
+
+        return new ResponseEntity<>(
+                HttpStatus.OK
+        );
+    }
 }
