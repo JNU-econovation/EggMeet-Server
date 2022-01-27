@@ -15,7 +15,6 @@ import com.fivepotato.eggmeetserver.exception.CustomTokenException;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.exception.SystemIOException;
 import com.fivepotato.eggmeetserver.provider.security.AppTokenProvider;
-import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
 import com.google.gson.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -46,7 +45,7 @@ public class AuthService {
 
     @Value("${backdoor-token-secret}")
     private String BACKDOOR_TOKEN;
-    private final String BACKDOOR_EMAIL = "test@test.com";
+    public static final String BACKDOOR_EMAIL = "test@test.test";
     private final String APPLE_DECODE_KEY_URL = "https://appleid.apple.com/auth/keys";
     private final String APPLE_TOKEN_ISS = "https://appleid.apple.com";
     private final String APPLE_TOKEN_CLIENT_ID = "com.FivePotato.EggMeet";
