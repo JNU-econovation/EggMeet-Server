@@ -5,6 +5,8 @@ import com.fivepotato.eggmeetserver.dto.user.AppTokenDto;
 import com.fivepotato.eggmeetserver.dto.user.AppTokenReissueDto;
 import com.fivepotato.eggmeetserver.dto.user.UserSaveDto;
 import com.fivepotato.eggmeetserver.dto.user.SocialTokenDto;
+import com.fivepotato.eggmeetserver.exception.DuplicatedRequestException;
+import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.service.user.AuthService;
 import com.fivepotato.eggmeetserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -51,12 +53,12 @@ public class AuthApiController {
         String email = authService.getEmailByUserSaveDto(userSaveDto);
         boolean isExistUser = userSevice.getIsExistUserByEmail(userSaveDto.getLoginType(), email);
         if (isExistUser) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            throw new DuplicatedRequestException(ErrorCode.ALREADY_EXIST_USER + userSaveDto.getLoginType() + email);
         }
 
         boolean isBannedUser = userSevice.getIsBannedUser(userSaveDto.getLoginType(), email);
         if (isBannedUser) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            throw new DuplicatedRequestException(ErrorCode.BAN_USER + userSaveDto.getLoginType() + email);
         }
 
 
