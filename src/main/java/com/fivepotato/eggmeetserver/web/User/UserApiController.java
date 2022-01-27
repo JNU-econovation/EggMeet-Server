@@ -55,8 +55,8 @@ public class UserApiController {
                                                                                        @RequestParam(value = "location", required = false) Location location,
                                                                                        @RequestParam(value = "sex", required = false) Sex sex,
                                                                                        @RequestParam(value = "age", required = false) List<Integer> ages,
-                                                                                       @RequestParam(value = "isOnlineAvailable", required = false) Boolean isOnlineAvailable,
-                                                                                       @RequestParam(value = "isOfflineAvailable", required = false) Boolean isOfflineAvailable,
+                                                                                       @RequestParam(value = "onlineAvailable", required = false) Boolean onlineAvailable,
+                                                                                       @RequestParam(value = "offlineAvailable", required = false) Boolean offlineAvailable,
                                                                                        @RequestParam(value = "category", required = false) Category category,
                                                                                        @RequestParam(value = "ratingSort", required = false) SortOrder mentorRatingSortOrder,
                                                                                        @RequestParam(value = "growthPointSort", required = false) SortOrder growthPointSortOrder) {
@@ -66,8 +66,8 @@ public class UserApiController {
                         location,
                         sex,
                         ages,
-                        isOnlineAvailable,
-                        isOfflineAvailable,
+                        onlineAvailable,
+                        offlineAvailable,
                         category,
                         mentorRatingSortOrder,
                         growthPointSortOrder
@@ -81,8 +81,8 @@ public class UserApiController {
                                                                                        @RequestParam(value = "location", required = false) Location location,
                                                                                        @RequestParam(value = "sex", required = false) Sex sex,
                                                                                        @RequestParam(value = "age", required = false) List<Integer> ages,
-                                                                                       @RequestParam(value = "isOnlineAvailable", required = false) Boolean isOnlineAvailable,
-                                                                                       @RequestParam(value = "isOfflineAvailable", required = false) Boolean isOfflineAvailable,
+                                                                                       @RequestParam(value = "onlineAvailable", required = false) Boolean onlineAvailable,
+                                                                                       @RequestParam(value = "offlineAvailable", required = false) Boolean offlineAvailable,
                                                                                        @RequestParam(value = "category", required = false) Category category,
                                                                                        @RequestParam(value = "ratingSort", required = false) SortOrder menteeRatingSortOrder) {
         return new ResponseEntity<>(
@@ -91,8 +91,8 @@ public class UserApiController {
                         location,
                         sex,
                         ages,
-                        isOnlineAvailable,
-                        isOfflineAvailable,
+                        onlineAvailable,
+                        offlineAvailable,
                         category,
                         menteeRatingSortOrder
                 ),

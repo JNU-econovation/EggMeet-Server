@@ -16,8 +16,8 @@ public class MenteeDto {
     private float menteeRating;
     private Category category;
     private Location location;
-    private boolean isOnlineAvailable;
-    private boolean isOfflineAvailable;
+    private boolean onlineAvailable;
+    private boolean offlineAvailable;
     private int age;
     private Sex sex;
 
@@ -27,8 +27,8 @@ public class MenteeDto {
         this.menteeRating = user.getMenteeRating();
         this.category = user.getMenteeArea().getCategory();
         this.location = user.getLocation();
-        this.isOnlineAvailable = user.isOnlineAvailable();
-        this.isOfflineAvailable = user.isOfflineAvailable();
+        this.onlineAvailable = user.isOnlineAvailable();
+        this.offlineAvailable = user.isOfflineAvailable();
         this.age = user.getAge();
         this.sex = user.getSex();
     }

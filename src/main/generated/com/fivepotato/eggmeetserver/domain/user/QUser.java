@@ -36,10 +36,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final BooleanPath isOfflineAvailable = createBoolean("isOfflineAvailable");
-
-    public final BooleanPath isOnlineAvailable = createBoolean("isOnlineAvailable");
-
     public final EnumPath<Location> location = createEnum("location", Location.class);
 
     public final EnumPath<LoginType> loginType = createEnum("loginType", LoginType.class);
@@ -63,6 +59,10 @@ public class QUser extends EntityPathBase<User> {
     public final ListPath<com.fivepotato.eggmeetserver.domain.chat.Message, com.fivepotato.eggmeetserver.domain.chat.QMessage> messages = this.<com.fivepotato.eggmeetserver.domain.chat.Message, com.fivepotato.eggmeetserver.domain.chat.QMessage>createList("messages", com.fivepotato.eggmeetserver.domain.chat.Message.class, com.fivepotato.eggmeetserver.domain.chat.QMessage.class, PathInits.DIRECT2);
 
     public final StringPath nickname = createString("nickname");
+
+    public final BooleanPath offlineAvailable = createBoolean("offlineAvailable");
+
+    public final BooleanPath onlineAvailable = createBoolean("onlineAvailable");
 
     public final NumberPath<Integer> pictureIndex = createNumber("pictureIndex", Integer.class);
 

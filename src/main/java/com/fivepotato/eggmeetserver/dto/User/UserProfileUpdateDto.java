@@ -14,8 +14,8 @@ public class UserProfileUpdateDto {
     private Location location;
     private String description;
     private int pictureIndex;
-    private boolean isOnlineAvailable;
-    private boolean isOfflineAvailable;
+    private boolean onlineAvailable;
+    private boolean offlineAvailable;
 
     private Category mentorCategory;
     private String mentorDescription;
@@ -26,13 +26,13 @@ public class UserProfileUpdateDto {
     private String menteeDescription;
 
     @Builder
-    public UserProfileUpdateDto(String nickname, int age, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, Integer mentorGrowthCost, Category menteeCategory, String menteeDescription) {
+    public UserProfileUpdateDto(String nickname, int age, Location location, String description, int pictureIndex, boolean onlineAvailable, boolean offlineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, Integer mentorGrowthCost, Category menteeCategory, String menteeDescription) {
         this.nickname = nickname;
         this.location = location;
         this.description = description;
         this.pictureIndex = pictureIndex;
-        this.isOnlineAvailable = isOnlineAvailable;
-        this.isOfflineAvailable = isOfflineAvailable;
+        this.onlineAvailable = onlineAvailable;
+        this.offlineAvailable = offlineAvailable;
         this.mentorCategory = mentorCategory;
         this.mentorDescription = mentorDescription;
         this.mentorCareer = mentorCareer;

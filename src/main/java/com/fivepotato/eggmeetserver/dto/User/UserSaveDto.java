@@ -18,8 +18,8 @@ public class UserSaveDto {
     private String description;
     private int pictureIndex;
 
-    private boolean isOnlineAvailable;
-    private boolean isOfflineAvailable;
+    private boolean onlineAvailable;
+    private boolean offlineAvailable;
     private Category mentorCategory;
     private String mentorDescription;
     private String mentorCareer;
@@ -38,15 +38,15 @@ public class UserSaveDto {
     }
 
     @Builder
-    public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthCost, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
+    public UserSaveDto(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean onlineAvailable, boolean offlineAvailable, Category mentorCategory, String mentorDescription, String mentorCareer, String mentorLink, int mentorGrowthCost, Category menteeCategory, String menteeDescription, LoginType loginType, String socialToken, Role role) {
         this.nickname = nickname;
         this.age = age;
         this.sex = sex;
         this.location = location;
         this.description = description;
         this.pictureIndex = pictureIndex;
-        this.isOnlineAvailable = isOnlineAvailable;
-        this.isOfflineAvailable = isOfflineAvailable;
+        this.onlineAvailable = onlineAvailable;
+        this.offlineAvailable = offlineAvailable;
         this.mentorCategory = mentorCategory;
         this.mentorDescription = mentorDescription;
         this.mentorCareer = mentorCareer;
@@ -67,8 +67,8 @@ public class UserSaveDto {
                 .location(location)
                 .description(description)
                 .pictureIndex(pictureIndex)
-                .isOnlineAvailable(isOnlineAvailable)
-                .isOfflineAvailable(isOfflineAvailable)
+                .onlineAvailable(onlineAvailable)
+                .offlineAvailable(offlineAvailable)
                 .loginType(loginType)
                 .email(email)
                 .encodedEmail(passwordEncoder.encode(email))

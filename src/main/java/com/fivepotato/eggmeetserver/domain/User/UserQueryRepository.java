@@ -28,8 +28,8 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                                                                 Location location,
                                                                 Sex sex,
                                                                 List<Integer> ages,
-                                                                Boolean isOnlineAvailable,
-                                                                Boolean isOfflineAvailable,
+                                                                Boolean onlineAvailable,
+                                                                Boolean offlineAvailable,
                                                                 Category mentorCategory,
                                                                 SortOrder mentorRatingSortOrder,
                                                                 SortOrder growthPointOrder) {
@@ -48,8 +48,8 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                         eqLocationAllOrCondition(location),
                         eqSex(sex),
                         eqAges(ages),
-                        eqIsOnlineAvailable(isOnlineAvailable),
-                        eqIsOfflineAvailable(isOfflineAvailable),
+                        eqIsOnlineAvailable(onlineAvailable),
+                        eqIsOfflineAvailable(offlineAvailable),
                         eqMentorCategory(mentorCategory)
                 )
                 .orderBy(orders.toArray(new OrderSpecifier[orders.size()]))
@@ -62,8 +62,8 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                                                                 Location location,
                                                                 Sex sex,
                                                                 List<Integer> ages,
-                                                                Boolean isOnlineAvailable,
-                                                                Boolean isOfflineAvailable,
+                                                                Boolean onlineAvailable,
+                                                                Boolean offlineAvailable,
                                                                 Category category,
                                                                 SortOrder menteeRatingSortOrder) {
         List<OrderSpecifier> orders = new ArrayList<>();
@@ -78,8 +78,8 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                         eqLocationAllOrCondition(location),
                         eqSex(sex),
                         eqAges(ages),
-                        eqIsOnlineAvailable(isOnlineAvailable),
-                        eqIsOfflineAvailable(isOfflineAvailable),
+                        eqIsOnlineAvailable(onlineAvailable),
+                        eqIsOfflineAvailable(offlineAvailable),
                         eqMenteeCategory(category)
                 )
                 .orderBy(orders.toArray(new OrderSpecifier[orders.size()]))
@@ -131,20 +131,20 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         return ageBuilder;
     }
 
-    private BooleanExpression eqIsOnlineAvailable(Boolean isOnlineAvailable) {
-        if (isOnlineAvailable == null) {
+    private BooleanExpression eqIsOnlineAvailable(Boolean onlineAvailable) {
+        if (onlineAvailable == null) {
             return null;
         }
 
-        return QUser.user.isOnlineAvailable.eq(isOnlineAvailable);
+        return QUser.user.onlineAvailable.eq(onlineAvailable);
     }
 
-    private BooleanExpression eqIsOfflineAvailable(Boolean isOfflineAvailable) {
-        if (isOfflineAvailable == null) {
+    private BooleanExpression eqIsOfflineAvailable(Boolean offlineAvailable) {
+        if (offlineAvailable == null) {
             return null;
         }
 
-        return QUser.user.isOfflineAvailable.eq(isOfflineAvailable);
+        return QUser.user.offlineAvailable.eq(offlineAvailable);
     }
 
     private BooleanExpression eqMentorCategory(Category mentorCategory) {

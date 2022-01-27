@@ -107,12 +107,12 @@ public class UserService {
                                                                        Location location,
                                                                        Sex sex,
                                                                        List<Integer> ages,
-                                                                       Boolean isOnlineAvailable,
-                                                                       Boolean isOfflineAvailable,
+                                                                       Boolean onlineAvailable,
+                                                                       Boolean offlineAvailable,
                                                                        Category category,
                                                                        SortOrder mentorRatingSortOrder,
                                                                        SortOrder growthPointSortOrder) {
-        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, ages, isOnlineAvailable, isOfflineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
+        List<User> users = userQueryRepository.findMentorsByMultipleConditionsOnPageable(pageable, location, sex, ages, onlineAvailable, offlineAvailable, category, mentorRatingSortOrder, growthPointSortOrder);
 
         return users.stream().map(MentorDto::new).collect(Collectors.toList());
     }
@@ -121,11 +121,11 @@ public class UserService {
                                                                        Location location,
                                                                        Sex sex,
                                                                        List<Integer> ages,
-                                                                       Boolean isOnlineAvailable,
-                                                                       Boolean isOfflineAvailable,
+                                                                       Boolean onlineAvailable,
+                                                                       Boolean offlineAvailable,
                                                                        Category category,
                                                                        SortOrder menteeRatingSortOrder) {
-        List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, ages, isOnlineAvailable, isOfflineAvailable, category, menteeRatingSortOrder);
+        List<User> users = userQueryRepository.findMenteesByMultipleConditionsOnPageable(pageable, location, sex, ages, onlineAvailable, offlineAvailable, category, menteeRatingSortOrder);
 
         return users.stream().map(MenteeDto::new).collect(Collectors.toList());
     }

@@ -18,8 +18,8 @@ public class UserProfileDto {
     private String description;
     private int pictureIndex;
 
-    private boolean isOnlineAvailable;
-    private boolean isOfflineAvailable;
+    private boolean onlineAvailable;
+    private boolean offlineAvailable;
     private Category mentorCategory;
     private String mentorDescription;
     private String mentorCareer;
@@ -38,8 +38,8 @@ public class UserProfileDto {
         this.location = user.getLocation();
         this.description = user.getDescription();
         this.pictureIndex = user.getPictureIndex();
-        this.isOnlineAvailable = user.isOnlineAvailable();
-        this.isOfflineAvailable = user.isOfflineAvailable();
+        this.onlineAvailable = user.isOnlineAvailable();
+        this.offlineAvailable = user.isOfflineAvailable();
         this.mentorRating = user.getMentorRating();
         this.menteeRating = user.getMenteeRating();
         this.growthPoint = user.getGrowthPoint();

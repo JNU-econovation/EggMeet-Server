@@ -1,6 +1,5 @@
 package com.fivepotato.eggmeetserver.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.Message;
 import com.fivepotato.eggmeetserver.domain.mentoring.MenteeArea;
@@ -44,10 +43,10 @@ public class User {
     private int pictureIndex;
 
     @NotNull
-    private boolean isOnlineAvailable;
+    private boolean onlineAvailable;
 
     @NotNull
-    private boolean isOfflineAvailable;
+    private boolean offlineAvailable;
 
     @OneToOne(mappedBy = "mentor", orphanRemoval = true)
     private MentorArea mentorArea;
@@ -98,15 +97,15 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean isOnlineAvailable, boolean isOfflineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
+    public User(String nickname, int age, Sex sex, Location location, String description, int pictureIndex, boolean onlineAvailable, boolean offlineAvailable, LoginType loginType, String encodedEmail, String email, Role role) {
         this.nickname = nickname;
         this.age = age;
         this.sex = sex;
         this.location = location;
         this.description = description;
         this.pictureIndex = pictureIndex;
-        this.isOnlineAvailable = isOnlineAvailable;
-        this.isOfflineAvailable = isOfflineAvailable;
+        this.onlineAvailable = onlineAvailable;
+        this.offlineAvailable = offlineAvailable;
         this.loginType = loginType;
         this.email = email;
         this.encodedEmail = encodedEmail;
@@ -118,7 +117,7 @@ public class User {
         this.location = userProfileUpdateDto.getLocation();
         this.description = userProfileUpdateDto.getDescription();
         this.pictureIndex = userProfileUpdateDto.getPictureIndex();
-        this.isOnlineAvailable = userProfileUpdateDto.isOnlineAvailable();
-        this.isOfflineAvailable = userProfileUpdateDto.isOfflineAvailable();
+        this.onlineAvailable = userProfileUpdateDto.isOnlineAvailable();
+        this.offlineAvailable = userProfileUpdateDto.isOfflineAvailable();
     }
 }
