@@ -23,26 +23,6 @@ public class ChatController {
     private final ChatroomService chatRoomService;
     private final MessageService messageService;
 
-    @Deprecated
-    @GetMapping("/chat/room/list")
-    public ResponseEntity<List<ChatroomTempInfoDto>> getRoomList() {
-        return new ResponseEntity<>(
-                chatRoomService.getAllChatroom(),
-                HttpStatus.OK
-        );
-    }
-
-    @Deprecated
-    @PostMapping("/chat/room")
-    public ResponseEntity<Void> createChatroom(@RequestParam(value = "participantId") Long participantId) {
-        Long myId = SecurityUtils.getCurrentUserId();
-        chatRoomService.createChatroom(myId, participantId);
-
-        return new ResponseEntity<>(
-                HttpStatus.OK
-        );
-    }
-
     @GetMapping("/chat/room")
     public ResponseEntity<List<ChatroomPreviewDto>> getMyChatroomPreviewDtos() {
         return new ResponseEntity<>(

@@ -54,11 +54,6 @@ public class ChatroomService {
         return new ChatroomInfoDto(getChatroomByRoomId(chatroomId));
     }
 
-    @Deprecated
-    public List<ChatroomTempInfoDto> getAllChatroom() {
-        return chatroomRepository.findAll().stream().map(ChatroomTempInfoDto::new).collect(Collectors.toList());
-    }
-
     public boolean isParticipantByChatroomId(long chatroomId, long userId) {
         return chatroomQueryRepository.isParticipantByChatroomId(chatroomId, userId);
     }
