@@ -47,6 +47,10 @@ public class MentoringService {
         return getMentoringById(mentoringId).getChatroom().getId();
     }
 
+    public boolean isExistsMentoring(long menteeId, long mentorId) {
+        return mentoringRepository.existsByMentee_IdAndMentor_Id(menteeId, mentorId);
+    }
+
     public boolean isMentoringMentorByMentoringId(long mentoringId, long userId) {
         Mentoring mentoring = getMentoringById(mentoringId);
 

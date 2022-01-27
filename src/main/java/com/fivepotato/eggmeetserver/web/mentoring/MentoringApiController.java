@@ -4,6 +4,7 @@ import com.fivepotato.eggmeetserver.domain.chat.Chatroom;
 import com.fivepotato.eggmeetserver.domain.chat.MessageType;
 import com.fivepotato.eggmeetserver.domain.chat.SystemMessageContent;
 import com.fivepotato.eggmeetserver.dto.chat.SystemMessageSaveDto;
+import com.fivepotato.eggmeetserver.exception.DuplicatedRequestException;
 import com.fivepotato.eggmeetserver.exception.ErrorCode;
 import com.fivepotato.eggmeetserver.service.chat.ChatroomService;
 import com.fivepotato.eggmeetserver.service.mentoring.MentoringService;
@@ -28,6 +29,10 @@ public class MentoringApiController {
         Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
         Long mentoringId = mentoringService.createMentoring(myId, mentorId, chatroom);
 
+        if (mentoringService.isExistsMentoring(myId, mentorId)){
+            throw new DuplicatedRequestException(ErrorCode.ALREADY_EXIST_MENTORING + mentoringId);
+        }
+
         stompChatController.sendSystemMessage(chatroom.getId(),
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTEE_SYSTEM)
@@ -51,6 +56,7 @@ public class MentoringApiController {
     @PutMapping("/mentoring/request")
     public ResponseEntity<Void> acceptMentoringRequest(@RequestParam(value = "requestId") Long requestId) {
         Long myId = SecurityUtils.getCurrentUserId();
+
         if (!mentoringService.isMentoringMentorByMentoringId(requestId, myId)) {
             throw new IllegalArgumentException(ErrorCode.NOT_MENTORING_MENTOR + requestId);
         }
