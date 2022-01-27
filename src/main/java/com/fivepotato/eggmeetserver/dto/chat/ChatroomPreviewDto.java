@@ -31,7 +31,7 @@ public class ChatroomPreviewDto {
             }
         }
 
-        if (chatroom.getMessages().isEmpty()) {
+        if (!chatroom.getMessages().isEmpty()) {
             this.recentMessageContent = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getContent();
             this.recentMessageDateTime = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
         }
