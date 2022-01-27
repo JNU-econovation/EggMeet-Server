@@ -31,7 +31,9 @@ public class ChatroomPreviewDto {
             }
         }
 
-        this.recentMessageContent = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getContent();
-        this.recentMessageDateTime = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
+        if (chatroom.getMessages().size() == 0) {
+            this.recentMessageContent = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getContent();
+            this.recentMessageDateTime = chatroom.getMessages().get(chatroom.getMessages().size() - 1).getCreatedDate().toEpochSecond(ZoneOffset.of("+09:00"));
+        }
     }
 }
