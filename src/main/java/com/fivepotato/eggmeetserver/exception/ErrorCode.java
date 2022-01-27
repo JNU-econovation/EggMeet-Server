@@ -33,7 +33,7 @@ public enum ErrorCode {
 
     public static String ALREADY_EXIST_USER = "이미 존재하는 유저 : email = ";
     public static String BAN_USER = "벤 유저 : email = ";
-    public static String ALREADY_EXIST_MENTORING = "이미 존재하는 멘토링 관계 : mentorId = ";
+    public static String ALREADY_EXIST_MENTORING = "이미 존재하는 멘토링 관계";
 
     public static String SYSTEM_IO_ERROR_MESSAGE = "서버의 IO 과정에서 문제 발생";
 

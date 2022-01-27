@@ -45,6 +45,7 @@ public class MessageService {
                         .chatroom(chatroom)
                         .type(systemMessageSaveDto.getType())
                         .content(systemMessageSaveDto.getContent().toString())
+                        .requestId(systemMessageSaveDto.getRequestId())
                         .build()
         );
 

@@ -26,12 +26,12 @@ public class MentoringApiController {
     @PostMapping("/mentoring/request")
     public ResponseEntity<Long> sendMentoringRequestAndGetChatroomId(@RequestParam(value = "mentorId") Long mentorId) {
         Long myId = SecurityUtils.getCurrentUserId();
+        if (mentoringService.isExistsMentoring(myId, mentorId)){
+            throw new DuplicatedRequestException(ErrorCode.ALREADY_EXIST_MENTORING);
+        }
+
         Chatroom chatroom = chatroomService.createChatroom(myId, mentorId);
         Long mentoringId = mentoringService.createMentoring(myId, mentorId, chatroom);
-
-        if (mentoringService.isExistsMentoring(myId, mentorId)){
-            throw new DuplicatedRequestException(ErrorCode.ALREADY_EXIST_MENTORING + mentoringId);
-        }
 
         stompChatController.sendSystemMessage(chatroom.getId(),
                 SystemMessageSaveDto.builder()
