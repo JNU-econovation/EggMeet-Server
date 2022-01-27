@@ -62,4 +62,13 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NO_CONTENT)
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler(DuplicatedRequestException.class)
+    protected ResponseEntity handleDuplicatedRequestException(final DuplicatedRequestException e) {
+        printExceptionLog(HttpStatus.ACCEPTED, e);
+
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(e.getMessage());
+    }
 }
