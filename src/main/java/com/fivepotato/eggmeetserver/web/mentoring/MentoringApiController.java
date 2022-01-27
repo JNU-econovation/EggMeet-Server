@@ -74,6 +74,7 @@ public class MentoringApiController {
                 SystemMessageSaveDto.builder()
                         .type(MessageType.MENTEE_SYSTEM)
                         .content(SystemMessageContent.SCHEDULE_REQUEST)
+                        .requestId(requestId)
                         .build()
         );
 
